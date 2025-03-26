@@ -1,7 +1,7 @@
-export type DatasourceType = "entity" | "device";
 export type ScriptHandler<T> = (event: ScriptEvent<T>) => Promise<any>;
+export type OrderByFn = "asc" | "desc";
 
-export interface ScriptEvent<T = any> {
+export type ScriptEvent<T = any> = {
   event: string;
   metadata: {
     workspaceId: number;
@@ -16,46 +16,35 @@ export interface ScriptEvent<T = any> {
     };
   };
   content: T;
-}
+};
 
-export interface FetchOptions {
+export type FetchOptions = {
   path: string;
   method: string;
-  body: any;
-}
+  body?: any;
+  params?: any;
+};
 
-export interface APIResponse<T> {
-  httpStatusCode: number;
-  ok: boolean;
+export type APIRawResponse<T> = {
   code: string;
   data: T;
-}
+};
 
-export interface ID {
+export type APIResponse<T = null> = APIRawResponse<T> & {
+  httpStatusCode: number;
+  ok: boolean;
+};
+
+export type ID = {
   id: number;
-}
+};
 
-export interface TagForm {
+export type TagForm = {
   key: string;
   value: string;
-}
+};
 
-export interface RawTag {
+export type RawTag = {
   key: string;
   value: string;
-}
-
-export interface DatasourceForm {
-  bucketId: number;
-  networkId: number;
-  type: DatasourceType;
-  dnid: string;
-  payloadParserId: number | null;
-  name: string;
-  blocked: boolean;
-}
-
-export interface DatasourceObjectForm {
-  key: string;
-  value: Object;
-}
+};
