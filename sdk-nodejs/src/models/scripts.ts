@@ -16,7 +16,6 @@ export type Script = {
 
 export type ScriptInvokeForm = {
   event: string;
-  meta: ScriptEventMeta;
   content: any;
 };
 

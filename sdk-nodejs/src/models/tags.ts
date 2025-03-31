@@ -1,3 +1,5 @@
+import { RawTag } from "../types";
+
 export type Tag = {
   id: number;
   key: string;
@@ -5,14 +7,12 @@ export type Tag = {
 };
 
 export class TagsFilter {
-  public value: Record<string, string>;
-  constructor(value: Record<string, any>) {
+  public value: RawTag[];
+  constructor(value: RawTag[]) {
     this.value = value;
   }
 
   public toString(): string {
-    return Object.entries(this.value)
-      .map((e) => `${e[0]}:${e[1].toString()}`)
-      .toString();
+    return this.value.map((tag) => `${tag.key}:${tag.value}`).join(",");
   }
 }

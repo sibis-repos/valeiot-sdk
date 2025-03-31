@@ -34,7 +34,7 @@ export class Objects {
   }): Promise<DatasourceObject> {
     return this.api.fetch({
       method: "GET",
-      path: `datasources/${options.datasourceId}/objects/${options.datasourceId}`,
+      path: `datasources/${options.datasourceId}/objects/${options.objectId}`,
     });
   }
 
@@ -53,7 +53,7 @@ export class Objects {
   }): Promise<Record<string, any>> {
     return this.api.fetch({
       method: "GET",
-      path: `datasources/${options.datasourceId}/objects/${options.datasourceId}/value`,
+      path: `datasources/${options.datasourceId}/objects/${options.objectId}/value`,
     });
   }
 
