@@ -16,30 +16,72 @@ export class Objects {
     this.tags = new DatasourceObjectTags(this.api);
   }
 
+  /**
+   * Retrieves a single datasource object.
+   * @param options Request options.
+   * @default
+   * object: {
+   *  id: 1,
+   *  key: "device123",
+   *  createdAt: Date,
+   *  updatedAt: Date,
+   *  value: { status: "active", temperature: 22.5 }
+   * }
+   */
   public async get(options: {
     datasourceId: number;
     objectId: number | string;
-  }): Promise<APIResponse<DatasourceObject>> {
+  }): Promise<DatasourceObject> {
     return this.api.fetch({
       method: "GET",
       path: `datasources/${options.datasourceId}/objects/${options.datasourceId}`,
     });
   }
 
+  /**
+   * Retrieves the value of a datasource object.
+   * @param options Request options.
+   * @default
+   * value: {
+   *  status: "active",
+   *  temperature: 22.5
+   * }
+   */
   public async getValue(options: {
     datasourceId: number;
     objectId: number | string;
-  }): Promise<APIResponse<Record<string, any>>> {
+  }): Promise<Record<string, any>> {
     return this.api.fetch({
       method: "GET",
       path: `datasources/${options.datasourceId}/objects/${options.datasourceId}/value`,
     });
   }
 
+  /**
+   * Retrieves a list of datasource objects.
+   * @param options Request options.
+   * @default
+   * objects: [
+   *  {
+   *    id: 1,
+   *    key: "device123",
+   *    createdAt: Date,
+   *    updatedAt: Date,
+   *    value: null
+   *  },
+   *  {
+   *    id: 2,
+   *    key: "sensor456",
+   *    createdAt: Date,
+   *    updatedAt: Date,
+   *    value: null
+   *  }
+   * ]
+   */
   public async getList(options: {
     datasourceId: number;
     params?: DatasourceObjectsListFilters;
-  }): Promise<APIResponse<DatasourceObject>> {
+  }): Promise<DatasourceObject> {
     return this.api.fetch({
       method: "GET",
       path: `datasources/${options.datasourceId}/objects`,
@@ -47,10 +89,16 @@ export class Objects {
     });
   }
 
+  /**
+   * Creates a new datasource object.
+   * @param options Request options.
+   * @default
+   * response: { id: 1 }
+   */
   public async create(options: {
     datasourceId: number;
     body: DatasourceObjectForm;
-  }): Promise<APIResponse<ID>> {
+  }): Promise<ID> {
     return this.api.fetch({
       method: "POST",
       path: `datasources/${options.datasourceId}/objects`,
@@ -58,11 +106,17 @@ export class Objects {
     });
   }
 
+  /**
+   * Updates an existing datasource object.
+   * @param options Request options.
+   * @default
+   * response: null
+   */
   public async update(options: {
     datasourceId: number;
     objectId: number | string;
     body: DatasourceObjectForm;
-  }): Promise<APIResponse<ID>> {
+  }): Promise<null> {
     return this.api.fetch({
       method: "PUT",
       path: `datasources/${options.datasourceId}/objects/${options.objectId}`,
@@ -70,11 +124,17 @@ export class Objects {
     });
   }
 
+  /**
+   * Updates only the value of a datasource object.
+   * @param options Request options.
+   * @default
+   * response: null
+   */
   public async updateValue(options: {
     datasourceId: number;
     objectId: number | string;
     body: Record<string, any>;
-  }): Promise<APIResponse<ID>> {
+  }): Promise<null> {
     return this.api.fetch({
       method: "PUT",
       path: `datasources/${options.datasourceId}/objects/${options.objectId}/value`,
@@ -82,10 +142,16 @@ export class Objects {
     });
   }
 
+  /**
+   * Deletes a datasource object.
+   * @param options Request options.
+   * @default
+   * response: null
+   */
   public async delete(options: {
     datasourceId: number;
     objectId: number | string;
-  }): Promise<APIResponse<ID>> {
+  }): Promise<null> {
     return this.api.fetch({
       method: "DELETE",
       path: `datasources/${options.datasourceId}/objects/${options.objectId}`,

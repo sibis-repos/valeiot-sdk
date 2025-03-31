@@ -4,7 +4,6 @@ import {
   DatapointsDeleteFilters,
   DatapointsListFilters,
 } from "../models/datapoints";
-import { APIResponse } from "../types";
 import { API } from "./api";
 
 export class Datapoints {
@@ -14,6 +13,23 @@ export class Datapoints {
     this.api = api;
   }
 
+  /**
+   * Retrieves a list of datapoints for a given datasource.
+   * @param options Request options.
+   * @default
+   * datapoints: [
+   *  {
+   *    time: Date,
+   *    variable: "temperature",
+   *    value: 22.5
+   *  },
+   *  {
+   *    time: Date,
+   *    variable: "temperature",
+   *    value: 23.1
+   *  }
+   * ]
+   */
   public async getList(options: {
     datasourceId: number;
     params?: DatapointsListFilters;
@@ -25,6 +41,23 @@ export class Datapoints {
     });
   }
 
+  /**
+   * Retrieves the latest datapoints for a given datasource.
+   * @param options Request options.
+   * @default
+   * datapoints: [
+   *  {
+   *    time: Date,
+   *    variable: "humidity",
+   *    value: 55
+   *  },
+   *  {
+   *    time: Date,
+   *    variable: "temperature",
+   *    value: 22.9
+   *  }
+   * ]
+   */
   public async getLatest(options: {
     datasourceId: number;
     params: {
@@ -38,6 +71,12 @@ export class Datapoints {
     });
   }
 
+  /**
+   * Creates new datapoints for a given datasource.
+   * @param options Request options.
+   * @default
+   * response: null
+   */
   public async create(options: {
     body: DatapointForm[];
     datasourceId: number;
@@ -49,6 +88,12 @@ export class Datapoints {
     });
   }
 
+  /**
+   * Deletes datapoints based on filters for a given datasource.
+   * @param options Request options.
+   * @default
+   * response: null
+   */
   public async delete(options: {
     datasourceId: number;
     params: DatapointsDeleteFilters;

@@ -1,6 +1,7 @@
-import { OrderByFn } from "../types";
+import { OrderByFn, RawTag } from "../types";
 import { RoleReduced } from "./roles";
 import { Tag, TagsFilter } from "./tags";
+import { Permissions } from "./tokens";
 
 export type UserForm = {
   roleId: number;
@@ -28,6 +29,14 @@ export type UserDetails = {
   email: string;
 };
 
+export type UserContext = {
+  id: number;
+  permission: Permissions;
+  roleId: number;
+  roleName: string;
+  tags: RawTag[];
+};
+
 export type UsersListFilters = {
   name?: string;
   email?: string;
@@ -38,4 +47,3 @@ export type UsersListFilters = {
   orderBy?: "name" | "email" | "role_id" | "created_at" | "updated_at";
   orderByFn?: OrderByFn;
 };
-

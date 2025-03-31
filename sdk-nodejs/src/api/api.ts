@@ -29,9 +29,7 @@ export class API {
       );
     }
     if (!this.baseUrl.endsWith("/workspace")) {
-      throw new Error(
-        "Workspace api URL must end with '/workspace'. Please update WORKSPACE_API_URL in your environment. Example: \"https://<ident>.<region>.api.valeiot.com/api/v1/workspace\""
-      );
+      this.baseUrl = this.baseUrl + "/workspace";
     }
   }
 
