@@ -1,36 +1,25 @@
-import { kebabize } from "../tools/case-parser";
-import { APIResponse, FetchOptions } from "../types";
+import { kebabize } from '../tools/case-parser';
+import { APIResponse, FetchOptions } from '../types';
+
+export type APIOptions = {
+  /**
+   * baseUrl is the requests base url. Must not end with '/'.
+   */
+  baseUrl: string;
+  /**
+   * headers is the additional headers for requests.
+   */
+  headers: Record<string, string>;
+};
 
 /**
  * API class provides a wrapper for making HTTP requests to the workspace API.
- * It automatically retrieves the API URL and authentication token from the environment.
- *
- * - Requires `WORKSPACE_TOKEN` for authentication.
- * - Requires `WORKSPACE_API_URL` as the base URL.
- * - Ensures the API URL ends with `/workspace` for correct endpoint usage.
- * - Provides a `fetch` method for making API requests with standard headers.
  */
 export class API {
-  private baseUrl: string;
-  private token: string;
+  private options: APIOptions;
 
-  constructor() {
-    this.token = process.env.WORKSPACE_TOKEN ?? "";
-    if (!this.token) {
-      throw new Error(
-        "Workspace token is required in environment. Please add WORKSPACE_TOKEN to your environment."
-      );
-    }
-
-    this.baseUrl = process.env.WORKSPACE_API_URL ?? "";
-    if (!this.baseUrl) {
-      throw new Error(
-        "Workspace api URL is required in environment. Please add WORKSPACE_API_URL to your environment."
-      );
-    }
-    if (!this.baseUrl.endsWith("/workspace")) {
-      this.baseUrl = this.baseUrl + "/workspace";
-    }
+  constructor(options: APIOptions) {
+    this.options = options;
   }
 
   /**
@@ -39,11 +28,11 @@ export class API {
    * @returns The API response wrapped in `APIResponse<T>`.
    */
   public async fetch<T>(options: FetchOptions): Promise<T> {
-    const url = new URL(`${this.baseUrl}/${options.path}`);
+    const url = new URL(`${this.options.baseUrl}/${options.path}`);
     if (options.params) {
       Object.keys(options.params).forEach((key) => {
         try {
-          let rawValue = options.params[key];
+          const rawValue = options.params[key];
           let value: string;
 
           if (rawValue instanceof Date) {
@@ -53,7 +42,9 @@ export class API {
           }
 
           url.searchParams.append(kebabize(key), value);
-        } catch (e) {}
+        } catch (err) {
+          console.error(err);
+        }
       });
     }
 
@@ -61,8 +52,8 @@ export class API {
       method: options.method,
       body: JSON.stringify(options.body),
       headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${this.token}`,
+        'Content-Type': 'application/json',
+        ...this.options.headers,
       },
     };
 

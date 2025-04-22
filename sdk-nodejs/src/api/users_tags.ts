@@ -1,6 +1,7 @@
-import { Tag } from "../models/tags";
-import { ID, RawTag, TagForm } from "../types";
-import { API } from "./api";
+import { List } from '../models/list';
+import { Tag } from '../models/tags';
+import { ID, RawTag, TagForm } from '../types';
+import { API } from './api';
 
 export class UserTags {
   private api: API;
@@ -26,9 +27,9 @@ export class UserTags {
    *   }
    * ]
    */
-  public async getList(options: { userId: number }): Promise<Tag[]> {
+  public async getList(options: { userId: number }): Promise<List<Tag>> {
     return this.api.fetch({
-      method: "GET",
+      method: 'GET',
       path: `users/${options.userId}/tags`,
     });
   }
@@ -45,7 +46,7 @@ export class UserTags {
    */
   public async get(options: { userId: number; tagId: number }): Promise<Tag> {
     return this.api.fetch({
-      method: "GET",
+      method: 'GET',
       path: `users/${options.userId}/tags/${options.tagId}`,
     });
   }
@@ -60,7 +61,7 @@ export class UserTags {
    */
   public async create(options: { userId: number; body: RawTag }): Promise<ID> {
     return this.api.fetch({
-      method: "POST",
+      method: 'POST',
       path: `users/${options.userId}/tags`,
       body: options.body,
     });
@@ -74,13 +75,9 @@ export class UserTags {
    *   id: 2
    * }
    */
-  public async update(options: {
-    userId: number;
-    tagId: number;
-    body: TagForm;
-  }): Promise<ID> {
+  public async update(options: { userId: number; tagId: number; body: TagForm }): Promise<ID> {
     return this.api.fetch({
-      method: "PUT",
+      method: 'PUT',
       path: `users/${options.userId}/tags/${options.tagId}`,
       body: options.body,
     });
@@ -96,7 +93,7 @@ export class UserTags {
    */
   public async delete(options: { userId: number; tagId: number }): Promise<ID> {
     return this.api.fetch({
-      method: "DELETE",
+      method: 'DELETE',
       path: `users/${options.userId}/tags/${options.tagId}`,
     });
   }
@@ -109,12 +106,9 @@ export class UserTags {
    *   id: 4
    * }
    */
-  public async set(options: {
-    userId: number;
-    body: { tags: RawTag[] };
-  }): Promise<ID> {
+  public async set(options: { userId: number; body: { tags: RawTag[] } }): Promise<ID> {
     return this.api.fetch({
-      method: "PUT",
+      method: 'PUT',
       path: `users/${options.userId}/tags`,
       body: options.body,
     });
@@ -128,12 +122,9 @@ export class UserTags {
    *   id: 5
    * }
    */
-  public async createOrReplace(options: {
-    userId: number;
-    body: { tags: RawTag[] };
-  }): Promise<ID> {
+  public async createOrReplace(options: { userId: number; body: { tags: RawTag[] } }): Promise<ID> {
     return this.api.fetch({
-      method: "PUT",
+      method: 'PUT',
       path: `users/${options.userId}/tags/replace`,
       body: options.body,
     });

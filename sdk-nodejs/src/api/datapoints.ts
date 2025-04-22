@@ -3,8 +3,9 @@ import {
   DatapointForm,
   DatapointsDeleteFilters,
   DatapointsListFilters,
-} from "../models/datapoints";
-import { API } from "./api";
+} from '../models/datapoints';
+import { List } from '../models/list';
+import { API } from './api';
 
 export class Datapoints {
   private api: API;
@@ -33,9 +34,9 @@ export class Datapoints {
   public async getList(options: {
     datasourceId: number;
     params?: DatapointsListFilters;
-  }): Promise<Datapoint[]> {
+  }): Promise<List<Datapoint>> {
     return this.api.fetch({
-      method: "GET",
+      method: 'GET',
       path: `datasources/${options.datasourceId}/datapoints`,
       params: options.params,
     });
@@ -65,7 +66,7 @@ export class Datapoints {
     };
   }): Promise<Datapoint[]> {
     return this.api.fetch({
-      method: "GET",
+      method: 'GET',
       path: `datasources/${options.datasourceId}/datapoints/latest`,
       params: options.params,
     });
@@ -77,12 +78,9 @@ export class Datapoints {
    * @default
    * response: null
    */
-  public async create(options: {
-    body: DatapointForm[];
-    datasourceId: number;
-  }): Promise<null> {
+  public async create(options: { body: DatapointForm[]; datasourceId: number }): Promise<null> {
     return this.api.fetch({
-      method: "POST",
+      method: 'POST',
       path: `datasources/${options.datasourceId}/datapoints`,
       body: options.body,
     });
@@ -99,7 +97,7 @@ export class Datapoints {
     params: DatapointsDeleteFilters;
   }): Promise<null> {
     return this.api.fetch({
-      method: "DELETE",
+      method: 'DELETE',
       path: `datasources/${options.datasourceId}/datapoints`,
       params: options.params,
     });

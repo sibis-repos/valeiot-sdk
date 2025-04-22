@@ -1,6 +1,7 @@
-import { Tag } from "../models/tags";
-import { ID, RawTag, TagForm } from "../types";
-import { API } from "./api";
+import { List } from '../models/list';
+import { Tag } from '../models/tags';
+import { ID, RawTag, TagForm } from '../types';
+import { API } from './api';
 
 export class DatasourceTags {
   private api: API;
@@ -26,9 +27,9 @@ export class DatasourceTags {
    *   }
    * ]
    */
-  public async getList(options: { datasourceId: number }): Promise<Tag[]> {
+  public async getList(options: { datasourceId: number }): Promise<List<Tag>> {
     return this.api.fetch({
-      method: "GET",
+      method: 'GET',
       path: `datasources/${options.datasourceId}/tags`,
     });
   }
@@ -43,12 +44,9 @@ export class DatasourceTags {
    *   value: "Production"
    * }
    */
-  public async get(options: {
-    datasourceId: number;
-    tagId: number;
-  }): Promise<Tag[]> {
+  public async get(options: { datasourceId: number; tagId: number }): Promise<Tag[]> {
     return this.api.fetch({
-      method: "GET",
+      method: 'GET',
       path: `datasources/${options.datasourceId}/tags/${options.tagId}`,
     });
   }
@@ -61,12 +59,9 @@ export class DatasourceTags {
    *   id: 3
    * }
    */
-  public async create(options: {
-    datasourceId: number;
-    body: RawTag;
-  }): Promise<ID> {
+  public async create(options: { datasourceId: number; body: RawTag }): Promise<ID> {
     return this.api.fetch({
-      method: "POST",
+      method: 'POST',
       path: `datasources/${options.datasourceId}/tags`,
       body: options.body,
     });
@@ -86,7 +81,7 @@ export class DatasourceTags {
     body: TagForm;
   }): Promise<ID> {
     return this.api.fetch({
-      method: "PUT",
+      method: 'PUT',
       path: `datasources/${options.datasourceId}/tags/${options.tagId}`,
       body: options.body,
     });
@@ -100,12 +95,9 @@ export class DatasourceTags {
    *   id: 2
    * }
    */
-  public async delete(options: {
-    datasourceId: number;
-    tagId: number;
-  }): Promise<ID> {
+  public async delete(options: { datasourceId: number; tagId: number }): Promise<ID> {
     return this.api.fetch({
-      method: "DELETE",
+      method: 'DELETE',
       path: `datasources/${options.datasourceId}/tags/${options.tagId}`,
     });
   }
@@ -118,12 +110,9 @@ export class DatasourceTags {
    *   id: 4
    * }
    */
-  public async set(options: {
-    datasourceId: number;
-    body: { tags: RawTag[] };
-  }): Promise<ID> {
+  public async set(options: { datasourceId: number; body: { tags: RawTag[] } }): Promise<ID> {
     return this.api.fetch({
-      method: "PUT",
+      method: 'PUT',
       path: `datasources/${options.datasourceId}/tags`,
       body: options.body,
     });
@@ -142,7 +131,7 @@ export class DatasourceTags {
     body: { tags: RawTag[] };
   }): Promise<ID> {
     return this.api.fetch({
-      method: "PUT",
+      method: 'PUT',
       path: `datasources/${options.datasourceId}/tags/replace`,
       body: options.body,
     });

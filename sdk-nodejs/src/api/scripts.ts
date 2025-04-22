@@ -1,10 +1,11 @@
+import { List } from '../models/list';
 import {
   Script,
   ScriptInvokeForm,
   ScriptInvokeResponse,
   ScriptsListFilters,
-} from "../models/scripts";
-import { API } from "./api";
+} from '../models/scripts';
+import { API } from './api';
 
 export class Scripts {
   private api: API;
@@ -15,17 +16,15 @@ export class Scripts {
 
   public async get(options: { scriptId: number }): Promise<Script> {
     return this.api.fetch({
-      method: "GET",
+      method: 'GET',
       path: `scripts/${options.scriptId}`,
     });
   }
 
-  public async getList(
-    options: { params?: ScriptsListFilters } = {}
-  ): Promise<Script[]> {
+  public async getList(options: { params?: ScriptsListFilters } = {}): Promise<List<Script>> {
     return this.api.fetch({
-      method: "GET",
-      path: "scripts",
+      method: 'GET',
+      path: 'scripts',
       params: options.params,
     });
   }
@@ -35,11 +34,9 @@ export class Scripts {
     body: ScriptInvokeForm;
   }): Promise<ScriptInvokeResponse> {
     return this.api.fetch({
-      method: "GET",
+      method: 'GET',
       path: `scripts/${options.scriptId}/invoke`,
       body: options.body,
     });
   }
-
-  
 }

@@ -1,6 +1,7 @@
-import { Tag } from "../models/tags";
-import { APIResponse, ID, RawTag, TagForm } from "../types";
-import { API } from "./api";
+import { List } from '../models/list';
+import { Tag } from '../models/tags';
+import { ID, RawTag, TagForm } from '../types';
+import { API } from './api';
 
 export class DatasourceObjectTags {
   private api: API;
@@ -12,9 +13,9 @@ export class DatasourceObjectTags {
   public async getList(options: {
     datasourceId: number;
     objectId: number | string;
-  }): Promise<Tag[]> {
+  }): Promise<List<Tag>> {
     return this.api.fetch({
-      method: "GET",
+      method: 'GET',
       path: `datasources/${options.datasourceId}/objects/${options.objectId}/tags`,
     });
   }
@@ -25,7 +26,7 @@ export class DatasourceObjectTags {
     tagId: number;
   }): Promise<Tag[]> {
     return this.api.fetch({
-      method: "GET",
+      method: 'GET',
       path: `datasources/${options.datasourceId}/objects/${options.objectId}/tags/${options.tagId}`,
     });
   }
@@ -36,7 +37,7 @@ export class DatasourceObjectTags {
     body: RawTag;
   }): Promise<ID> {
     return this.api.fetch({
-      method: "POST",
+      method: 'POST',
       path: `datasources/${options.datasourceId}/objects/${options.objectId}/tags`,
       body: options.body,
     });
@@ -49,7 +50,7 @@ export class DatasourceObjectTags {
     body: TagForm;
   }): Promise<ID> {
     return this.api.fetch({
-      method: "PUT",
+      method: 'PUT',
       path: `datasources/${options.datasourceId}/objects/${options.objectId}/tags/${options.tagId}`,
       body: options.body,
     });
@@ -61,7 +62,7 @@ export class DatasourceObjectTags {
     tagId: number;
   }): Promise<ID> {
     return this.api.fetch({
-      method: "DELETE",
+      method: 'DELETE',
       path: `datasources/${options.datasourceId}/objects/${options.objectId}/tags/${options.tagId}`,
     });
   }
@@ -72,7 +73,7 @@ export class DatasourceObjectTags {
     body: { tags: RawTag[] };
   }): Promise<ID> {
     return this.api.fetch({
-      method: "PUT",
+      method: 'PUT',
       path: `datasources/${options.datasourceId}/objects/${options.objectId}/tags`,
       body: options.body,
     });
@@ -84,7 +85,7 @@ export class DatasourceObjectTags {
     body: { tags: RawTag[] };
   }): Promise<ID> {
     return this.api.fetch({
-      method: "PUT",
+      method: 'PUT',
       path: `datasources/${options.datasourceId}/objects/${options.objectId}/tags/replace`,
       body: options.body,
     });

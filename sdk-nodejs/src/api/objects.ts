@@ -1,11 +1,12 @@
+import { List } from '../models/list';
 import {
   DatasourceObject,
   DatasourceObjectForm,
   DatasourceObjectsListFilters,
-} from "../models/objects";
-import { APIResponse, ID } from "../types";
-import { API } from "./api";
-import { DatasourceObjectTags } from "./objects_tags";
+} from '../models/objects';
+import { ID } from '../types';
+import { API } from './api';
+import { DatasourceObjectTags } from './objects_tags';
 
 export class Objects {
   private api: API;
@@ -33,7 +34,7 @@ export class Objects {
     objectId: number | string;
   }): Promise<DatasourceObject> {
     return this.api.fetch({
-      method: "GET",
+      method: 'GET',
       path: `datasources/${options.datasourceId}/objects/${options.objectId}`,
     });
   }
@@ -52,7 +53,7 @@ export class Objects {
     objectId: number | string;
   }): Promise<Record<string, any>> {
     return this.api.fetch({
-      method: "GET",
+      method: 'GET',
       path: `datasources/${options.datasourceId}/objects/${options.objectId}/value`,
     });
   }
@@ -81,9 +82,9 @@ export class Objects {
   public async getList(options: {
     datasourceId: number;
     params?: DatasourceObjectsListFilters;
-  }): Promise<DatasourceObject> {
+  }): Promise<List<DatasourceObject>> {
     return this.api.fetch({
-      method: "GET",
+      method: 'GET',
       path: `datasources/${options.datasourceId}/objects`,
       params: options.params,
     });
@@ -95,12 +96,9 @@ export class Objects {
    * @default
    * response: { id: 1 }
    */
-  public async create(options: {
-    datasourceId: number;
-    body: DatasourceObjectForm;
-  }): Promise<ID> {
+  public async create(options: { datasourceId: number; body: DatasourceObjectForm }): Promise<ID> {
     return this.api.fetch({
-      method: "POST",
+      method: 'POST',
       path: `datasources/${options.datasourceId}/objects`,
       body: options.body,
     });
@@ -118,7 +116,7 @@ export class Objects {
     body: DatasourceObjectForm;
   }): Promise<null> {
     return this.api.fetch({
-      method: "PUT",
+      method: 'PUT',
       path: `datasources/${options.datasourceId}/objects/${options.objectId}`,
       body: options.body,
     });
@@ -136,7 +134,7 @@ export class Objects {
     body: Record<string, any>;
   }): Promise<null> {
     return this.api.fetch({
-      method: "PUT",
+      method: 'PUT',
       path: `datasources/${options.datasourceId}/objects/${options.objectId}/value`,
       body: options.body,
     });
@@ -148,12 +146,9 @@ export class Objects {
    * @default
    * response: null
    */
-  public async delete(options: {
-    datasourceId: number;
-    objectId: number | string;
-  }): Promise<null> {
+  public async delete(options: { datasourceId: number; objectId: number | string }): Promise<null> {
     return this.api.fetch({
-      method: "DELETE",
+      method: 'DELETE',
       path: `datasources/${options.datasourceId}/objects/${options.objectId}`,
     });
   }

@@ -1,7 +1,8 @@
-import { User, UserDetails, UserForm, UsersListFilters } from "../models/users";
-import { ID } from "../types";
-import { API } from "./api";
-import { UserTags } from "./users_tags";
+import { List } from '../models/list';
+import { User, UserDetails, UserForm, UsersListFilters } from '../models/users';
+import { ID } from '../types';
+import { API } from './api';
+import { UserTags } from './users_tags';
 
 export class Users {
   private api: API;
@@ -28,7 +29,7 @@ export class Users {
    */
   public async get(options: { userId: number }): Promise<User> {
     return this.api.fetch({
-      method: "GET",
+      method: 'GET',
       path: `users/${options.userId}`,
     });
   }
@@ -52,7 +53,7 @@ export class Users {
    */
   public async getDetails(options: { userId: number }): Promise<UserDetails> {
     return this.api.fetch({
-      method: "GET",
+      method: 'GET',
       path: `users/${options.userId}/details`,
     });
   }
@@ -84,10 +85,10 @@ export class Users {
     options: {
       params?: UsersListFilters;
     } = {}
-  ): Promise<User[]> {
+  ): Promise<List<User>> {
     return this.api.fetch({
-      method: "GET",
-      path: "users",
+      method: 'GET',
+      path: 'users',
       params: options.params,
     });
   }
@@ -124,10 +125,10 @@ export class Users {
     options: {
       params?: UsersListFilters;
     } = {}
-  ): Promise<UserDetails[]> {
+  ): Promise<List<UserDetails>> {
     return this.api.fetch({
-      method: "GET",
-      path: "users/details",
+      method: 'GET',
+      path: 'users/details',
       params: options.params,
     });
   }
@@ -142,8 +143,8 @@ export class Users {
    */
   public async create(options: { body: UserForm }): Promise<ID> {
     return this.api.fetch({
-      method: "POST",
-      path: "users",
+      method: 'POST',
+      path: 'users',
       body: options.body,
     });
   }
@@ -154,12 +155,9 @@ export class Users {
    * @default
    * response: null
    */
-  public async update(options: {
-    userId: number;
-    body: UserForm;
-  }): Promise<null> {
+  public async update(options: { userId: number; body: UserForm }): Promise<null> {
     return this.api.fetch({
-      method: "PUT",
+      method: 'PUT',
       path: `users/${options.userId}`,
       body: options.body,
     });
@@ -173,7 +171,7 @@ export class Users {
    */
   public async delete(options: { userId: number }): Promise<null> {
     return this.api.fetch({
-      method: "DELETE",
+      method: 'DELETE',
       path: `users/${options.userId}`,
     });
   }
