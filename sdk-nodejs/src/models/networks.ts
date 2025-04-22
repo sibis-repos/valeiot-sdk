@@ -1,10 +1,16 @@
-import { OrderByFn } from "../types";
-import { TokenPermission } from "./token";
+import { OrderByFn } from '../types';
+import { TokenPermission } from './token';
 
 export type Network = {
   id: number;
   createdAt: Date;
   updatedAt: Date;
+  name: string;
+  type: string;
+  description: string;
+};
+
+export type NetworkForm = {
   name: string;
   type: string;
   description: string;
@@ -37,6 +43,6 @@ export type NetworkListFilters = {
   type?: string;
   limit?: number;
   offset?: number;
-  orderBy?: "name" | "description" | "type" | "created_at" | "updated_at";
+  orderBy?: 'name' | 'description' | 'type' | 'created_at' | 'updated_at';
   orderByFn?: OrderByFn;
 };

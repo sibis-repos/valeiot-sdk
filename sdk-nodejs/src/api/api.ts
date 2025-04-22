@@ -13,7 +13,7 @@ export type APIOptions = {
 };
 
 /**
- * API class provides a wrapper for making HTTP requests to the workspace API.
+ * API class provides a wrapper for making HTTP requests to the API.
  */
 export class API {
   private options: APIOptions;
@@ -23,7 +23,7 @@ export class API {
   }
 
   /**
-   * fetch makes a HTTP request to the workspace API.
+   * fetch makes a HTTP request to the API.
    * @param options - Fetch options including method, path, and body.
    * @returns The API response wrapped in `APIResponse<T>`.
    */
@@ -61,7 +61,7 @@ export class API {
     try {
       res = await fetch(url, request).then(async (response) => {
         return {
-          ...(await response.json()),
+          ...(response.ok ? await response.json() : null),
           ok: response.ok,
           httpStatusCode: response.status,
         } as APIResponse<T>;

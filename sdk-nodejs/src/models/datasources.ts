@@ -1,12 +1,12 @@
-import { OrderByFn } from "../types";
-import { BucketReduced } from "./buckets";
-import { Datapoint } from "./datapoints";
-import { NetworkReduced } from "./network";
-import { DatasourceObject } from "./objects";
-import { PayloadParserReduced } from "./payload_parser";
-import { Tag, TagsFilter } from "./tags";
+import { OrderByFn } from '../types';
+import { BucketReduced } from './buckets';
+import { Datapoint } from './datapoints';
+import { NetworkReduced } from './networks';
+import { DatasourceObject } from './objects';
+import { PayloadParserReduced } from './payload_parser';
+import { Tag, TagsFilter } from './tags';
 
-export type DatasourceType = "entity" | "device";
+export type DatasourceType = 'entity' | 'device';
 
 export type Datasource = {
   id: number;
@@ -50,7 +50,7 @@ export type DatasourceForm = {
 
 export type DatasourcesDetailsListFilters = {
   name?: string;
-  type?: "device" | "entity";
+  type?: 'device' | 'entity';
   alerted?: boolean;
   alertName?: string;
   alertCategory?: string;
@@ -63,16 +63,16 @@ export type DatasourcesDetailsListFilters = {
   datapointsVariables?: string[];
   limit?: number;
   offset?: number;
-  orderBy?: "name" | "created_at" | "updated_at";
+  orderBy?: 'name' | 'created_at' | 'updated_at';
   orderByFn?: OrderByFn;
 };
 
 export type DatasourcesListFilters = {
   name?: string;
-  type?: "device" | "entity";
+  type?: 'device' | 'entity';
   tags?: TagsFilter;
   limit?: number;
   offset?: number;
-  orderBy?: "name" | "created_at" | "updated_at";
+  orderBy?: 'name' | 'created_at' | 'updated_at';
   orderByFn?: OrderByFn;
 };

@@ -3,12 +3,14 @@
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
     "dev": "ts-node src/index.ts",
-    "devtest": "ts-node src/index_test.ts"
+    "devtest": "ts-node tests/index_test.ts"
   },
+  "include": ["src"],
   "keywords": [],
   "author": "",
   "license": "ISC",

@@ -6,7 +6,7 @@ import {
   DatasourcesListFilters,
 } from '../models/datasources';
 import { List } from '../models/list';
-import { Network } from '../models/network';
+import { Network } from '../models/networks';
 import { ID } from '../types';
 import { API } from './api';
 import { Datapoints } from './datapoints';
