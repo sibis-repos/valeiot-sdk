@@ -8,6 +8,15 @@ export class Quotas {
     this.api = api;
   }
 
+  /**
+   * Retrieves the workspace quotas configuration.
+   * @default
+   * object: {
+   *  plan: "free",
+   *  planQuotas: { users: 10 },
+   *  addonsQuotas: { users: 5 },
+   * }
+   */
   public async get(): Promise<WorkspaceQuotas> {
     return this.api.fetch({
       method: 'GET',
@@ -15,6 +24,14 @@ export class Quotas {
     });
   }
 
+  /**
+   * Retrieves the workspace quotas consumption.
+   * @default
+   * object: {
+   *  static: { users: 7 },
+   *  monthly: { datasources-datapoints-input: 20000 },
+   * }
+   */
   public async getConsumption(): Promise<WorkspaceQuotasConsumption> {
     return this.api.fetch({
       method: 'GET',

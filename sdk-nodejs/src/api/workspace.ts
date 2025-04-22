@@ -2,6 +2,7 @@ import { Actions } from './actions';
 import { API, APIOptions } from './api';
 import { Buckets } from './buckets';
 import { Datasources } from './datasources';
+import { Networks } from './networks';
 import { Quotas } from './quotas';
 import { Scripts } from './scripts';
 import { Users } from './users';
@@ -21,6 +22,7 @@ export class Workspace {
   public actions: Actions;
   public scripts: Scripts;
   public quotas: Quotas;
+  public networks: Networks;
 
   constructor(options: WorkspaceOptions = {}) {
     if (!options.baseUrl) {
@@ -55,5 +57,6 @@ export class Workspace {
     this.actions = new Actions(this.api);
     this.scripts = new Scripts(this.api);
     this.quotas = new Quotas(this.api);
+    this.networks = new Networks(this.api);
   }
 }
