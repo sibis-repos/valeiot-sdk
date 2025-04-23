@@ -1,17 +1,29 @@
 import { OrderByFn } from '../types';
 import { UserContext } from './users';
 
+export type ScriptRuntime = 'nodejs20.x';
+
 export type Script = {
   id: number;
   name: string;
   description: string;
   blocked: boolean;
-  runtime: string;
+  runtime: ScriptRuntime;
   timeout: number; //seconds
   layerVersion: number;
   env: Record<string, string>;
   createdAt: Date;
   updatedAt: Date;
+};
+
+export type ScriptForm = {
+  name: string;
+  description: string;
+  blocked: boolean;
+  runtime: ScriptRuntime; // does not update after creation
+  timeout: number; // seconds
+  layerVersion: number;
+  env: Record<string, string>;
 };
 
 export type ScriptInvokeForm = {
@@ -46,4 +58,8 @@ export type ScriptsListFilters = {
 export type ScriptLayer = {
   version: number;
   description: string;
+};
+
+export type ScriptCode = {
+  code: string;
 };

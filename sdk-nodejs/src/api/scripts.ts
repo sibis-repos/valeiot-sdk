@@ -1,11 +1,14 @@
 import { List } from '../models/list';
 import {
   Script,
+  ScriptCode,
+  ScriptForm,
   ScriptInvokeForm,
   ScriptInvokeResponse,
   ScriptLayer,
   ScriptsListFilters,
 } from '../models/scripts';
+import { ID } from '../types';
 import { API } from './api';
 
 export class Scripts {
@@ -30,10 +33,48 @@ export class Scripts {
     });
   }
 
+  public async getCode(options: { scriptId: number }): Promise<ScriptCode> {
+    return this.api.fetch({
+      method: 'GET',
+      path: `scripts/${options.scriptId}/code`,
+    });
+  }
+
   public async getRuntimeLayers(options: { runtime: string }): Promise<List<ScriptLayer>> {
     return this.api.fetch({
       method: 'GET',
       path: `scripts/runtimes/${options.runtime}/layers`,
+    });
+  }
+
+  public async create(options: { body: ScriptForm }): Promise<ID> {
+    return this.api.fetch({
+      method: 'POST',
+      path: 'scripts',
+      body: options.body,
+    });
+  }
+
+  public async update(options: { scriptId: number; body: ScriptForm }): Promise<null> {
+    return this.api.fetch({
+      method: 'PUT',
+      path: `scripts/${options.scriptId}`,
+      body: options.body,
+    });
+  }
+
+  public async updateCode(options: { scriptId: number; body: ScriptCode }): Promise<null> {
+    return this.api.fetch({
+      method: 'PUT',
+      path: `scripts/${options.scriptId}/code`,
+      body: options.body,
+    });
+  }
+
+  public async delete(options: { scriptId: number }): Promise<null> {
+    return this.api.fetch({
+      method: 'DELETE',
+      path: `scripts/${options.scriptId}`,
     });
   }
 

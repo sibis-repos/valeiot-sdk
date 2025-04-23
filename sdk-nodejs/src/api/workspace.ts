@@ -9,6 +9,7 @@ import { PayloadParsers } from './payload_parsers';
 import { Portals } from './portals';
 import { PublicPayloadParsers } from './public_payload_parsers';
 import { Quotas } from './quotas';
+import { Roles } from './roles';
 import { Scripts } from './scripts';
 import { Users } from './users';
 
@@ -33,6 +34,7 @@ export class Workspace {
   public portals: Portals;
   public dashboards: Dashboards;
   public notifications: Notifications;
+  public roles: Roles;
 
   constructor(options: WorkspaceOptions = {}) {
     if (!options.baseUrl) {
@@ -73,5 +75,6 @@ export class Workspace {
     this.portals = new Portals(this.api);
     this.dashboards = new Dashboards(this.api);
     this.notifications = new Notifications(this.api);
+    this.roles = new Roles(this.api);
   }
 }
