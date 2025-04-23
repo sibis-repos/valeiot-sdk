@@ -3,6 +3,7 @@ import {
   Script,
   ScriptInvokeForm,
   ScriptInvokeResponse,
+  ScriptLayer,
   ScriptsListFilters,
 } from '../models/scripts';
 import { API } from './api';
@@ -26,6 +27,13 @@ export class Scripts {
       method: 'GET',
       path: 'scripts',
       params: options.params,
+    });
+  }
+
+  public async getRuntimeLayers(options: { runtime: string }): Promise<List<ScriptLayer>> {
+    return this.api.fetch({
+      method: 'GET',
+      path: `scripts/runtimes/${options.runtime}/layers`,
     });
   }
 

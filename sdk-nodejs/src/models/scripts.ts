@@ -1,5 +1,5 @@
-import { OrderByFn } from "../types";
-import { UserContext } from "./users";
+import { OrderByFn } from '../types';
+import { UserContext } from './users';
 
 export type Script = {
   id: number;
@@ -39,6 +39,11 @@ export type ScriptsListFilters = {
   layerVersion?: string;
   limit?: number;
   offset?: number;
-  orderBy?: "name" | "description" | "runtime" | "created_at" | "updated_at";
+  orderBy?: 'name' | 'description' | 'runtime' | 'created_at' | 'updated_at';
   orderByFn?: OrderByFn;
+};
+
+export type ScriptLayer = {
+  version: number;
+  description: string;
 };
