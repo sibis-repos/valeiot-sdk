@@ -1,4 +1,5 @@
 import { List } from '../models/list';
+import { TokenID } from '../models/token';
 import { User, UserDetails, UserForm, UsersListFilters } from '../models/users';
 import { ID } from '../types';
 import { API } from './api';
@@ -173,6 +174,22 @@ export class Users {
     return this.api.fetch({
       method: 'DELETE',
       path: `users/${options.userId}`,
+    });
+  }
+
+  /**
+   * Retrieves a new user session.
+   * @param options Request options containing userId.
+   * @default
+   * id: {
+   *  id: 1,
+   *  token: "abcdef123456"
+   * }
+   */
+  public async login(options: { userId: number }): Promise<TokenID> {
+    return this.api.fetch({
+      method: 'POST',
+      path: `users/${options.userId}/login`,
     });
   }
 }

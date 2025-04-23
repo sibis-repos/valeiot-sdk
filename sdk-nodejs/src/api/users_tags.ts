@@ -71,11 +71,9 @@ export class UserTags {
    * Updates an existing tag for a specific user.
    * @param options Request options containing the userId, tagId, and updated tag data.
    * @default
-   * response: {
-   *   id: 2
-   * }
+   * response: null
    */
-  public async update(options: { userId: number; tagId: number; body: TagForm }): Promise<ID> {
+  public async update(options: { userId: number; tagId: number; body: TagForm }): Promise<null> {
     return this.api.fetch({
       method: 'PUT',
       path: `users/${options.userId}/tags/${options.tagId}`,
@@ -87,11 +85,9 @@ export class UserTags {
    * Deletes a tag for a specific user.
    * @param options Request options containing the userId and tagId.
    * @default
-   * response: {
-   *   id: 2
-   * }
+   * response: null
    */
-  public async delete(options: { userId: number; tagId: number }): Promise<ID> {
+  public async delete(options: { userId: number; tagId: number }): Promise<null> {
     return this.api.fetch({
       method: 'DELETE',
       path: `users/${options.userId}/tags/${options.tagId}`,
@@ -102,11 +98,9 @@ export class UserTags {
    * Sets multiple tags for a specific user, replacing the existing tags.
    * @param options Request options containing the userId and tags data.
    * @default
-   * response: {
-   *   id: 4
-   * }
+   * response: null
    */
-  public async set(options: { userId: number; body: { tags: RawTag[] } }): Promise<ID> {
+  public async set(options: { userId: number; body: { tags: RawTag[] } }): Promise<null> {
     return this.api.fetch({
       method: 'PUT',
       path: `users/${options.userId}/tags`,
@@ -118,11 +112,12 @@ export class UserTags {
    * Creates or replaces multiple tags for a specific user.
    * @param options Request options containing the userId and tags data.
    * @default
-   * response: {
-   *   id: 5
-   * }
+   * response: null
    */
-  public async createOrReplace(options: { userId: number; body: { tags: RawTag[] } }): Promise<ID> {
+  public async createOrReplace(options: {
+    userId: number;
+    body: { tags: RawTag[] };
+  }): Promise<null> {
     return this.api.fetch({
       method: 'PUT',
       path: `users/${options.userId}/tags/replace`,

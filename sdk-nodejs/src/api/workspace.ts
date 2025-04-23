@@ -1,8 +1,13 @@
 import { Actions } from './actions';
 import { API, APIOptions } from './api';
 import { Buckets } from './buckets';
+import { Dashboards } from './dashboards';
 import { Datasources } from './datasources';
 import { Networks } from './networks';
+import { Notifications } from './notifications';
+import { PayloadParsers } from './payload_parsers';
+import { Portals } from './portals';
+import { PublicPayloadParsers } from './public_payload_parsers';
 import { Quotas } from './quotas';
 import { Scripts } from './scripts';
 import { Users } from './users';
@@ -23,6 +28,11 @@ export class Workspace {
   public scripts: Scripts;
   public quotas: Quotas;
   public networks: Networks;
+  public payloadParsers: PayloadParsers;
+  public publicPayloadParsers: PublicPayloadParsers;
+  public portals: Portals;
+  public dashboards: Dashboards;
+  public notifications: Notifications;
 
   constructor(options: WorkspaceOptions = {}) {
     if (!options.baseUrl) {
@@ -58,5 +68,10 @@ export class Workspace {
     this.scripts = new Scripts(this.api);
     this.quotas = new Quotas(this.api);
     this.networks = new Networks(this.api);
+    this.payloadParsers = new PayloadParsers(this.api);
+    this.publicPayloadParsers = new PublicPayloadParsers(this.api);
+    this.portals = new Portals(this.api);
+    this.dashboards = new Dashboards(this.api);
+    this.notifications = new Notifications(this.api);
   }
 }

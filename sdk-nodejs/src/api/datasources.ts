@@ -11,6 +11,7 @@ import { ID } from '../types';
 import { API } from './api';
 import { Datapoints } from './datapoints';
 import { DatasourceTags } from './datasources_tags';
+import { DatasourcesTokens } from './datasources_tokens';
 import { Objects } from './objects';
 
 export class Datasources {
@@ -19,10 +20,12 @@ export class Datasources {
   public datapoints: Datapoints;
   public objects: Objects;
   public tags: DatasourceTags;
+  public tokens: DatasourcesTokens;
 
   constructor(api: API) {
     this.api = api;
     this.tags = new DatasourceTags(this.api);
+    this.tokens = new DatasourcesTokens(this.api);
     this.datapoints = new Datapoints(this.api);
     this.objects = new Objects(this.api);
   }

@@ -44,7 +44,7 @@ export class DatasourceTags {
    *   value: "Production"
    * }
    */
-  public async get(options: { datasourceId: number; tagId: number }): Promise<Tag[]> {
+  public async get(options: { datasourceId: number; tagId: number }): Promise<Tag> {
     return this.api.fetch({
       method: 'GET',
       path: `datasources/${options.datasourceId}/tags/${options.tagId}`,
@@ -71,15 +71,13 @@ export class DatasourceTags {
    * Updates an existing tag for a specific datasource.
    * @param options Request options containing the datasourceId, tagId, and updated tag data.
    * @default
-   * response: {
-   *   id: 2
-   * }
+   * response: null
    */
   public async update(options: {
     datasourceId: number;
     tagId: number;
     body: TagForm;
-  }): Promise<ID> {
+  }): Promise<null> {
     return this.api.fetch({
       method: 'PUT',
       path: `datasources/${options.datasourceId}/tags/${options.tagId}`,
@@ -91,11 +89,9 @@ export class DatasourceTags {
    * Deletes a tag for a specific datasource.
    * @param options Request options containing the datasourceId and tagId.
    * @default
-   * response: {
-   *   id: 2
-   * }
+   * response: null
    */
-  public async delete(options: { datasourceId: number; tagId: number }): Promise<ID> {
+  public async delete(options: { datasourceId: number; tagId: number }): Promise<null> {
     return this.api.fetch({
       method: 'DELETE',
       path: `datasources/${options.datasourceId}/tags/${options.tagId}`,
@@ -106,11 +102,9 @@ export class DatasourceTags {
    * Sets multiple tags for a specific datasource, replacing the existing tags.
    * @param options Request options containing the datasourceId and tags data.
    * @default
-   * response: {
-   *   id: 4
-   * }
+   * response: null
    */
-  public async set(options: { datasourceId: number; body: { tags: RawTag[] } }): Promise<ID> {
+  public async set(options: { datasourceId: number; body: { tags: RawTag[] } }): Promise<null> {
     return this.api.fetch({
       method: 'PUT',
       path: `datasources/${options.datasourceId}/tags`,
@@ -122,14 +116,12 @@ export class DatasourceTags {
    * Creates or replaces multiple tags for a specific datasource.
    * @param options Request options containing the datasourceId and tags data.
    * @default
-   * response: {
-   *   id: 5
-   * }
+   * response: null
    */
   public async createOrReplace(options: {
     datasourceId: number;
     body: { tags: RawTag[] };
-  }): Promise<ID> {
+  }): Promise<null> {
     return this.api.fetch({
       method: 'PUT',
       path: `datasources/${options.datasourceId}/tags/replace`,

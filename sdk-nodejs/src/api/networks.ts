@@ -2,12 +2,16 @@ import { List } from '../models/list';
 import { Network, NetworkForm, NetworkListFilters } from '../models/networks';
 import { ID } from '../types';
 import { API } from './api';
+import { NetworksTokens } from './networks_tokens';
 
 export class Networks {
   private api: API;
 
+  public tokens: NetworksTokens;
+
   constructor(api: API) {
     this.api = api;
+    this.tokens = new NetworksTokens(this.api);
   }
 
   /**

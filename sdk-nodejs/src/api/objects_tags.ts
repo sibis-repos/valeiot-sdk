@@ -24,7 +24,7 @@ export class DatasourceObjectTags {
     datasourceId: number;
     objectId: number | string;
     tagId: number;
-  }): Promise<Tag[]> {
+  }): Promise<Tag> {
     return this.api.fetch({
       method: 'GET',
       path: `datasources/${options.datasourceId}/objects/${options.objectId}/tags/${options.tagId}`,
@@ -48,7 +48,7 @@ export class DatasourceObjectTags {
     objectId: number | string;
     tagId: number;
     body: TagForm;
-  }): Promise<ID> {
+  }): Promise<null> {
     return this.api.fetch({
       method: 'PUT',
       path: `datasources/${options.datasourceId}/objects/${options.objectId}/tags/${options.tagId}`,
@@ -60,7 +60,7 @@ export class DatasourceObjectTags {
     datasourceId: number;
     objectId: number | string;
     tagId: number;
-  }): Promise<ID> {
+  }): Promise<null> {
     return this.api.fetch({
       method: 'DELETE',
       path: `datasources/${options.datasourceId}/objects/${options.objectId}/tags/${options.tagId}`,
@@ -71,7 +71,7 @@ export class DatasourceObjectTags {
     datasourceId: number;
     objectId: number | string;
     body: { tags: RawTag[] };
-  }): Promise<ID> {
+  }): Promise<null> {
     return this.api.fetch({
       method: 'PUT',
       path: `datasources/${options.datasourceId}/objects/${options.objectId}/tags`,
@@ -83,7 +83,7 @@ export class DatasourceObjectTags {
     datasourceId: number;
     objectId: number | string;
     body: { tags: RawTag[] };
-  }): Promise<ID> {
+  }): Promise<null> {
     return this.api.fetch({
       method: 'PUT',
       path: `datasources/${options.datasourceId}/objects/${options.objectId}/tags/replace`,
