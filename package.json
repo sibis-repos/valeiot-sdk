@@ -1,0 +1,35 @@
+{
+  "name": "@sibis/valeiot-sdk",
+  "version": "0.1.1",
+  "description": "Valeiot software development kit.",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "exports": {
+    "./*": "./dist/*.js"
+  },
+  "keywords": [
+    "valeiot",
+    "sibis"
+  ],
+  "author": "Sibis",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sibis-repos/valeiot-sdk.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sibis-repos/valeiot-sdk/issues"
+  },
+  "homepage": "https://github.com/sibis-repos/valeiot-sdk#readme",
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  },
+  "files": [
+    "dist"
+  ]
+}
