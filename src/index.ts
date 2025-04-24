@@ -3,6 +3,9 @@ export * from './api/conn_workspace';
 export * from './api/conn_user';
 export * from './router/router';
 
+export * from './models/datapoints';
+export * from './models/tags';
+
 export type * from './models/actions';
 export type * from './models/buckets';
 export type * from './models/common';
