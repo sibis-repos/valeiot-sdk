@@ -1,7 +1,7 @@
 import { List } from '../models/list';
 import { TokenID } from '../models/tokens';
 import { User, UserDetails, UserForm, UsersListFilters } from '../models/users';
-import { ID } from '../models/common';
+import { ID, RequestOptions } from '../models/common';
 import { API } from './api';
 import { UserTags } from './users_tags';
 
@@ -28,10 +28,11 @@ export class Users {
    *   updatedAt: "2021-01-01T00:00:00Z"
    * }
    */
-  public async get(options: { userId: number }): Promise<User> {
+  public async get(options: { userId: number } & RequestOptions): Promise<User> {
     return this.api.fetch({
       method: 'GET',
       path: `users/${options.userId}`,
+      modifier: options.modifier,
     });
   }
 
@@ -52,10 +53,11 @@ export class Users {
    *   updatedAt: "2021-01-01T00:00:00Z"
    * }
    */
-  public async getDetails(options: { userId: number }): Promise<UserDetails> {
+  public async getDetails(options: { userId: number } & RequestOptions): Promise<UserDetails> {
     return this.api.fetch({
       method: 'GET',
       path: `users/${options.userId}/details`,
+      modifier: options.modifier,
     });
   }
 
@@ -85,12 +87,13 @@ export class Users {
   public async getList(
     options: {
       params?: UsersListFilters;
-    } = {}
+    } & RequestOptions = {}
   ): Promise<List<User>> {
     return this.api.fetch({
       method: 'GET',
       path: 'users',
       params: options.params,
+      modifier: options.modifier,
     });
   }
 
@@ -125,12 +128,13 @@ export class Users {
   public async getDetailsList(
     options: {
       params?: UsersListFilters;
-    } = {}
+    } & RequestOptions = {}
   ): Promise<List<UserDetails>> {
     return this.api.fetch({
       method: 'GET',
       path: 'users/details',
       params: options.params,
+      modifier: options.modifier,
     });
   }
 
@@ -142,11 +146,12 @@ export class Users {
    *   id: 1
    * }
    */
-  public async create(options: { body: UserForm }): Promise<ID> {
+  public async create(options: { body: UserForm } & RequestOptions): Promise<ID> {
     return this.api.fetch({
       method: 'POST',
       path: 'users',
       body: options.body,
+      modifier: options.modifier,
     });
   }
 
@@ -156,11 +161,12 @@ export class Users {
    * @default
    * response: null
    */
-  public async update(options: { userId: number; body: UserForm }): Promise<null> {
+  public async update(options: { userId: number; body: UserForm } & RequestOptions): Promise<null> {
     return this.api.fetch({
       method: 'PUT',
       path: `users/${options.userId}`,
       body: options.body,
+      modifier: options.modifier,
     });
   }
 
@@ -170,10 +176,11 @@ export class Users {
    * @default
    * response: null
    */
-  public async delete(options: { userId: number }): Promise<null> {
+  public async delete(options: { userId: number } & RequestOptions): Promise<null> {
     return this.api.fetch({
       method: 'DELETE',
       path: `users/${options.userId}`,
+      modifier: options.modifier,
     });
   }
 
@@ -186,10 +193,11 @@ export class Users {
    *  token: "abcdef123456"
    * }
    */
-  public async login(options: { userId: number }): Promise<TokenID> {
+  public async login(options: { userId: number } & RequestOptions): Promise<TokenID> {
     return this.api.fetch({
       method: 'POST',
       path: `users/${options.userId}/login`,
+      modifier: options.modifier,
     });
   }
 }

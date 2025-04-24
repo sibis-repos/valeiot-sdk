@@ -1,5 +1,6 @@
 export type ScriptHandler<T> = (event: ScriptEvent<T>) => Promise<any>;
-export type OrderByFn = "asc" | "desc";
+export type OrderByFn = 'asc' | 'desc';
+export type RequestModifier = (r: RequestInit) => RequestInit;
 
 export type ScriptEvent<T = any> = {
   event: string;
@@ -23,6 +24,11 @@ export type FetchOptions = {
   method: string;
   body?: any;
   params?: any;
+  modifier?: RequestModifier;
+};
+
+export type RequestOptions = {
+  modifier?: RequestModifier;
 };
 
 export type APIRawResponse<T> = {

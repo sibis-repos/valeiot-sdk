@@ -1,4 +1,5 @@
 import { Bucket, BucketsListFilters } from '../models/buckets';
+import { RequestOptions } from '../models/common';
 import { List } from '../models/list';
 import { API } from './api';
 
@@ -25,11 +26,14 @@ export class Buckets {
    *  }
    * ]
    */
-  public async getList(options: { params?: BucketsListFilters } = {}): Promise<List<Bucket>> {
+  public async getList(
+    options: { params?: BucketsListFilters } & RequestOptions = {}
+  ): Promise<List<Bucket>> {
     return this.api.fetch({
       method: 'GET',
       path: 'buckets',
       params: options.params,
+      modifier: options.modifier,
     });
   }
 }

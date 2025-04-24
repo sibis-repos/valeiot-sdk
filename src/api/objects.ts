@@ -4,7 +4,7 @@ import {
   DatasourceObjectForm,
   DatasourceObjectsListFilters,
 } from '../models/objects';
-import { ID } from '../models/common';
+import { ID, RequestOptions } from '../models/common';
 import { API } from './api';
 import { DatasourceObjectTags } from './objects_tags';
 
@@ -29,13 +29,16 @@ export class Objects {
    *  value: { status: "active", temperature: 22.5 }
    * }
    */
-  public async get(options: {
-    datasourceId: number;
-    objectId: number | string;
-  }): Promise<DatasourceObject> {
+  public async get(
+    options: {
+      datasourceId: number;
+      objectId: number | string;
+    } & RequestOptions
+  ): Promise<DatasourceObject> {
     return this.api.fetch({
       method: 'GET',
       path: `datasources/${options.datasourceId}/objects/${options.objectId}`,
+      modifier: options.modifier,
     });
   }
 
@@ -48,13 +51,16 @@ export class Objects {
    *  temperature: 22.5
    * }
    */
-  public async getValue(options: {
-    datasourceId: number;
-    objectId: number | string;
-  }): Promise<Record<string, any>> {
+  public async getValue(
+    options: {
+      datasourceId: number;
+      objectId: number | string;
+    } & RequestOptions
+  ): Promise<Record<string, any>> {
     return this.api.fetch({
       method: 'GET',
       path: `datasources/${options.datasourceId}/objects/${options.objectId}/value`,
+      modifier: options.modifier,
     });
   }
 
@@ -79,14 +85,17 @@ export class Objects {
    *  }
    * ]
    */
-  public async getList(options: {
-    datasourceId: number;
-    params?: DatasourceObjectsListFilters;
-  }): Promise<List<DatasourceObject>> {
+  public async getList(
+    options: {
+      datasourceId: number;
+      params?: DatasourceObjectsListFilters;
+    } & RequestOptions
+  ): Promise<List<DatasourceObject>> {
     return this.api.fetch({
       method: 'GET',
       path: `datasources/${options.datasourceId}/objects`,
       params: options.params,
+      modifier: options.modifier,
     });
   }
 
@@ -96,11 +105,14 @@ export class Objects {
    * @default
    * response: { id: 1 }
    */
-  public async create(options: { datasourceId: number; body: DatasourceObjectForm }): Promise<ID> {
+  public async create(
+    options: { datasourceId: number; body: DatasourceObjectForm } & RequestOptions
+  ): Promise<ID> {
     return this.api.fetch({
       method: 'POST',
       path: `datasources/${options.datasourceId}/objects`,
       body: options.body,
+      modifier: options.modifier,
     });
   }
 
@@ -110,15 +122,18 @@ export class Objects {
    * @default
    * response: null
    */
-  public async update(options: {
-    datasourceId: number;
-    objectId: number | string;
-    body: DatasourceObjectForm;
-  }): Promise<null> {
+  public async update(
+    options: {
+      datasourceId: number;
+      objectId: number | string;
+      body: DatasourceObjectForm;
+    } & RequestOptions
+  ): Promise<null> {
     return this.api.fetch({
       method: 'PUT',
       path: `datasources/${options.datasourceId}/objects/${options.objectId}`,
       body: options.body,
+      modifier: options.modifier,
     });
   }
 
@@ -128,15 +143,18 @@ export class Objects {
    * @default
    * response: null
    */
-  public async updateValue(options: {
-    datasourceId: number;
-    objectId: number | string;
-    body: Record<string, any>;
-  }): Promise<null> {
+  public async updateValue(
+    options: {
+      datasourceId: number;
+      objectId: number | string;
+      body: Record<string, any>;
+    } & RequestOptions
+  ): Promise<null> {
     return this.api.fetch({
       method: 'PUT',
       path: `datasources/${options.datasourceId}/objects/${options.objectId}/value`,
       body: options.body,
+      modifier: options.modifier,
     });
   }
 
@@ -146,10 +164,13 @@ export class Objects {
    * @default
    * response: null
    */
-  public async delete(options: { datasourceId: number; objectId: number | string }): Promise<null> {
+  public async delete(
+    options: { datasourceId: number; objectId: number | string } & RequestOptions
+  ): Promise<null> {
     return this.api.fetch({
       method: 'DELETE',
       path: `datasources/${options.datasourceId}/objects/${options.objectId}`,
+      modifier: options.modifier,
     });
   }
 }

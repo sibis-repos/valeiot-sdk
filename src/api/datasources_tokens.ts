@@ -1,3 +1,4 @@
+import { RequestOptions } from '../models/common';
 import { List } from '../models/list';
 import { Token, TokenForm, TokenID } from '../models/tokens';
 import { API } from './api';
@@ -24,10 +25,11 @@ export class DatasourcesTokens {
    *   }
    * ]
    */
-  public async getList(options: { datasourceId: number }): Promise<List<Token>> {
+  public async getList(options: { datasourceId: number } & RequestOptions): Promise<List<Token>> {
     return this.api.fetch({
       method: 'GET',
       path: `datasources/${options.datasourceId}/tokens`,
+      modifier: options.modifier,
     });
   }
 
@@ -44,10 +46,13 @@ export class DatasourcesTokens {
    *     expiresAt: Date | null
    *   }
    */
-  public async get(options: { datasourceId: number; tokenId: number }): Promise<Token> {
+  public async get(
+    options: { datasourceId: number; tokenId: number } & RequestOptions
+  ): Promise<Token> {
     return this.api.fetch({
       method: 'GET',
       path: `datasources/${options.datasourceId}/tokens/${options.tokenId}`,
+      modifier: options.modifier,
     });
   }
 
@@ -59,11 +64,14 @@ export class DatasourcesTokens {
    *   id: 1
    * }
    */
-  public async create(options: { datasourceId: number; body: TokenForm }): Promise<TokenID> {
+  public async create(
+    options: { datasourceId: number; body: TokenForm } & RequestOptions
+  ): Promise<TokenID> {
     return this.api.fetch({
       method: 'POST',
       path: `datasources/${options.datasourceId}/tokens`,
       body: options.body,
+      modifier: options.modifier,
     });
   }
 
@@ -73,10 +81,13 @@ export class DatasourcesTokens {
    * @default
    * response: null
    */
-  public async delete(options: { datasourceId: number; tokenId: number }): Promise<null> {
+  public async delete(
+    options: { datasourceId: number; tokenId: number } & RequestOptions
+  ): Promise<null> {
     return this.api.fetch({
       method: 'DELETE',
       path: `datasources/${options.datasourceId}/tokens/${options.tokenId}`,
+      modifier: options.modifier,
     });
   }
 }

@@ -7,7 +7,7 @@ import {
 } from '../models/datasources';
 import { List } from '../models/list';
 import { Network } from '../models/networks';
-import { ID } from '../models/common';
+import { ID, RequestOptions } from '../models/common';
 import { API } from './api';
 import { Datapoints } from './datapoints';
 import { DatasourceTags } from './datasources_tags';
@@ -47,10 +47,11 @@ export class Datasources {
    *  blocked: false
    * }
    */
-  public async get(options: { datasourceId: number }): Promise<Datasource> {
+  public async get(options: { datasourceId: number } & RequestOptions): Promise<Datasource> {
     return this.api.fetch({
       method: 'GET',
       path: `datasources/${options.datasourceId}`,
+      modifier: options.modifier,
     });
   }
 
@@ -76,10 +77,13 @@ export class Datasources {
    *  datapoints: []
    * }
    */
-  public async getDetails(options: { datasourceId: number }): Promise<DatasourceDetails> {
+  public async getDetails(
+    options: { datasourceId: number } & RequestOptions
+  ): Promise<DatasourceDetails> {
     return this.api.fetch({
       method: 'GET',
       path: `datasources/${options.datasourceId}/details`,
+      modifier: options.modifier,
     });
   }
 
@@ -96,10 +100,11 @@ export class Datasources {
    *  updatedAt: Date
    * }
    */
-  public async getNetwork(options: { datasourceId: number }): Promise<Network> {
+  public async getNetwork(options: { datasourceId: number } & RequestOptions): Promise<Network> {
     return this.api.fetch({
       method: 'GET',
       path: `datasources/${options.datasourceId}/network`,
+      modifier: options.modifier,
     });
   }
 
@@ -125,12 +130,13 @@ export class Datasources {
   public async getList(
     options: {
       params?: DatasourcesListFilters;
-    } = {}
+    } & RequestOptions = {}
   ): Promise<List<Datasource>> {
     return this.api.fetch({
       method: 'GET',
       path: 'datasources',
       params: options.params,
+      modifier: options.modifier,
     });
   }
 
@@ -161,12 +167,13 @@ export class Datasources {
   public async getDetailsList(
     options: {
       params?: DatasourcesDetailsListFilters;
-    } = {}
+    } & RequestOptions = {}
   ): Promise<List<DatasourceDetails>> {
     return this.api.fetch({
       method: 'GET',
       path: 'datasources/details',
       params: options.params,
+      modifier: options.modifier,
     });
   }
 
@@ -178,11 +185,12 @@ export class Datasources {
    *  id: 1
    * }
    */
-  public async create(options: { body: DatasourceForm }): Promise<ID> {
+  public async create(options: { body: DatasourceForm } & RequestOptions): Promise<ID> {
     return this.api.fetch({
       method: 'POST',
       path: 'datasources',
       body: options.body,
+      modifier: options.modifier,
     });
   }
 
@@ -192,11 +200,14 @@ export class Datasources {
    * @default
    * response: null
    */
-  public async update(options: { datasourceId: number; body: DatasourceForm }): Promise<null> {
+  public async update(
+    options: { datasourceId: number; body: DatasourceForm } & RequestOptions
+  ): Promise<null> {
     return this.api.fetch({
       method: 'PUT',
       path: `datasources/${options.datasourceId}`,
       body: options.body,
+      modifier: options.modifier,
     });
   }
 
@@ -206,10 +217,11 @@ export class Datasources {
    * @default
    * response: null
    */
-  public async delete(options: { datasourceId: number }): Promise<null> {
+  public async delete(options: { datasourceId: number } & RequestOptions): Promise<null> {
     return this.api.fetch({
       method: 'DELETE',
       path: `datasources/${options.datasourceId}`,
+      modifier: options.modifier,
     });
   }
 }

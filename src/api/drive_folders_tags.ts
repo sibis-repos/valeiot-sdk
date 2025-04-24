@@ -1,6 +1,6 @@
 import { List } from '../models/list';
 import { Tag } from '../models/tags';
-import { ID, RawTag, TagForm } from '../models/common';
+import { ID, RawTag, RequestOptions, TagForm } from '../models/common';
 import { API } from './api';
 
 export class DriveFoldersTags {
@@ -27,10 +27,11 @@ export class DriveFoldersTags {
    *   }
    * ]
    */
-  public async getList(options: { folderId: number }): Promise<List<Tag>> {
+  public async getList(options: { folderId: number } & RequestOptions): Promise<List<Tag>> {
     return this.api.fetch({
       method: 'GET',
       path: `drive/folders/${options.folderId}/tags`,
+      modifier: options.modifier,
     });
   }
 
@@ -44,10 +45,11 @@ export class DriveFoldersTags {
    *   value: "Production"
    * }
    */
-  public async get(options: { folderId: number; tagId: number }): Promise<Tag> {
+  public async get(options: { folderId: number; tagId: number } & RequestOptions): Promise<Tag> {
     return this.api.fetch({
       method: 'GET',
       path: `drive/folders/${options.folderId}/tags/${options.tagId}`,
+      modifier: options.modifier,
     });
   }
 
@@ -59,11 +61,12 @@ export class DriveFoldersTags {
    *   id: 3
    * }
    */
-  public async create(options: { folderId: number; body: RawTag }): Promise<ID> {
+  public async create(options: { folderId: number; body: RawTag } & RequestOptions): Promise<ID> {
     return this.api.fetch({
       method: 'POST',
       path: `drive/folders/${options.folderId}/tags`,
       body: options.body,
+      modifier: options.modifier,
     });
   }
 
@@ -73,15 +76,18 @@ export class DriveFoldersTags {
    * @default
    * response: null
    */
-  public async update(options: {
-    dashboardId: number;
-    tagId: number;
-    body: TagForm;
-  }): Promise<null> {
+  public async update(
+    options: {
+      dashboardId: number;
+      tagId: number;
+      body: TagForm;
+    } & RequestOptions
+  ): Promise<null> {
     return this.api.fetch({
       method: 'PUT',
       path: `drive/folders/${options.dashboardId}/tags/${options.tagId}`,
       body: options.body,
+      modifier: options.modifier,
     });
   }
 
@@ -91,10 +97,13 @@ export class DriveFoldersTags {
    * @default
    * response: null
    */
-  public async delete(options: { folderId: number; tagId: number }): Promise<null> {
+  public async delete(
+    options: { folderId: number; tagId: number } & RequestOptions
+  ): Promise<null> {
     return this.api.fetch({
       method: 'DELETE',
       path: `drive/folders/${options.folderId}/tags/${options.tagId}`,
+      modifier: options.modifier,
     });
   }
 
@@ -104,11 +113,14 @@ export class DriveFoldersTags {
    * @default
    * response: null
    */
-  public async set(options: { folderId: number; body: { tags: RawTag[] } }): Promise<null> {
+  public async set(
+    options: { folderId: number; body: { tags: RawTag[] } } & RequestOptions
+  ): Promise<null> {
     return this.api.fetch({
       method: 'PUT',
       path: `drive/folders/${options.folderId}/tags`,
       body: options.body,
+      modifier: options.modifier,
     });
   }
 
@@ -118,14 +130,17 @@ export class DriveFoldersTags {
    * @default
    * response: null
    */
-  public async createOrReplace(options: {
-    folderId: number;
-    body: { tags: RawTag[] };
-  }): Promise<null> {
+  public async createOrReplace(
+    options: {
+      folderId: number;
+      body: { tags: RawTag[] };
+    } & RequestOptions
+  ): Promise<null> {
     return this.api.fetch({
       method: 'PUT',
       path: `drive/folders/${options.folderId}/tags/replace`,
       body: options.body,
+      modifier: options.modifier,
     });
   }
 }

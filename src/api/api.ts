@@ -1,5 +1,5 @@
 import { kebabize } from '../tools/case-parser';
-import { APIResponse, FetchOptions } from '../models/common';
+import { APIResponse, FetchOptions, RequestModifier } from '../models/common';
 
 export type APIOptions = {
   /**
@@ -7,9 +7,9 @@ export type APIOptions = {
    */
   baseUrl: string;
   /**
-   * headers is the additional headers for requests.
+   * modifier is the request modifer function.
    */
-  headers: Record<string, string>;
+  modifiers: RequestModifier[];
 };
 
 /**
@@ -48,14 +48,19 @@ export class API {
       });
     }
 
-    const request: RequestInit = {
+    let request: RequestInit = {
       method: options.method,
       body: JSON.stringify(options.body),
       headers: {
         'Content-Type': 'application/json',
-        ...this.options.headers,
       },
     };
+
+    // apply api modifiers
+    this.options.modifiers.forEach((modifier) => (request = modifier(request)));
+
+    // apply request modifier
+    request = options.modifier ? options.modifier(request) : request;
 
     let res: APIResponse<T>;
     try {

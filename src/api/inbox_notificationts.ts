@@ -1,3 +1,4 @@
+import { RequestOptions } from '../models/common';
 import {
   InboxNotification,
   InboxNotificationDeleteFilters,
@@ -31,14 +32,17 @@ export class InboxNotifications {
    *  }
    * ]
    */
-  public async getList(options: {
-    userId: number;
-    params?: InboxNotificationsListFilters;
-  }): Promise<List<InboxNotification>> {
+  public async getList(
+    options: {
+      userId: number;
+      params?: InboxNotificationsListFilters;
+    } & RequestOptions
+  ): Promise<List<InboxNotification>> {
     return this.api.fetch({
       method: 'GET',
       path: `notifications/inbox/users/${options.userId}`,
       params: options.params,
+      modifier: options.modifier,
     });
   }
 
@@ -48,11 +52,14 @@ export class InboxNotifications {
    * @default
    * response: null
    */
-  public async create(options: { body: UsersInboxNotificationForm }): Promise<null> {
+  public async create(
+    options: { body: UsersInboxNotificationForm } & RequestOptions
+  ): Promise<null> {
     return this.api.fetch({
       method: 'POST',
       path: 'notifications/inbox',
       body: options.body,
+      modifier: options.modifier,
     });
   }
 
@@ -62,14 +69,17 @@ export class InboxNotifications {
    * @default
    * response: null
    */
-  public async delete(options: {
-    userId: number;
-    params: InboxNotificationDeleteFilters;
-  }): Promise<null> {
+  public async delete(
+    options: {
+      userId: number;
+      params: InboxNotificationDeleteFilters;
+    } & RequestOptions
+  ): Promise<null> {
     return this.api.fetch({
       method: 'DELETE',
       path: `notifications/inbox/users/${options.userId}`,
       params: options.params,
+      modifier: options.modifier,
     });
   }
 }

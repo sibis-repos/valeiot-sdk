@@ -1,6 +1,6 @@
 import { List } from '../models/list';
 import { Tag } from '../models/tags';
-import { ID, RawTag, TagForm } from '../models/common';
+import { ID, RawTag, RequestOptions, TagForm } from '../models/common';
 import { API } from './api';
 
 export class DatasourceTags {
@@ -27,10 +27,11 @@ export class DatasourceTags {
    *   }
    * ]
    */
-  public async getList(options: { datasourceId: number }): Promise<List<Tag>> {
+  public async getList(options: { datasourceId: number } & RequestOptions): Promise<List<Tag>> {
     return this.api.fetch({
       method: 'GET',
       path: `datasources/${options.datasourceId}/tags`,
+      modifier: options.modifier,
     });
   }
 
@@ -44,10 +45,13 @@ export class DatasourceTags {
    *   value: "Production"
    * }
    */
-  public async get(options: { datasourceId: number; tagId: number }): Promise<Tag> {
+  public async get(
+    options: { datasourceId: number; tagId: number } & RequestOptions
+  ): Promise<Tag> {
     return this.api.fetch({
       method: 'GET',
       path: `datasources/${options.datasourceId}/tags/${options.tagId}`,
+      modifier: options.modifier,
     });
   }
 
@@ -59,11 +63,14 @@ export class DatasourceTags {
    *   id: 3
    * }
    */
-  public async create(options: { datasourceId: number; body: RawTag }): Promise<ID> {
+  public async create(
+    options: { datasourceId: number; body: RawTag } & RequestOptions
+  ): Promise<ID> {
     return this.api.fetch({
       method: 'POST',
       path: `datasources/${options.datasourceId}/tags`,
       body: options.body,
+      modifier: options.modifier,
     });
   }
 
@@ -73,15 +80,18 @@ export class DatasourceTags {
    * @default
    * response: null
    */
-  public async update(options: {
-    datasourceId: number;
-    tagId: number;
-    body: TagForm;
-  }): Promise<null> {
+  public async update(
+    options: {
+      datasourceId: number;
+      tagId: number;
+      body: TagForm;
+    } & RequestOptions
+  ): Promise<null> {
     return this.api.fetch({
       method: 'PUT',
       path: `datasources/${options.datasourceId}/tags/${options.tagId}`,
       body: options.body,
+      modifier: options.modifier,
     });
   }
 
@@ -91,10 +101,13 @@ export class DatasourceTags {
    * @default
    * response: null
    */
-  public async delete(options: { datasourceId: number; tagId: number }): Promise<null> {
+  public async delete(
+    options: { datasourceId: number; tagId: number } & RequestOptions
+  ): Promise<null> {
     return this.api.fetch({
       method: 'DELETE',
       path: `datasources/${options.datasourceId}/tags/${options.tagId}`,
+      modifier: options.modifier,
     });
   }
 
@@ -104,11 +117,14 @@ export class DatasourceTags {
    * @default
    * response: null
    */
-  public async set(options: { datasourceId: number; body: { tags: RawTag[] } }): Promise<null> {
+  public async set(
+    options: { datasourceId: number; body: { tags: RawTag[] } } & RequestOptions
+  ): Promise<null> {
     return this.api.fetch({
       method: 'PUT',
       path: `datasources/${options.datasourceId}/tags`,
       body: options.body,
+      modifier: options.modifier,
     });
   }
 
@@ -118,14 +134,17 @@ export class DatasourceTags {
    * @default
    * response: null
    */
-  public async createOrReplace(options: {
-    datasourceId: number;
-    body: { tags: RawTag[] };
-  }): Promise<null> {
+  public async createOrReplace(
+    options: {
+      datasourceId: number;
+      body: { tags: RawTag[] };
+    } & RequestOptions
+  ): Promise<null> {
     return this.api.fetch({
       method: 'PUT',
       path: `datasources/${options.datasourceId}/tags/replace`,
       body: options.body,
+      modifier: options.modifier,
     });
   }
 }

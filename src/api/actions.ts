@@ -1,6 +1,6 @@
 import { Action, ActionForm, ActionsListFilters } from '../models/actions';
 import { List } from '../models/list';
-import { ID } from '../models/common';
+import { ID, RequestOptions } from '../models/common';
 import { API } from './api';
 
 export class Actions {
@@ -10,41 +10,50 @@ export class Actions {
     this.api = api;
   }
 
-  public async get(options: { actionId: number }): Promise<Action> {
+  public async get(options: { actionId: number } & RequestOptions): Promise<Action> {
     return this.api.fetch({
       method: 'GET',
       path: `actions/${options.actionId}`,
+      modifier: options.modifier,
     });
   }
 
-  public async getList(options: { params?: ActionsListFilters } = {}): Promise<List<Action>> {
+  public async getList(
+    options: { params?: ActionsListFilters } & RequestOptions = {}
+  ): Promise<List<Action>> {
     return this.api.fetch({
       method: 'GET',
       path: 'actions',
       params: options.params,
+      modifier: options.modifier,
     });
   }
 
-  public async create(options: { body: ActionForm }): Promise<ID> {
+  public async create(options: { body: ActionForm } & RequestOptions): Promise<ID> {
     return this.api.fetch({
       method: 'POST',
       path: 'actions',
       body: options.body,
+      modifier: options.modifier,
     });
   }
 
-  public async update(options: { actionId: number; body: ActionForm }): Promise<null> {
+  public async update(
+    options: { actionId: number; body: ActionForm } & RequestOptions
+  ): Promise<null> {
     return this.api.fetch({
       method: 'PUT',
       path: `actions/${options.actionId}`,
       body: options.body,
+      modifier: options.modifier,
     });
   }
 
-  public async delete(options: { actionId: number }): Promise<null> {
+  public async delete(options: { actionId: number } & RequestOptions): Promise<null> {
     return this.api.fetch({
       method: 'DELETE',
       path: `actions/${options.actionId}`,
+      modifier: options.modifier,
     });
   }
 }

@@ -1,3 +1,4 @@
+import { RequestOptions } from '../models/common';
 import { List } from '../models/list';
 import { PayloadParser, PayloadParsersListFilters } from '../models/payload_parsers';
 import { API } from './api';
@@ -22,10 +23,11 @@ export class PublicPayloadParsers {
    *  updatedAt: Date,
    * }
    */
-  public async get(options: { parserId: number }): Promise<PayloadParser> {
+  public async get(options: { parserId: number } & RequestOptions): Promise<PayloadParser> {
     return this.api.fetch({
       method: 'GET',
       path: `public-payload-parsers/${options.parserId}`,
+      modifier: options.modifier,
     });
   }
 
@@ -47,12 +49,13 @@ export class PublicPayloadParsers {
   public async getList(
     options: {
       params?: PayloadParsersListFilters;
-    } = {}
+    } & RequestOptions = {}
   ): Promise<List<PayloadParser>> {
     return this.api.fetch({
       method: 'GET',
       path: 'public-payload-parsers',
       params: options.params,
+      modifier: options.modifier,
     });
   }
 }

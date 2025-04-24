@@ -1,6 +1,6 @@
 import { List } from '../models/list';
 import { Portal, PortalForm, PortalsListFilters } from '../models/portals';
-import { ID } from '../models/common';
+import { ID, RequestOptions } from '../models/common';
 import { API } from './api';
 
 export class Portals {
@@ -25,10 +25,11 @@ export class Portals {
    *  updatedAt: Date,
    * }
    */
-  public async get(options: { portalId: number }): Promise<Portal> {
+  public async get(options: { portalId: number } & RequestOptions): Promise<Portal> {
     return this.api.fetch({
       method: 'GET',
       path: `portals/${options.portalId}`,
+      modifier: options.modifier,
     });
   }
 
@@ -52,12 +53,13 @@ export class Portals {
   public async getList(
     options: {
       params?: PortalsListFilters;
-    } = {}
+    } & RequestOptions = {}
   ): Promise<List<Portal>> {
     return this.api.fetch({
       method: 'GET',
       path: 'portals',
       params: options.params,
+      modifier: options.modifier,
     });
   }
 
@@ -69,11 +71,12 @@ export class Portals {
    *  id: 1
    * }
    */
-  public async create(options: { body: PortalForm }): Promise<ID> {
+  public async create(options: { body: PortalForm } & RequestOptions): Promise<ID> {
     return this.api.fetch({
       method: 'POST',
       path: 'portals',
       body: options.body,
+      modifier: options.modifier,
     });
   }
 
@@ -83,11 +86,14 @@ export class Portals {
    * @default
    * response: null
    */
-  public async update(options: { parserId: number; body: PortalForm }): Promise<null> {
+  public async update(
+    options: { parserId: number; body: PortalForm } & RequestOptions
+  ): Promise<null> {
     return this.api.fetch({
       method: 'PUT',
       path: `portals/${options.parserId}`,
       body: options.body,
+      modifier: options.modifier,
     });
   }
 
@@ -97,10 +103,11 @@ export class Portals {
    * @default
    * response: null
    */
-  public async delete(options: { parserId: number }): Promise<null> {
+  public async delete(options: { parserId: number } & RequestOptions): Promise<null> {
     return this.api.fetch({
       method: 'DELETE',
       path: `portals/${options.parserId}`,
+      modifier: options.modifier,
     });
   }
 }

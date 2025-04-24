@@ -4,7 +4,7 @@ import {
   PayloadParserForm,
   PayloadParsersListFilters,
 } from '../models/payload_parsers';
-import { ID } from '../models/common';
+import { ID, RequestOptions } from '../models/common';
 import { API } from './api';
 
 export class PayloadParsers {
@@ -27,10 +27,11 @@ export class PayloadParsers {
    *  updatedAt: Date,
    * }
    */
-  public async get(options: { parserId: number }): Promise<PayloadParser> {
+  public async get(options: { parserId: number } & RequestOptions): Promise<PayloadParser> {
     return this.api.fetch({
       method: 'GET',
       path: `payload-parsers/${options.parserId}`,
+      modifier: options.modifier,
     });
   }
 
@@ -52,12 +53,13 @@ export class PayloadParsers {
   public async getList(
     options: {
       params?: PayloadParsersListFilters;
-    } = {}
+    } & RequestOptions = {}
   ): Promise<List<PayloadParser>> {
     return this.api.fetch({
       method: 'GET',
       path: 'payload-parsers',
       params: options.params,
+      modifier: options.modifier,
     });
   }
 
@@ -69,11 +71,12 @@ export class PayloadParsers {
    *  id: 1
    * }
    */
-  public async create(options: { body: PayloadParserForm }): Promise<ID> {
+  public async create(options: { body: PayloadParserForm } & RequestOptions): Promise<ID> {
     return this.api.fetch({
       method: 'POST',
       path: 'payload-parsers',
       body: options.body,
+      modifier: options.modifier,
     });
   }
 
@@ -83,11 +86,14 @@ export class PayloadParsers {
    * @default
    * response: null
    */
-  public async update(options: { parserId: number; body: PayloadParserForm }): Promise<null> {
+  public async update(
+    options: { parserId: number; body: PayloadParserForm } & RequestOptions
+  ): Promise<null> {
     return this.api.fetch({
       method: 'PUT',
       path: `payload-parsers/${options.parserId}`,
       body: options.body,
+      modifier: options.modifier,
     });
   }
 
@@ -97,10 +103,11 @@ export class PayloadParsers {
    * @default
    * response: null
    */
-  public async delete(options: { parserId: number }): Promise<null> {
+  public async delete(options: { parserId: number } & RequestOptions): Promise<null> {
     return this.api.fetch({
       method: 'DELETE',
       path: `payload-parsers/${options.parserId}`,
+      modifier: options.modifier,
     });
   }
 }

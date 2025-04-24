@@ -1,3 +1,4 @@
+import { RequestOptions } from '../models/common';
 import { List } from '../models/list';
 import { Token, TokenForm, TokenID } from '../models/tokens';
 import { API } from './api';
@@ -24,10 +25,11 @@ export class NetworksTokens {
    *   }
    * ]
    */
-  public async getList(options: { networkId: number }): Promise<List<Token>> {
+  public async getList(options: { networkId: number } & RequestOptions): Promise<List<Token>> {
     return this.api.fetch({
       method: 'GET',
       path: `networks/${options.networkId}/tokens`,
+      modifier: options.modifier,
     });
   }
 
@@ -44,10 +46,13 @@ export class NetworksTokens {
    *     expiresAt: Date | null
    *   }
    */
-  public async get(options: { networkId: number; tokenId: number }): Promise<Token> {
+  public async get(
+    options: { networkId: number; tokenId: number } & RequestOptions
+  ): Promise<Token> {
     return this.api.fetch({
       method: 'GET',
       path: `networks/${options.networkId}/tokens/${options.tokenId}`,
+      modifier: options.modifier,
     });
   }
 
@@ -59,11 +64,14 @@ export class NetworksTokens {
    *   id: 1
    * }
    */
-  public async create(options: { networkId: number; body: TokenForm }): Promise<TokenID> {
+  public async create(
+    options: { networkId: number; body: TokenForm } & RequestOptions
+  ): Promise<TokenID> {
     return this.api.fetch({
       method: 'POST',
       path: `networks/${options.networkId}/tokens`,
       body: options.body,
+      modifier: options.modifier,
     });
   }
 
@@ -73,10 +81,13 @@ export class NetworksTokens {
    * @default
    * response: null
    */
-  public async delete(options: { networkId: number; tokenId: number }): Promise<null> {
+  public async delete(
+    options: { networkId: number; tokenId: number } & RequestOptions
+  ): Promise<null> {
     return this.api.fetch({
       method: 'DELETE',
       path: `networks/${options.networkId}/tokens/${options.tokenId}`,
+      modifier: options.modifier,
     });
   }
 }

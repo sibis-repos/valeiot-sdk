@@ -1,6 +1,6 @@
 import { DriveFolder, DriveFolderForm, DriveFoldersListFilters } from '../models/drive_folder';
 import { List } from '../models/list';
-import { ID } from '../models/common';
+import { ID, RequestOptions } from '../models/common';
 import { API } from './api';
 import { DriveFoldersTags } from './drive_folders_tags';
 
@@ -27,10 +27,11 @@ export class DriveFolders {
    *  updatedAt: Date,
    * }
    */
-  public async get(options: { folderId: number }): Promise<DriveFolder> {
+  public async get(options: { folderId: number } & RequestOptions): Promise<DriveFolder> {
     return this.api.fetch({
       method: 'GET',
       path: `drive/folders/${options.folderId}`,
+      modifier: options.modifier,
     });
   }
 
@@ -52,12 +53,13 @@ export class DriveFolders {
   public async getList(
     options: {
       params?: DriveFoldersListFilters;
-    } = {}
+    } & RequestOptions = {}
   ): Promise<List<DriveFolder>> {
     return this.api.fetch({
       method: 'GET',
       path: 'drive/folders',
       params: options.params,
+      modifier: options.modifier,
     });
   }
 
@@ -69,11 +71,12 @@ export class DriveFolders {
    *  id: 1
    * }
    */
-  public async create(options: { body: DriveFolderForm }): Promise<ID> {
+  public async create(options: { body: DriveFolderForm } & RequestOptions): Promise<ID> {
     return this.api.fetch({
       method: 'POST',
       path: 'drive/folders',
       body: options.body,
+      modifier: options.modifier,
     });
   }
 
@@ -83,11 +86,14 @@ export class DriveFolders {
    * @default
    * response: null
    */
-  public async update(options: { parserId: number; body: DriveFolderForm }): Promise<null> {
+  public async update(
+    options: { parserId: number; body: DriveFolderForm } & RequestOptions
+  ): Promise<null> {
     return this.api.fetch({
       method: 'PUT',
       path: `drive/folders/${options.parserId}`,
       body: options.body,
+      modifier: options.modifier,
     });
   }
 
@@ -97,10 +103,11 @@ export class DriveFolders {
    * @default
    * response: null
    */
-  public async delete(options: { parserId: number }): Promise<null> {
+  public async delete(options: { parserId: number } & RequestOptions): Promise<null> {
     return this.api.fetch({
       method: 'DELETE',
       path: `drive/folders/${options.parserId}`,
+      modifier: options.modifier,
     });
   }
 }

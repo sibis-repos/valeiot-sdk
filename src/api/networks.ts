@@ -1,6 +1,6 @@
 import { List } from '../models/list';
 import { Network, NetworkForm, NetworkListFilters } from '../models/networks';
-import { ID } from '../models/common';
+import { ID, RequestOptions } from '../models/common';
 import { API } from './api';
 import { NetworksTokens } from './networks_tokens';
 
@@ -27,10 +27,11 @@ export class Networks {
    *  description: ""
    * }
    */
-  public async get(options: { networkId: number }): Promise<Network> {
+  public async get(options: { networkId: number } & RequestOptions): Promise<Network> {
     return this.api.fetch({
       method: 'GET',
       path: `networks/${options.networkId}`,
+      modifier: options.modifier,
     });
   }
 
@@ -52,12 +53,13 @@ export class Networks {
   public async getList(
     options: {
       params?: NetworkListFilters;
-    } = {}
+    } & RequestOptions = {}
   ): Promise<List<Network>> {
     return this.api.fetch({
       method: 'GET',
       path: 'networks',
       params: options.params,
+      modifier: options.modifier,
     });
   }
 
@@ -69,11 +71,12 @@ export class Networks {
    *  id: 1
    * }
    */
-  public async create(options: { body: NetworkForm }): Promise<ID> {
+  public async create(options: { body: NetworkForm } & RequestOptions): Promise<ID> {
     return this.api.fetch({
       method: 'POST',
       path: 'networks',
       body: options.body,
+      modifier: options.modifier,
     });
   }
 
@@ -83,11 +86,14 @@ export class Networks {
    * @default
    * response: null
    */
-  public async update(options: { networkId: number; body: NetworkForm }): Promise<null> {
+  public async update(
+    options: { networkId: number; body: NetworkForm } & RequestOptions
+  ): Promise<null> {
     return this.api.fetch({
       method: 'PUT',
       path: `networks/${options.networkId}`,
       body: options.body,
+      modifier: options.modifier,
     });
   }
 
@@ -97,10 +103,11 @@ export class Networks {
    * @default
    * response: null
    */
-  public async delete(options: { networkId: number }): Promise<null> {
+  public async delete(options: { networkId: number } & RequestOptions): Promise<null> {
     return this.api.fetch({
       method: 'DELETE',
       path: `networks/${options.networkId}`,
+      modifier: options.modifier,
     });
   }
 }

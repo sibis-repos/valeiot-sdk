@@ -1,6 +1,6 @@
 import { Dashboard, DashboardForm, DashboardsListFilters } from '../models/dashboards';
 import { List } from '../models/list';
-import { ID } from '../models/common';
+import { ID, RequestOptions } from '../models/common';
 import { API } from './api';
 import { DashboardTags } from './dashboards_tags';
 
@@ -28,10 +28,11 @@ export class Dashboards {
    *  updatedAt: Date,
    * }
    */
-  public async get(options: { dashboarId: number }): Promise<Dashboard> {
+  public async get(options: { dashboarId: number } & RequestOptions): Promise<Dashboard> {
     return this.api.fetch({
       method: 'GET',
       path: `dashboards/${options.dashboarId}`,
+      modifier: options.modifier,
     });
   }
 
@@ -54,12 +55,13 @@ export class Dashboards {
   public async getList(
     options: {
       params?: DashboardsListFilters;
-    } = {}
+    } & RequestOptions = {}
   ): Promise<List<Dashboard>> {
     return this.api.fetch({
       method: 'GET',
       path: 'dashboards',
       params: options.params,
+      modifier: options.modifier,
     });
   }
 
@@ -71,11 +73,12 @@ export class Dashboards {
    *  id: 1
    * }
    */
-  public async create(options: { body: DashboardForm }): Promise<ID> {
+  public async create(options: { body: DashboardForm } & RequestOptions): Promise<ID> {
     return this.api.fetch({
       method: 'POST',
       path: 'dashboards',
       body: options.body,
+      modifier: options.modifier,
     });
   }
 
@@ -85,11 +88,14 @@ export class Dashboards {
    * @default
    * response: null
    */
-  public async update(options: { parserId: number; body: DashboardForm }): Promise<null> {
+  public async update(
+    options: { parserId: number; body: DashboardForm } & RequestOptions
+  ): Promise<null> {
     return this.api.fetch({
       method: 'PUT',
       path: `dashboards/${options.parserId}`,
       body: options.body,
+      modifier: options.modifier,
     });
   }
 
@@ -99,10 +105,11 @@ export class Dashboards {
    * @default
    * response: null
    */
-  public async delete(options: { parserId: number }): Promise<null> {
+  public async delete(options: { parserId: number } & RequestOptions): Promise<null> {
     return this.api.fetch({
       method: 'DELETE',
       path: `dashboards/${options.parserId}`,
+      modifier: options.modifier,
     });
   }
 }

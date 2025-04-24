@@ -1,3 +1,4 @@
+import { RequestModifier } from '../models/common';
 import { Actions } from './actions';
 import { API, APIOptions } from './api';
 import { Buckets } from './buckets';
@@ -17,10 +18,12 @@ export type WorkspaceConnOptions = {
   session?: string;
   token?: string;
   baseUrl?: string;
+  modifiers?: RequestModifier[];
 };
 
 export class WorkspaceConn {
   private api: API;
+  private options: WorkspaceConnOptions;
 
   public buckets: Buckets;
   public datasources: Datasources;
@@ -37,6 +40,8 @@ export class WorkspaceConn {
   public drive: Drive;
 
   constructor(options: WorkspaceConnOptions = {}) {
+    this.options = options;
+
     if (!options.baseUrl) {
       options.baseUrl = process.env.API_BASE_URL;
       if (!options.baseUrl) {
@@ -51,16 +56,27 @@ export class WorkspaceConn {
       }
     }
 
+    const modifiers = options.modifiers ?? [];
     const apiOptions: APIOptions = {
       baseUrl: options.baseUrl + '/api/v1/workspace',
-      headers: {},
-    };
+      modifiers: [
+        (request) => {
+          const authHeaders: HeadersInit = {};
+          if (this.options.session) {
+            authHeaders['session-id'] = this.options.session;
+          } else {
+            authHeaders['Authorization'] = `Bearer ${this.options.token}`;
+          }
 
-    if (options.session) {
-      apiOptions.headers['session-id'] = options.session;
-    } else {
-      apiOptions.headers['Authorization'] = `Bearer ${options.token}`;
-    }
+          request.headers = {
+            ...request.headers,
+            ...authHeaders,
+          };
+          return request;
+        },
+        ...modifiers,
+      ],
+    };
 
     this.api = new API(apiOptions);
     this.buckets = new Buckets(this.api);
@@ -76,5 +92,13 @@ export class WorkspaceConn {
     this.dashboards = new Dashboards(this.api);
     this.notifications = new Notifications(this.api);
     this.drive = new Drive(this.api);
+  }
+
+  public setSession(session: string) {
+    this.options.session = session;
+  }
+
+  public setToken(token: string) {
+    this.options.token = token;
   }
 }

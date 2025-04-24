@@ -9,7 +9,7 @@
     "build": "tsc"
   },
   "exports": {
-    "./*": "./dist/*.js"
+    "./*": "./dist/index.js"
   },
   "keywords": [
     "valeiot",
