@@ -1,7 +1,7 @@
 export type ScriptHandler<T> = (event: ScriptEvent<T>) => Promise<any>;
 export type OrderByFn = 'asc' | 'desc';
 export type RequestModifier = (r: RequestInit) => RequestInit;
-export type RequestPosProcessor = (r: APIResponse<any>) => PosProcessorResponse;
+export type RequestPosProcessor = (r: APIResponse<any>) => Promise<PosProcessorResponse>;
 
 export type PosProcessorResponse = {
   response: APIResponse;

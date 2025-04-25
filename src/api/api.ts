@@ -102,7 +102,7 @@ export class API {
       res = await makeRequest();
 
       if (this.options.posProcessor) {
-        const pr = this.options.posProcessor(res);
+        const pr = await this.options.posProcessor(res);
         res = pr.response as APIResponse<T>;
 
         if (pr.remakeRequest) {
