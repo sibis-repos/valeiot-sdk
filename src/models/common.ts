@@ -19,16 +19,15 @@ export type ScriptEvent<T = any> = {
   content: T;
 };
 
-export type FetchOptions = {
+export type RequestOptions = {
+  modifier?: RequestModifier;
+};
+
+export type FetchOptions = RequestOptions & {
   path: string;
   method: string;
   body?: any;
   params?: any;
-  modifier?: RequestModifier;
-};
-
-export type RequestOptions = {
-  modifier?: RequestModifier;
 };
 
 export type APIRawResponse<T> = {
