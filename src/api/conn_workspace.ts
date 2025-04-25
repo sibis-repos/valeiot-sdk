@@ -59,7 +59,7 @@ export class WorkspaceConn {
 
     const modifiers = options.modifiers ?? [];
     const apiOptions: APIOptions = {
-      baseUrl: options.baseUrl + '/api/v1/workspace',
+      baseUrl: options.baseUrl + '/workspace',
       posProcessor: options.postProcessor,
       modifiers: [
         (request) => {

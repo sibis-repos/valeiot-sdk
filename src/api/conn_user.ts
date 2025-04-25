@@ -24,7 +24,7 @@ export class UserConn {
 
     const modifiers = options.modifiers ?? [];
     const apiOptions: APIOptions = {
-      baseUrl: options.baseUrl + '/api/v1/user',
+      baseUrl: options.baseUrl + '/user',
       posProcessor: options.postProcessor,
       modifiers: [
         (request) => {

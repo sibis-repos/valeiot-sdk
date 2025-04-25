@@ -75,8 +75,13 @@ export class API {
       let res: APIResponse<T>;
       try {
         res = await fetch(url, request).then(async (response) => {
+          let json = {};
+          try {
+            json = await response.json();
+          } catch (e) {}
+
           return {
-            ...(response.ok ? await response.json() : null),
+            ...json,
             ok: response.ok,
             httpStatusCode: response.status,
           } as APIResponse<T>;
