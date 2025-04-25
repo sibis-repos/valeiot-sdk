@@ -1,15 +1,19 @@
 {
   "name": "@sibis/valeiot-sdk",
-  "version": "0.2.1",
+  "version": "0.2.0",
   "description": "Valeiot software development kit.",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "scripts": {
-    "build": "tsc"
-  },
   "exports": {
-    ".": "./dist/index.js"
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit"
   },
   "keywords": [
     "valeiot",

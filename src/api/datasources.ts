@@ -4,15 +4,15 @@ import {
   DatasourceForm,
   DatasourcesDetailsListFilters,
   DatasourcesListFilters,
-} from '../models/datasources';
-import { List } from '../models/list';
-import { Network } from '../models/networks';
-import { ID, RequestOptions } from '../models/common';
-import { API } from './api';
-import { Datapoints } from './datapoints';
-import { DatasourceTags } from './datasources_tags';
-import { DatasourcesTokens } from './datasources_tokens';
-import { Objects } from './objects';
+} from '../models/datasources.js';
+import { List } from '../models/list.js';
+import { Network } from '../models/networks.js';
+import { ID, RequestOptions } from '../models/common.js';
+import { API } from './api.js';
+import { Datapoints } from './datapoints.js';
+import { DatasourceTags } from './datasources_tags.js';
+import { DatasourcesTokens } from './datasources_tokens.js';
+import { Objects } from './objects.js';
 
 export class Datasources {
   private api: API;

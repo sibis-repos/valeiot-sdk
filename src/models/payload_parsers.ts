@@ -1,4 +1,4 @@
-import { OrderByFn } from './common';
+import { OrderByFn } from './common.js';
 
 export type PayloadParserReduced = {
   id: number;

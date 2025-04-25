@@ -1,12 +1,12 @@
-import { RequestOptions } from '../models/common';
+import { RequestOptions } from '../models/common.js';
 import {
   Datapoint,
   DatapointForm,
   DatapointsDeleteFilters,
   DatapointsListFilters,
-} from '../models/datapoints';
-import { List } from '../models/list';
-import { API } from './api';
+} from '../models/datapoints.js';
+import { List } from '../models/list.js';
+import { API } from './api.js';
 
 export class Datapoints {
   private api: API;

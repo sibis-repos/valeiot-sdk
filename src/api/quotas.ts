@@ -1,6 +1,6 @@
-import { RequestOptions } from '../models/common';
-import { WorkspaceQuotas, WorkspaceQuotasConsumption } from '../models/quotas';
-import { API } from './api';
+import { RequestOptions } from '../models/common.js';
+import { WorkspaceQuotas, WorkspaceQuotasConsumption } from '../models/quotas.js';
+import { API } from './api.js';
 
 export class Quotas {
   private api: API;

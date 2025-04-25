@@ -1,7 +1,7 @@
-import { Action, ActionForm, ActionsListFilters } from '../models/actions';
-import { List } from '../models/list';
-import { ID, RequestOptions } from '../models/common';
-import { API } from './api';
+import { Action, ActionForm, ActionsListFilters } from '../models/actions.js';
+import { List } from '../models/list.js';
+import { ID, RequestOptions } from '../models/common.js';
+import { API } from './api.js';
 
 export class Actions {
   private api: API;

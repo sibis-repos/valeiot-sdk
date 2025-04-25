@@ -1,5 +1,5 @@
-import { OrderByFn } from './common';
-import { TagsFilter } from './tags';
+import { OrderByFn } from './common.js';
+import { TagsFilter } from './tags.js';
 
 export type Dashboard = {
   id: number;

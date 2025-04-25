@@ -1,8 +1,8 @@
-import { RequestModifier } from '../models/common';
-import { API, APIOptions } from './api';
-import { Datasources } from './datasources';
-import { Scripts } from './scripts';
-import { Users } from './users';
+import { RequestModifier } from '../models/common.js';
+import { API, APIOptions } from './api.js';
+import { Datasources } from './datasources.js';
+import { Scripts } from './scripts.js';
+import { Users } from './users.js';
 
 export type UserConnOptions = {
   session: string;

@@ -1,5 +1,5 @@
-import { OrderByFn } from './common';
-import { TokenPermission } from './tokens';
+import { OrderByFn } from './common.js';
+import { TokenPermission } from './tokens.js';
 
 export type Network = {
   id: number;

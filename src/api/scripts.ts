@@ -1,13 +1,13 @@
-import { RequestOptions } from '../models/common';
-import { List } from '../models/list';
+import { RequestOptions } from '../models/common.js';
+import { List } from '../models/list.js';
 import {
   Script,
   ScriptInvokeForm,
   ScriptInvokeResponse,
   ScriptLayer,
   ScriptsListFilters,
-} from '../models/scripts';
-import { API } from './api';
+} from '../models/scripts.js';
+import { API } from './api.js';
 
 export class Scripts {
   private api: API;

@@ -1,7 +1,7 @@
-import { List } from '../models/list';
-import { Portal, PortalForm, PortalsListFilters } from '../models/portals';
-import { ID, RequestOptions } from '../models/common';
-import { API } from './api';
+import { List } from '../models/list.js';
+import { Portal, PortalForm, PortalsListFilters } from '../models/portals.js';
+import { ID, RequestOptions } from '../models/common.js';
+import { API } from './api.js';
 
 export class Portals {
   private api: API;

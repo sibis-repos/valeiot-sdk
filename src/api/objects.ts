@@ -1,12 +1,12 @@
-import { List } from '../models/list';
+import { List } from '../models/list.js';
 import {
   DatasourceObject,
   DatasourceObjectForm,
   DatasourceObjectsListFilters,
-} from '../models/objects';
-import { ID, RequestOptions } from '../models/common';
-import { API } from './api';
-import { DatasourceObjectTags } from './objects_tags';
+} from '../models/objects.js';
+import { ID, RequestOptions } from '../models/common.js';
+import { API } from './api.js';
+import { DatasourceObjectTags } from './objects_tags.js';
 
 export class Objects {
   private api: API;

@@ -1,5 +1,5 @@
-import { kebabize } from '../tools/case-parser';
-import { APIResponse, FetchOptions, RequestModifier } from '../models/common';
+import { kebabize } from '../tools/case-parser.js';
+import { APIResponse, FetchOptions, RequestModifier } from '../models/common.js';
 
 export type APIOptions = {
   /**

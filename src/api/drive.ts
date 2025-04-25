@@ -1,5 +1,5 @@
-import { API } from './api';
-import { DriveFolders } from './drive_folders';
+import { API } from './api.js';
+import { DriveFolders } from './drive_folders.js';
 
 export class Drive {
   private api: API;

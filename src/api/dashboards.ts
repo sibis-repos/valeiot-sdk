@@ -1,8 +1,8 @@
-import { Dashboard, DashboardForm, DashboardsListFilters } from '../models/dashboards';
-import { List } from '../models/list';
-import { ID, RequestOptions } from '../models/common';
-import { API } from './api';
-import { DashboardTags } from './dashboards_tags';
+import { Dashboard, DashboardForm, DashboardsListFilters } from '../models/dashboards.js';
+import { List } from '../models/list.js';
+import { ID, RequestOptions } from '../models/common.js';
+import { API } from './api.js';
+import { DashboardTags } from './dashboards_tags.js';
 
 export class Dashboards {
   private api: API;

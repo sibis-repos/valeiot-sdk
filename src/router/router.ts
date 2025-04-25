@@ -1,4 +1,4 @@
-import { ScriptEvent } from '../models/common';
+import { ScriptEvent } from '../models/common.js';
 
 type EventHandler<T> = (ctx: EventContext<T>, event: ScriptEvent<T>) => Promise<any>;
 
@@ -29,7 +29,9 @@ export class EventContext<T = any> {
     const handler = this.handlers[this.nextHandler];
     this.nextHandler++;
 
-    handler(this, this.event).then(() => this.next());
+    if (handler) {
+      handler(this, this.event).then(() => this.next());
+    }
   }
 
   /**
@@ -125,8 +127,9 @@ export class Router {
   public group(path: string, ...middlewares: EventHandler<any>[]): Router {
     path = this.getFullPath(path);
 
-    if (this.groups[path]) {
-      return this.groups[path];
+    const group = this.groups[path];
+    if (group) {
+      return group;
     }
 
     const router = new Router(this, path);

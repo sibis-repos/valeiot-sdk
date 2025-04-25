@@ -1,8 +1,8 @@
-import { DriveFolder, DriveFolderForm, DriveFoldersListFilters } from '../models/drive_folder';
-import { List } from '../models/list';
-import { ID, RequestOptions } from '../models/common';
-import { API } from './api';
-import { DriveFoldersTags } from './drive_folders_tags';
+import { DriveFolder, DriveFolderForm, DriveFoldersListFilters } from '../models/drive_folder.js';
+import { List } from '../models/list.js';
+import { ID, RequestOptions } from '../models/common.js';
+import { API } from './api.js';
+import { DriveFoldersTags } from './drive_folders_tags.js';
 
 export class DriveFolders {
   private api: API;

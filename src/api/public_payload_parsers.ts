@@ -1,7 +1,7 @@
-import { RequestOptions } from '../models/common';
-import { List } from '../models/list';
-import { PayloadParser, PayloadParsersListFilters } from '../models/payload_parsers';
-import { API } from './api';
+import { RequestOptions } from '../models/common.js';
+import { List } from '../models/list.js';
+import { PayloadParser, PayloadParsersListFilters } from '../models/payload_parsers.js';
+import { API } from './api.js';
 
 export class PublicPayloadParsers {
   private api: API;

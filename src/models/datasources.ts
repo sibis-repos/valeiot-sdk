@@ -1,10 +1,10 @@
-import { OrderByFn } from './common';
-import { BucketReduced } from './buckets';
-import { Datapoint } from './datapoints';
-import { NetworkReduced } from './networks';
-import { DatasourceObject } from './objects';
-import { PayloadParserReduced } from './payload_parsers';
-import { Tag, TagsFilter } from './tags';
+import { OrderByFn } from './common.js';
+import { BucketReduced } from './buckets.js';
+import { Datapoint } from './datapoints.js';
+import { NetworkReduced } from './networks.js';
+import { DatasourceObject } from './objects.js';
+import { PayloadParserReduced } from './payload_parsers.js';
+import { Tag, TagsFilter } from './tags.js';
 
 export type DatasourceType = 'entity' | 'device';
 

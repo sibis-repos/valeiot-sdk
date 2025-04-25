@@ -1,18 +1,18 @@
-import { RequestModifier } from '../models/common';
-import { Actions } from './actions';
-import { API, APIOptions } from './api';
-import { Buckets } from './buckets';
-import { Dashboards } from './dashboards';
-import { Datasources } from './datasources';
-import { Drive } from './drive';
-import { Networks } from './networks';
-import { Notifications } from './notifications';
-import { PayloadParsers } from './payload_parsers';
-import { Portals } from './portals';
-import { PublicPayloadParsers } from './public_payload_parsers';
-import { Quotas } from './quotas';
-import { Scripts } from './scripts';
-import { Users } from './users';
+import { RequestModifier } from '../models/common.js';
+import { Actions } from './actions.js';
+import { API, APIOptions } from './api.js';
+import { Buckets } from './buckets.js';
+import { Dashboards } from './dashboards.js';
+import { Datasources } from './datasources.js';
+import { Drive } from './drive.js';
+import { Networks } from './networks.js';
+import { Notifications } from './notifications.js';
+import { PayloadParsers } from './payload_parsers.js';
+import { Portals } from './portals.js';
+import { PublicPayloadParsers } from './public_payload_parsers.js';
+import { Quotas } from './quotas.js';
+import { Scripts } from './scripts.js';
+import { Users } from './users.js';
 
 export type WorkspaceConnOptions = {
   session?: string;

@@ -1,7 +1,7 @@
-import { OrderByFn, RawTag } from './common';
-import { RoleReduced } from './roles';
-import { Tag, TagsFilter } from './tags';
-import { Permissions } from './tokens';
+import { OrderByFn, RawTag } from './common.js';
+import { RoleReduced } from './roles.js';
+import { Tag, TagsFilter } from './tags.js';
+import { Permissions } from './tokens.js';
 
 export type UserForm = {
   roleId: number;

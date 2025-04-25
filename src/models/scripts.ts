@@ -1,5 +1,5 @@
-import { OrderByFn } from './common';
-import { UserContext } from './users';
+import { OrderByFn } from './common.js';
+import { UserContext } from './users.js';
 
 export type Script = {
   id: number;

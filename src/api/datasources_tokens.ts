@@ -1,7 +1,7 @@
-import { RequestOptions } from '../models/common';
-import { List } from '../models/list';
-import { Token, TokenForm, TokenID } from '../models/tokens';
-import { API } from './api';
+import { RequestOptions } from '../models/common.js';
+import { List } from '../models/list.js';
+import { Token, TokenForm, TokenID } from '../models/tokens.js';
+import { API } from './api.js';
 
 export class DatasourcesTokens {
   private api: API;

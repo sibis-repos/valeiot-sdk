@@ -1,4 +1,4 @@
-import { RawTag } from './common';
+import { RawTag } from './common.js';
 
 export type Tag = {
   id: number;

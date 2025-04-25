@@ -1,5 +1,5 @@
-import { OrderByFn } from './common';
-import { Tag } from './tags';
+import { OrderByFn } from './common.js';
+import { Tag } from './tags.js';
 
 export type ActionType = 'script' | 'mqtt-publish';
 export type ActionTrigger = 'scheduler' | 'variable';

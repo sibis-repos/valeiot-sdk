@@ -1,12 +1,12 @@
-import { RequestOptions } from '../models/common';
+import { RequestOptions } from '../models/common.js';
 import {
   InboxNotification,
   InboxNotificationDeleteFilters,
   InboxNotificationsListFilters,
   UsersInboxNotificationForm,
-} from '../models/inbox_notifications';
-import { List } from '../models/list';
-import { API } from './api';
+} from '../models/inbox_notifications.js';
+import { List } from '../models/list.js';
+import { API } from './api.js';
 
 export class InboxNotifications {
   private api: API;

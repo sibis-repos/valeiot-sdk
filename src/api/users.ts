@@ -1,9 +1,9 @@
-import { List } from '../models/list';
-import { TokenID } from '../models/tokens';
-import { User, UserDetails, UserForm, UsersListFilters } from '../models/users';
-import { ID, RequestOptions } from '../models/common';
-import { API } from './api';
-import { UserTags } from './users_tags';
+import { List } from '../models/list.js';
+import { TokenID } from '../models/tokens.js';
+import { User, UserDetails, UserForm, UsersListFilters } from '../models/users.js';
+import { ID, RequestOptions } from '../models/common.js';
+import { API } from './api.js';
+import { UserTags } from './users_tags.js';
 
 export class Users {
   private api: API;

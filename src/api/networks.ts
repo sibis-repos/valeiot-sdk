@@ -1,8 +1,8 @@
-import { List } from '../models/list';
-import { Network, NetworkForm, NetworkListFilters } from '../models/networks';
-import { ID, RequestOptions } from '../models/common';
-import { API } from './api';
-import { NetworksTokens } from './networks_tokens';
+import { List } from '../models/list.js';
+import { Network, NetworkForm, NetworkListFilters } from '../models/networks.js';
+import { ID, RequestOptions } from '../models/common.js';
+import { API } from './api.js';
+import { NetworksTokens } from './networks_tokens.js';
 
 export class Networks {
   private api: API;

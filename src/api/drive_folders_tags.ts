@@ -1,7 +1,7 @@
-import { List } from '../models/list';
-import { Tag } from '../models/tags';
-import { ID, RawTag, RequestOptions, TagForm } from '../models/common';
-import { API } from './api';
+import { List } from '../models/list.js';
+import { Tag } from '../models/tags.js';
+import { ID, RawTag, RequestOptions, TagForm } from '../models/common.js';
+import { API } from './api.js';
 
 export class DriveFoldersTags {
   private api: API;

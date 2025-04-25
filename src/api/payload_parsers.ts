@@ -1,11 +1,11 @@
-import { List } from '../models/list';
+import { List } from '../models/list.js';
 import {
   PayloadParser,
   PayloadParserForm,
   PayloadParsersListFilters,
-} from '../models/payload_parsers';
-import { ID, RequestOptions } from '../models/common';
-import { API } from './api';
+} from '../models/payload_parsers.js';
+import { ID, RequestOptions } from '../models/common.js';
+import { API } from './api.js';
 
 export class PayloadParsers {
   private api: API;

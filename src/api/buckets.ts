@@ -1,7 +1,7 @@
-import { Bucket, BucketsListFilters } from '../models/buckets';
-import { RequestOptions } from '../models/common';
-import { List } from '../models/list';
-import { API } from './api';
+import { Bucket, BucketsListFilters } from '../models/buckets.js';
+import { RequestOptions } from '../models/common.js';
+import { List } from '../models/list.js';
+import { API } from './api.js';
 
 export class Buckets {
   private api: API;
