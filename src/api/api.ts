@@ -1,5 +1,10 @@
 import { kebabize } from '../tools/case-parser.js';
-import { APIResponse, FetchOptions, RequestModifier } from '../models/common.js';
+import {
+  APIResponse,
+  FetchOptions,
+  RequestModifier,
+  RequestPosProcessor,
+} from '../models/common.js';
 
 export type APIOptions = {
   /**
@@ -10,6 +15,10 @@ export type APIOptions = {
    * modifier is the request modifer function.
    */
   modifiers: RequestModifier[];
+  /**
+   * posProcessor is the request pos processor.
+   */
+  posProcessor?: RequestPosProcessor;
 };
 
 /**
@@ -28,56 +37,85 @@ export class API {
    * @returns The API response wrapped in `APIResponse<T>`.
    */
   public async fetch<T>(options: FetchOptions): Promise<T> {
-    const url = new URL(`${this.options.baseUrl}/${options.path}`);
-    if (options.params) {
-      Object.keys(options.params).forEach((key) => {
-        try {
-          const rawValue = options.params[key];
-          let value: string;
+    const makeRequest = async () => {
+      const url = new URL(`${this.options.baseUrl}/${options.path}`);
+      if (options.params) {
+        Object.keys(options.params).forEach((key) => {
+          try {
+            const rawValue = options.params[key];
+            let value: string;
 
-          if (rawValue instanceof Date) {
-            value = rawValue.toISOString();
-          } else {
-            value = rawValue.toString();
+            if (rawValue instanceof Date) {
+              value = rawValue.toISOString();
+            } else {
+              value = rawValue.toString();
+            }
+
+            url.searchParams.append(kebabize(key), value);
+          } catch (err) {
+            console.error(err);
           }
+        });
+      }
 
-          url.searchParams.append(kebabize(key), value);
-        } catch (err) {
-          console.error(err);
-        }
-      });
-    }
+      let request: RequestInit = {
+        method: options.method,
+        body: JSON.stringify(options.body),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
 
-    let request: RequestInit = {
-      method: options.method,
-      body: JSON.stringify(options.body),
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      // apply api modifiers
+      this.options.modifiers.forEach((modifier) => (request = modifier(request)));
+
+      // apply request modifier
+      request = options.modifier ? options.modifier(request) : request;
+
+      let res: APIResponse<T>;
+      try {
+        res = await fetch(url, request).then(async (response) => {
+          return {
+            ...(response.ok ? await response.json() : null),
+            ok: response.ok,
+            httpStatusCode: response.status,
+          } as APIResponse<T>;
+        });
+      } catch (e) {
+        res = {
+          code: `SDK_INTERNAL_ERROR (${e})`,
+          httpStatusCode: 500,
+          ok: false,
+          data: null as T,
+        };
+      }
+
+      return res;
     };
 
-    // apply api modifiers
-    this.options.modifiers.forEach((modifier) => (request = modifier(request)));
-
-    // apply request modifier
-    request = options.modifier ? options.modifier(request) : request;
-
+    const maxReq = 3;
+    let curReq = 0;
     let res: APIResponse<T>;
-    try {
-      res = await fetch(url, request).then(async (response) => {
-        return {
-          ...(response.ok ? await response.json() : null),
-          ok: response.ok,
-          httpStatusCode: response.status,
-        } as APIResponse<T>;
-      });
-    } catch (e) {
-      throw {
-        code: `SDK_INTERNAL_ERROR (${e})`,
-        httpStatusCode: 500,
-        ok: false,
-        data: null as T,
-      };
+
+    while (true) {
+      curReq++;
+      res = await makeRequest();
+
+      if (this.options.posProcessor) {
+        const pr = this.options.posProcessor(res);
+        res = pr.response as APIResponse<T>;
+
+        if (pr.remakeRequest) {
+          if (curReq == maxReq) {
+            console.warn('max number of request remakes', options);
+            break;
+          }
+
+          continue;
+        }
+
+        break;
+      }
     }
 
     if (!res.ok) {

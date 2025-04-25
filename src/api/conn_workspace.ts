@@ -1,4 +1,4 @@
-import { RequestModifier } from '../models/common.js';
+import { RequestModifier, RequestPosProcessor } from '../models/common.js';
 import { Actions } from './actions.js';
 import { API, APIOptions } from './api.js';
 import { Buckets } from './buckets.js';
@@ -19,6 +19,7 @@ export type WorkspaceConnOptions = {
   token?: string;
   baseUrl?: string;
   modifiers?: RequestModifier[];
+  postProcessor?: RequestPosProcessor;
 };
 
 export class WorkspaceConn {
@@ -59,6 +60,7 @@ export class WorkspaceConn {
     const modifiers = options.modifiers ?? [];
     const apiOptions: APIOptions = {
       baseUrl: options.baseUrl + '/api/v1/workspace',
+      posProcessor: options.postProcessor,
       modifiers: [
         (request) => {
           const authHeaders: HeadersInit = {};

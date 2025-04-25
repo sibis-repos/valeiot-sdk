@@ -1,4 +1,4 @@
-import { RequestModifier } from '../models/common.js';
+import { RequestModifier, RequestPosProcessor } from '../models/common.js';
 import { API, APIOptions } from './api.js';
 import { Datasources } from './datasources.js';
 import { Scripts } from './scripts.js';
@@ -8,6 +8,7 @@ export type UserConnOptions = {
   session: string;
   baseUrl: string;
   modifiers?: RequestModifier[];
+  postProcessor?: RequestPosProcessor;
 };
 
 export class UserConn {
@@ -24,6 +25,7 @@ export class UserConn {
     const modifiers = options.modifiers ?? [];
     const apiOptions: APIOptions = {
       baseUrl: options.baseUrl + '/api/v1/user',
+      posProcessor: options.postProcessor,
       modifiers: [
         (request) => {
           request.headers = {
