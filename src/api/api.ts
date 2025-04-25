@@ -101,7 +101,7 @@ export class API {
       curReq++;
       res = await makeRequest();
 
-      if (this.options.posProcessor) {
+      if (this.options.posProcessor != undefined) {
         const pr = await this.options.posProcessor(res);
         res = pr.response as APIResponse<T>;
 
@@ -113,9 +113,9 @@ export class API {
 
           continue;
         }
-
-        break;
       }
+
+      break;
     }
 
     if (!res.ok) {
