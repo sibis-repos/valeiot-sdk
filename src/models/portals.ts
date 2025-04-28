@@ -1,6 +1,6 @@
 import { OrderByFn } from './common.js';
 
-export type PortalOrderBy = 'name' | 'description' | 'version' | 'createdAt' | 'updatedAt';
+export type PortalOrderBy = 'name' | 'description' | 'version' | 'created_at' | 'updated_at';
 
 export type Portal = {
   id: number;

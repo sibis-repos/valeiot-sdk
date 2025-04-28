@@ -1,7 +1,7 @@
 import { OrderByFn } from './common.js';
 import { TagsFilter } from './tags.js';
 
-export type DashboardOrderBy = 'name' | 'description' | 'version' | 'createdAt' | 'updatedAt';
+export type DashboardOrderBy = 'name' | 'description' | 'version' | 'created_at' | 'updated_at';
 
 export type Dashboard = {
   id: number;
