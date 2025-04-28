@@ -1,4 +1,4 @@
 export type List<T> = {
-  list: T[];
+  items: T[];
   count: number;
 };
