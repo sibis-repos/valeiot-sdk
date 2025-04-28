@@ -5,6 +5,18 @@ export type ActionType = 'script' | 'mqtt-publish';
 export type ActionTrigger = 'scheduler' | 'variable';
 export type ActionGroupOperator = 'and' | 'or';
 
+export type ActionOrderBy =
+  | 'name'
+  | 'description'
+  | 'type'
+  | 'trigger'
+  | 'created_at'
+  | 'updated_at';
+
+export type ActionOperator = '!=' | '=' | '<' | '<=' | '>' | '>=';
+
+export type ActionDataType = 'number' | 'text' | 'bool';
+
 export type Action = {
   id: number;
   name: string;
@@ -69,9 +81,9 @@ export type ActionLockConfig = {
 
 export type ActionVariableCondition = {
   variable: string;
-  operator: '!=' | '=' | '<' | '<=' | '>' | '>=';
+  operator: ActionOperator;
   value: string;
-  dataType: 'number' | 'text' | 'bool';
+  dataType: ActionDataType;
 };
 
 export type ActionsListFilters = {
@@ -82,6 +94,6 @@ export type ActionsListFilters = {
   blocked?: boolean;
   limit?: number;
   offset?: number;
-  orderBy?: 'name' | 'description' | 'type' | 'trigger' | 'created_at' | 'updated_at';
+  orderBy?: ActionOrderBy;
   orderByFn?: OrderByFn;
 };

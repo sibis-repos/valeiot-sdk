@@ -3,6 +3,8 @@ import { RoleReduced } from './roles.js';
 import { Tag, TagsFilter } from './tags.js';
 import { Permissions } from './tokens.js';
 
+export type UserOrderBy = 'name' | 'email' | 'role_id' | 'created_at' | 'updated_at';
+
 export type UserForm = {
   roleId: number;
   name: string;
@@ -44,6 +46,6 @@ export type UsersListFilters = {
   tags?: TagsFilter;
   limit?: number;
   offset?: number;
-  orderBy?: 'name' | 'email' | 'role_id' | 'created_at' | 'updated_at';
+  orderBy?: UserOrderBy;
   orderByFn?: OrderByFn;
 };

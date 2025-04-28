@@ -1,5 +1,7 @@
 import { OrderByFn } from './common.js';
 
+export type PayloadParserOrderBy = 'name' | 'description' | 'created_at' | 'updated_at';
+
 export type PayloadParserReduced = {
   id: number;
   name: string;
@@ -25,6 +27,6 @@ export type PayloadParsersListFilters = {
   description?: string;
   limit?: number;
   offset?: number;
-  orderBy?: 'name' | 'description' | 'createdAt' | 'updatedAt';
+  orderBy?: PayloadParserOrderBy;
   orderByFn?: OrderByFn;
 };

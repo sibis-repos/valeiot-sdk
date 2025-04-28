@@ -1,6 +1,8 @@
 import { OrderByFn } from './common.js';
 import { TagsFilter } from './tags.js';
 
+export type DatasourceObjectOrderBy = 'name' | 'created_at' | 'updated_at';
+
 export type DatasourceObject = {
   id: number;
   key: string;
@@ -19,6 +21,6 @@ export type DatasourceObjectsListFilters = {
   tags?: TagsFilter;
   limit?: number;
   offset?: number;
-  orderBy?: 'name' | 'created_at' | 'updated_at';
+  orderBy?: DatasourceObjectOrderBy;
   orderByFn?: OrderByFn;
 };

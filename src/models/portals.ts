@@ -1,5 +1,7 @@
 import { OrderByFn } from './common.js';
 
+export type PortalOrderBy = 'name' | 'description' | 'version' | 'createdAt' | 'updatedAt';
+
 export type Portal = {
   id: number;
   createdAt: Date;
@@ -26,6 +28,6 @@ export type PortalsListFilters = {
   version?: string;
   limit?: number;
   offset?: number;
-  orderBy?: 'name' | 'description' | 'version' | 'createdAt' | 'updatedAt';
+  orderBy?: PortalOrderBy;
   orderByFn?: OrderByFn;
 };

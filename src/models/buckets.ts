@@ -1,5 +1,7 @@
 import { OrderByFn } from './common.js';
 
+export type BucketOrderBy = 'name' | 'retention';
+
 export type BucketReduced = {
   id: number;
   name: string;
@@ -19,6 +21,6 @@ export type BucketsListFilters = {
   name?: string;
   limit?: number;
   offset?: number;
-  orderBy?: 'name' | 'retention';
+  orderBy?: BucketOrderBy;
   orderByFn?: OrderByFn;
 };

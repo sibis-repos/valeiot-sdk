@@ -1,6 +1,8 @@
 import { OrderByFn } from './common.js';
 import { TagsFilter } from './tags.js';
 
+export type DriveFolderOrderBy = 'name' | 'description' | 'created_at' | 'updated_at';
+
 export type DriveFolder = {
   id: number;
   parentId: number | null;
@@ -23,6 +25,6 @@ export type DriveFoldersListFilters = {
   tags?: TagsFilter;
   limit?: number;
   offset?: number;
-  orderBy?: 'name' | 'description' | 'crated_at' | 'updated_at';
+  orderBy?: DriveFolderOrderBy;
   orderByFn?: OrderByFn;
 };

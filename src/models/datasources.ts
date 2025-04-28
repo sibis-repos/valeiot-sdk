@@ -7,6 +7,7 @@ import { PayloadParserReduced } from './payload_parsers.js';
 import { Tag, TagsFilter } from './tags.js';
 
 export type DatasourceType = 'entity' | 'device';
+export type DatasourceOrderBy = 'name' | 'created_at' | 'updated_at';
 
 export type Datasource = {
   id: number;
@@ -50,7 +51,7 @@ export type DatasourceForm = {
 
 export type DatasourcesDetailsListFilters = {
   name?: string;
-  type?: 'device' | 'entity';
+  type?: DatasourceType;
   alerted?: boolean;
   alertName?: string;
   alertCategory?: string;
@@ -63,16 +64,16 @@ export type DatasourcesDetailsListFilters = {
   datapointsVariables?: string[];
   limit?: number;
   offset?: number;
-  orderBy?: 'name' | 'created_at' | 'updated_at';
+  orderBy?: DatasourceOrderBy;
   orderByFn?: OrderByFn;
 };
 
 export type DatasourcesListFilters = {
   name?: string;
-  type?: 'device' | 'entity';
+  type?: DatasourceType;
   tags?: TagsFilter;
   limit?: number;
   offset?: number;
-  orderBy?: 'name' | 'created_at' | 'updated_at';
+  orderBy?: DatasourceOrderBy;
   orderByFn?: OrderByFn;
 };

@@ -1,6 +1,8 @@
 import { OrderByFn } from './common.js';
 import { TokenPermission } from './tokens.js';
 
+export type NetworkOrderBy = 'name' | 'description' | 'type' | 'created_at' | 'updated_at';
+
 export type Network = {
   id: number;
   createdAt: Date;
@@ -43,6 +45,6 @@ export type NetworkListFilters = {
   type?: string;
   limit?: number;
   offset?: number;
-  orderBy?: 'name' | 'description' | 'type' | 'created_at' | 'updated_at';
+  orderBy?: NetworkOrderBy;
   orderByFn?: OrderByFn;
 };

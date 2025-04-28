@@ -1,6 +1,8 @@
 import { OrderByFn } from './common.js';
 import { TagsFilter } from './tags.js';
 
+export type DashboardOrderBy = 'name' | 'description' | 'version' | 'createdAt' | 'updatedAt';
+
 export type Dashboard = {
   id: number;
   createdAt: Date;
@@ -25,6 +27,6 @@ export type DashboardsListFilters = {
   tags?: TagsFilter;
   limit?: number;
   offset?: number;
-  orderBy?: 'name' | 'description' | 'version' | 'createdAt' | 'updatedAt';
+  orderBy?: DashboardOrderBy;
   orderByFn?: OrderByFn;
 };
