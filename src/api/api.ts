@@ -48,10 +48,12 @@ export class API {
             if (rawValue instanceof Date) {
               value = rawValue.toISOString();
             } else {
-              value = rawValue?.toString();
+              value = rawValue?.toString ? rawValue.toString() : '';
             }
 
-            url.searchParams.append(kebabize(key), value);
+            if (value) {
+              url.searchParams.append(kebabize(key), value);
+            }
           } catch (err) {
             console.error(err);
           }
