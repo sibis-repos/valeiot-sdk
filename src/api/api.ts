@@ -48,7 +48,7 @@ export class API {
             if (rawValue instanceof Date) {
               value = rawValue.toISOString();
             } else {
-              value = rawValue.toString();
+              value = rawValue?.toString();
             }
 
             url.searchParams.append(kebabize(key), value);
