@@ -52,7 +52,7 @@ export class Scripts {
     } & RequestOptions
   ): Promise<ScriptInvokeResponse> {
     return this.api.fetch({
-      method: 'GET',
+      method: 'POST',
       path: `scripts/${options.scriptId}/invoke`,
       body: options.body,
       modifier: options.modifier,
