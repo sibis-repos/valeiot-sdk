@@ -18,6 +18,28 @@ export type Script = {
   updatedAt: Date;
 };
 
+export type ScriptForm = {
+  name: string;
+  description: string;
+  blocked: boolean;
+  executionMode: ScriptExecutionMode;
+  cloudConfig: ScriptCloudConfig;
+  webhookConfig?: ScriptWebhookConfig;
+};
+
+export type ScriptDetails = {
+  id: number;
+  name: string;
+  description: string;
+  blocked: boolean;
+  executionMode: ScriptExecutionMode;
+  cloudConfig: ScriptCloudConfig;
+  webhookConfig?: ScriptWebhookConfig;
+  createdAt: Date;
+  updatedAt: Date;
+  lastTrigger?: Date;
+};
+
 export type ScriptCloudConfig = {
   runtime: ScriptRuntime;
   timeout: number; //seconds
@@ -64,4 +86,8 @@ export type ScriptsListFilters = {
 export type ScriptLayer = {
   version: number;
   description: string;
+};
+
+export type ScriptCode = {
+  code: string;
 };
