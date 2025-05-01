@@ -11,6 +11,7 @@ import { PayloadParsers } from './payload_parsers.js';
 import { Portals } from './portals.js';
 import { PublicPayloadParsers } from './public_payload_parsers.js';
 import { Quotas } from './quotas.js';
+import { Roles } from './roles.js';
 import { Scripts } from './scripts.js';
 import { Users } from './users.js';
 
@@ -39,6 +40,7 @@ export class WorkspaceConn {
   public dashboards: Dashboards;
   public notifications: Notifications;
   public drive: Drive;
+  public roles: Roles;
 
   constructor(options: WorkspaceConnOptions = {}) {
     this.options = options;
@@ -94,6 +96,7 @@ export class WorkspaceConn {
     this.dashboards = new Dashboards(this.api);
     this.notifications = new Notifications(this.api);
     this.drive = new Drive(this.api);
+    this.roles = new Roles(this.api);
   }
 
   public setSession(session: string) {
