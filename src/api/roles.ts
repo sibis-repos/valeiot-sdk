@@ -83,11 +83,11 @@ export class Roles {
    * response: null
    */
   public async update(
-    options: { parserId: number; body: RoleForm } & RequestOptions
+    options: { roleId: number; body: RoleForm } & RequestOptions
   ): Promise<null> {
     return this.api.fetch({
       method: 'PUT',
-      path: `roles/${options.parserId}`,
+      path: `roles/${options.roleId}`,
       body: options.body,
       modifier: options.modifier,
     });
@@ -99,10 +99,10 @@ export class Roles {
    * @default
    * response: null
    */
-  public async delete(options: { parserId: number } & RequestOptions): Promise<null> {
+  public async delete(options: { roleId: number } & RequestOptions): Promise<null> {
     return this.api.fetch({
       method: 'DELETE',
-      path: `roles/${options.parserId}`,
+      path: `roles/${options.roleId}`,
       modifier: options.modifier,
     });
   }

@@ -87,11 +87,11 @@ export class Portals {
    * response: null
    */
   public async update(
-    options: { parserId: number; body: PortalForm } & RequestOptions
+    options: { portalId: number; body: PortalForm } & RequestOptions
   ): Promise<null> {
     return this.api.fetch({
       method: 'PUT',
-      path: `portals/${options.parserId}`,
+      path: `portals/${options.portalId}`,
       body: options.body,
       modifier: options.modifier,
     });
@@ -103,10 +103,10 @@ export class Portals {
    * @default
    * response: null
    */
-  public async delete(options: { parserId: number } & RequestOptions): Promise<null> {
+  public async delete(options: { portalId: number } & RequestOptions): Promise<null> {
     return this.api.fetch({
       method: 'DELETE',
-      path: `portals/${options.parserId}`,
+      path: `portals/${options.portalId}`,
       modifier: options.modifier,
     });
   }
