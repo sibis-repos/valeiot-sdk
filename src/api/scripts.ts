@@ -211,10 +211,10 @@ export class Scripts {
    * @default
    * response: null
    */
-  public async delete(options: { scriptID: number } & RequestOptions): Promise<ID> {
+  public async delete(options: { scriptId: number } & RequestOptions): Promise<ID> {
     return this.api.fetch({
       method: 'DELETE',
-      path: `scripts/${options.scriptID}`,
+      path: `scripts/${options.scriptId}`,
       modifier: options.modifier,
     });
   }

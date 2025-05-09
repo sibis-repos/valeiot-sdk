@@ -28,10 +28,10 @@ export class Dashboards {
    *  updatedAt: Date,
    * }
    */
-  public async get(options: { dashboarId: number } & RequestOptions): Promise<Dashboard> {
+  public async get(options: { dashboardId: number } & RequestOptions): Promise<Dashboard> {
     return this.api.fetch({
       method: 'GET',
-      path: `dashboards/${options.dashboarId}`,
+      path: `dashboards/${options.dashboardId}`,
       modifier: options.modifier,
     });
   }
@@ -89,11 +89,11 @@ export class Dashboards {
    * response: null
    */
   public async update(
-    options: { parserId: number; body: DashboardForm } & RequestOptions
+    options: { dashboardId: number; body: DashboardForm } & RequestOptions
   ): Promise<null> {
     return this.api.fetch({
       method: 'PUT',
-      path: `dashboards/${options.parserId}`,
+      path: `dashboards/${options.dashboardId}`,
       body: options.body,
       modifier: options.modifier,
     });
@@ -105,10 +105,10 @@ export class Dashboards {
    * @default
    * response: null
    */
-  public async delete(options: { parserId: number } & RequestOptions): Promise<null> {
+  public async delete(options: { dashboardId: number } & RequestOptions): Promise<null> {
     return this.api.fetch({
       method: 'DELETE',
-      path: `dashboards/${options.parserId}`,
+      path: `dashboards/${options.dashboardId}`,
       modifier: options.modifier,
     });
   }
