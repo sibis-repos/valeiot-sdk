@@ -87,11 +87,11 @@ export class DriveFolders {
    * response: null
    */
   public async update(
-    options: { parserId: number; body: DriveFolderForm } & RequestOptions
+    options: { folderId: number; body: DriveFolderForm } & RequestOptions
   ): Promise<null> {
     return this.api.fetch({
       method: 'PUT',
-      path: `drive/folders/${options.parserId}`,
+      path: `drive/folders/${options.folderId}`,
       body: options.body,
       modifier: options.modifier,
     });
@@ -103,10 +103,10 @@ export class DriveFolders {
    * @default
    * response: null
    */
-  public async delete(options: { parserId: number } & RequestOptions): Promise<null> {
+  public async delete(options: { folderId: number } & RequestOptions): Promise<null> {
     return this.api.fetch({
       method: 'DELETE',
-      path: `drive/folders/${options.parserId}`,
+      path: `drive/folders/${options.folderId}`,
       modifier: options.modifier,
     });
   }
