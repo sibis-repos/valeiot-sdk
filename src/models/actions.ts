@@ -34,6 +34,24 @@ export type Action = {
   updatedAt: Date;
 };
 
+export type ActionDetails = {
+  id: number;
+  name: string;
+  description: string;
+  type: ActionType;
+  config: ActionScriptConfig | ActionMQTTPublishConfig;
+  trigger: ActionTrigger;
+  triggerConfig: ActionTriggerScheduleConfig | ActionTriggerVariableConfig;
+  blocked: boolean;
+  lock: boolean;
+  lockConfig?: ActionLockConfig;
+  locked: boolean;
+  lockedUntil?: Date;
+  createdAt: Date;
+  updatedAt: Date;
+  lastTrigger?: Date;
+};
+
 export type ActionForm = {
   name: string;
   description: string;

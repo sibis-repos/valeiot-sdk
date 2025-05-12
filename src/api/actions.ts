@@ -1,4 +1,4 @@
-import { Action, ActionForm, ActionsListFilters } from '../models/actions.js';
+import { Action, ActionDetails, ActionForm, ActionsListFilters } from '../models/actions.js';
 import { List } from '../models/list.js';
 import { ID, RequestOptions } from '../models/common.js';
 import { API } from './api.js';
@@ -24,6 +24,17 @@ export class Actions {
     return this.api.fetch({
       method: 'GET',
       path: 'actions',
+      params: options.params,
+      modifier: options.modifier,
+    });
+  }
+
+  public async getDetailsList(
+    options: { params?: ActionsListFilters } & RequestOptions = {}
+  ): Promise<List<ActionDetails>> {
+    return this.api.fetch({
+      method: 'GET',
+      path: 'actions/details',
       params: options.params,
       modifier: options.modifier,
     });
