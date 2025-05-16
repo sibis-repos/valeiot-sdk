@@ -7,9 +7,23 @@ export type Tag = {
 };
 
 export class TagsFilter {
-  public value: RawTag[];
+  private value: RawTag[];
+  
   constructor(value: RawTag[]) {
     this.value = value;
+  }
+
+  public add(...tags: RawTag[]): void {
+    this.value.push(...tags)
+  }
+
+  public remove(...tags: RawTag[]): void {
+    this.value = this.value.filter(tag => !tags.some(t => t.key == tag.key && t.value == tag.value))
+
+  }
+
+  public removeByKeys(...keys: string[]): void {
+    this.value = this.value.filter(tag => !keys.some(k => k == tag.key))
   }
 
   public toString(): string {
