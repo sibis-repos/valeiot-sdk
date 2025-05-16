@@ -24,6 +24,7 @@ export type User = {
 export type UserDetails = {
   id: number;
   role: RoleReduced;
+  lastActivity?: Date;
   tags: Tag[];
   createdAt: Date;
   updatedAt: Date;
