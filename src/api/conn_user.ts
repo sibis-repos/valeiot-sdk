@@ -1,4 +1,6 @@
 import { RequestModifier, RequestPosProcessor } from '../models/common.js';
+import { TokenID } from '../models/tokens.js';
+import { User } from '../models/users.js';
 import { API, APIOptions } from './api.js';
 import { Datasources } from './datasources.js';
 import { Scripts } from './scripts.js';
@@ -46,5 +48,23 @@ export class UserConn {
 
   public setSession(session: string) {
     this.options.session = session;
+  }
+
+  public async login(options: { workspaceId: number, email: string, password: string }): Promise<TokenID> {
+    const res = await this.api.fetch<TokenID>({
+      method: 'POST',
+      path: 'login',
+      body: options
+    });
+    this.setSession(res.token)
+
+    return res;
+  }
+
+  public async me(): Promise<User> {
+    return await this.api.fetch({
+      method: 'GET',
+      path: ''
+    })
   }
 }
