@@ -34,6 +34,7 @@ export type FetchOptions = RequestOptions & {
   method: string;
   body?: any;
   params?: any;
+  ignorePostProcessor?: boolean
 };
 
 export type APIRawResponse<T> = {

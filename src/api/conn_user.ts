@@ -54,7 +54,8 @@ export class UserConn {
     const res = await this.api.fetch<TokenID>({
       method: 'POST',
       path: 'login',
-      body: options
+      body: options,
+      ignorePostProcessor: true
     });
     this.setSession(res.token)
 

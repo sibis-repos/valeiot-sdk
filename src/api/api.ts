@@ -80,7 +80,7 @@ export class API {
           let json = {};
           try {
             json = await response.json();
-          } catch (e) {}
+          } catch (e) { }
 
           return {
             ...json,
@@ -108,7 +108,7 @@ export class API {
       curReq++;
       res = await makeRequest();
 
-      if (this.options.posProcessor != undefined) {
+      if (this.options.posProcessor != undefined && !options.ignorePostProcessor) {
         const pr = await this.options.posProcessor(res);
         res = pr.response as APIResponse<T>;
 
