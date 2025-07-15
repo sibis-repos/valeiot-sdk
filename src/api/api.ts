@@ -38,7 +38,15 @@ export class API {
    */
   public async fetch<T>(options: FetchOptions): Promise<T> {
     const makeRequest = async () => {
-      const url = new URL(`${this.options.baseUrl}/${options.path}`);
+      let url: URL;
+
+      // avoid adding '/' for base requests to not trigger CORS errors.
+      if (options.path.length > 0) {
+        url = new URL(`${this.options.baseUrl}/${options.path.length}`);
+      } else {
+        url = new URL(this.options.baseUrl);
+      }
+
       if (options.params) {
         Object.keys(options.params).forEach((key) => {
           try {
