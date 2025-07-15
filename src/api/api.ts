@@ -42,7 +42,7 @@ export class API {
 
       // avoid adding '/' for base requests to not trigger CORS errors.
       if (options.path.length > 0) {
-        url = new URL(`${this.options.baseUrl}/${options.path.length}`);
+        url = new URL(`${this.options.baseUrl}/${options.path}`);
       } else {
         url = new URL(this.options.baseUrl);
       }
