@@ -1,6 +1,6 @@
 import { ScriptEvent } from '../models/common.js';
 
-type EventHandler<T> = (ctx: EventContext<T>, event: ScriptEvent<T>) => Promise<any>;
+type EventHandler<T> = (ctx: EventContext<T>, event: ScriptEvent<T>) => Promise<void>;
 
 export class EventContext<T = any> {
   public keys: Record<string, any> = {};
@@ -164,7 +164,7 @@ export class Router {
     });
     handlers.push(handler);
 
-    let resolver: (value: unknown) => void = () => {};
+    let resolver: (value: unknown) => void = () => { };
     const resultPromise = new Promise((r) => (resolver = r));
 
     const ctx = new EventContext(event, handlers, resolver);
