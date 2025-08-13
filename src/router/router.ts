@@ -40,14 +40,9 @@ export class EventContext<T = any> {
       return;
     }
 
-    try {
-      const result = await handler(this, this.event);
-      if (result !== undefined) {
-        this.setData(result);
-      }
-    } catch (error) {
-      console.error('Error in handler:', error);
-      this.abortWith("INTERNAL_ERROR");
+    const result = await handler(this, this.event);
+    if (result !== undefined) {
+      this.setData(result);
     }
 
     await this.next();
@@ -199,7 +194,12 @@ export class Router {
     const ctx = new EventContext(event, handlers, resolver);
     await ctx.next();
 
-    return resultPromise;
+    try {
+      return await resultPromise;
+    } catch (error) {
+      console.error('Error in event handler:', error);
+      return "INTERNAL_ERROR";
+    }
   }
 
   /**
