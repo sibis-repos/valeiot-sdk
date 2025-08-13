@@ -1,6 +1,6 @@
 import { ScriptEvent } from '../models/common.js';
 
-type EventHandler<T> = (ctx: EventContext<T>, event: ScriptEvent<T>) => Promise<void>;
+type EventHandler<T = any> = (ctx: EventContext<T>, event: ScriptEvent<T>) => Promise<void>;
 
 export class EventContext<T = any> {
   public keys: Record<string, any> = {};
@@ -11,6 +11,12 @@ export class EventContext<T = any> {
   private event: ScriptEvent<T>;
   private resolver: (value: any) => void;
 
+  /**
+   * Creates a new EventContext to manage middleware/handler execution.
+   * @param event The event being handled.
+   * @param handlers Array of middleware/handlers to execute sequentially.
+   * @param resolver Function to call with the final result when done.
+   */
   constructor(event: ScriptEvent<T>, handlers: EventHandler<T>[], resolver: (value: any) => void) {
     this.event = event;
     this.handlers = handlers;
@@ -18,10 +24,11 @@ export class EventContext<T = any> {
   }
 
   /**
-   * next calls the next handler in the chain.
+   * Calls the next handler in the chain.
+   * Executes sequentially until all handlers are done or context is aborted.
    */
-  public async next() {
-    if (this.nextHandler == this.handlers.length || this.aborted) {
+  public async next(): Promise<void> {
+    if (this.nextHandler >= this.handlers.length || this.aborted) {
       this.resolver(this.data);
       return;
     }
@@ -29,51 +36,63 @@ export class EventContext<T = any> {
     const handler = this.handlers[this.nextHandler];
     this.nextHandler++;
 
-    if (handler) {
-      handler(this, this.event).then(() => this.next());
+    if (!handler) {
+      return;
     }
+
+    try {
+      const result = await handler(this, this.event);
+      if (result !== undefined) {
+        this.setData(result);
+      }
+    } catch (error) {
+      console.error('Error in handler:', error);
+      this.abortWith("INTERNAL_ERROR");
+      return;
+    }
+
+    await this.next();
   }
 
   /**
-   * abort aborts the event pipeline.
+   * Aborts the event pipeline immediately.
    */
-  public abort() {
+  public abort(): void {
     this.aborted = true;
   }
 
   /**
-   * abortWith aborts the event pipeline and
-   * sets the data.
-   * @param value value is the value to be set as data.
+   * Aborts the event pipeline and sets a result value.
+   * @param value The value to set as the final result.
    */
-  public abortWith(value: any) {
+  public abortWith(value: any): void {
     this.abort();
     this.setData(value);
   }
 
   /**
-   * setData sets the data in the context.
-   * @param value value is the value to be set.
+   * Sets the final result data for this context.
+   * @param value The value to set.
    */
-  public setData(value: any) {
+  public setData(value: any): void {
     this.data = value;
   }
 
   /**
-   * set sets a key value pair in the context.
-   * @param key key is the key.
-   * @param value value is the value.
+   * Stores a key-value pair in the context for sharing data across handlers.
+   * @param key The key name.
+   * @param value The value to store.
    */
-  public set(key: string, value: any) {
+  public set(key: string, value: any): void {
     this.keys[key] = value;
   }
 
   /**
-   * get gets a value from the context.
-   * @param key key is the key.
-   * @returns returns the value.
+   * Retrieves a value stored in the context by key.
+   * @param key The key name.
+   * @returns The stored value.
    */
-  public get(key: string) {
+  public get(key: string): any {
     return this.keys[key];
   }
 }
@@ -85,17 +104,22 @@ export class Router {
   private groups: Record<string, Router> = {};
   private groupPath: string;
 
+  /**
+   * Creates a new Router instance.
+   * @param parentRouter Optional parent router for hierarchical routing.
+   * @param groupPath Optional path prefix for this router group.
+   */
   constructor(parentRouter: Router | null = null, groupPath: string = '') {
     this.parentRouter = parentRouter;
     this.groupPath = groupPath;
   }
 
   /**
-   * on registers a handler for an event.
-   * @param event event is the event to register the handler for.
-   * @param handler handler is the handler to register.
+   * Registers a handler for a specific event.
+   * @param event The event name.
+   * @param handler The handler function.
    */
-  public on<T>(event: string, handler: EventHandler<T>) {
+  public on<T>(event: string, handler: EventHandler<T>): void {
     event = this.getFullPath(event);
 
     if (this.parentRouter) {
@@ -104,25 +128,25 @@ export class Router {
     }
 
     if (this.handlers[event]) {
-      throw new Error(`handler for event ${event} already exists`);
+      throw new Error(`Handler for event ${event} already exists`);
     }
 
     this.handlers[event] = handler;
   }
 
   /**
-   * use registers a middleware for an event.
-   * @param event event is the event to register the middleware for.
-   * @param middleware middleware is the middleware to register.
+   * Registers a middleware to run for all events in this router.
+   * @param middleware Middleware function.
    */
-  public use<T>(middleware: EventHandler<T>) {
+  public use<T>(middleware: EventHandler<T>): void {
     this.middlewares.push(middleware);
   }
 
   /**
-   * group creates a new router group.
-   * @param path path is the path of the group.
-   * @returns returns the new router group.
+   * Creates a nested router group with optional middlewares.
+   * @param path Path prefix for the group.
+   * @param middlewares Optional middlewares to apply to the group.
+   * @returns The new or existing Router group.
    */
   public group(path: string, ...middlewares: EventHandler<any>[]): Router {
     path = this.getFullPath(path);
@@ -134,7 +158,7 @@ export class Router {
 
     const router = new Router(this, path);
     if (middlewares && middlewares.length > 0) {
-      middlewares.forEach((middleware) => router.use(middleware));
+      middlewares.forEach((mw) => router.use(mw));
     }
 
     this.groups[path] = router;
@@ -142,8 +166,9 @@ export class Router {
   }
 
   /**
-   * handle handles an event.
-   * @param event event is the event to handle.
+   * Handles an incoming event by executing middlewares and the event handler.
+   * @param event The ScriptEvent to handle.
+   * @returns A promise resolving to the final context data.
    */
   public async handle<T>(event: ScriptEvent<T>): Promise<any> {
     if (this.parentRouter) {
@@ -152,7 +177,7 @@ export class Router {
 
     const handler = this.handlers[event.event];
     if (!handler) {
-      throw new Error(`handler for event ${event.event} not found`);
+      throw new Error(`Handler for event ${event.event} not found`);
     }
 
     const paths = this.getPossiblePaths(event.event);
@@ -160,46 +185,53 @@ export class Router {
 
     paths.forEach((path) => {
       const groupMiddleware = this.groups[path]?.middlewares ?? [];
-      handlers.push(...groupMiddleware);
+      if (groupMiddleware && groupMiddleware.length > 0) {
+        handlers.push(...groupMiddleware);
+      }
     });
+
     handlers.push(handler);
 
     let resolver: (value: unknown) => void = () => { };
-    const resultPromise = new Promise((r) => (resolver = r));
+    const resultPromise = new Promise((r) => {
+      resolver = r;
+    });
 
     const ctx = new EventContext(event, handlers, resolver);
-    ctx.next();
+    await ctx.next();
 
-    return await resultPromise;
+    return resultPromise;
   }
 
+  /**
+   * Generates all possible paths for an event for hierarchical middleware lookup.
+   * @param event Event name (possibly with slashes).
+   * @returns Array of path strings.
+   */
   private getPossiblePaths(event: string): string[] {
-    const splited = event.split('/');
+    const parts = event.split('/');
     const paths: string[] = [];
 
-    let curPath = '';
-    splited.forEach((path, i) => {
-      // add "/" if is not last path
-      if (i != 0) {
-        path = `/${path}`;
+    let cur = '';
+    parts.forEach((p, i) => {
+      if (i === 0) {
+        cur += p;
+      } else {
+        cur += `/${p}`;
       }
-
-      curPath += path;
-
-      paths.push(curPath);
+      paths.push(cur);
     });
 
     return paths;
   }
 
+  /**
+   * Normalizes a path by removing leading/trailing slashes and prepending the groupPath.
+   * @param path The path to normalize.
+   * @returns The normalized full path.
+   */
   private getFullPath(path: string): string {
-    if (path.startsWith('/')) {
-      path.slice(1);
-    }
-    if (path.endsWith('/')) {
-      path.slice(0, -1);
-    }
-
+    path = path.replace(/^\/|\/$/g, '');
     if (this.groupPath) {
       path = `${this.groupPath}/${path}`;
     }
