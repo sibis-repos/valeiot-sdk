@@ -48,7 +48,6 @@ export class EventContext<T = any> {
     } catch (error) {
       console.error('Error in handler:', error);
       this.abortWith("INTERNAL_ERROR");
-      return;
     }
 
     await this.next();
@@ -177,7 +176,7 @@ export class Router {
 
     const handler = this.handlers[event.event];
     if (!handler) {
-      throw new Error(`Handler for event ${event.event} not found`);
+      return "HANDLER_NOT_FOUND"
     }
 
     const paths = this.getPossiblePaths(event.event);
