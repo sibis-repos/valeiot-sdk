@@ -192,9 +192,9 @@ export class Router {
     });
 
     const ctx = new EventContext(event, handlers, resolver);
-    await ctx.next();
 
     try {
+      await ctx.next();
       return await resultPromise;
     } catch (error) {
       console.error('Error in event handler:', error);
