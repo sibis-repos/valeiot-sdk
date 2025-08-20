@@ -19,6 +19,7 @@ export type DatasourceObjectForm = {
 export type DatasourceObjectsListFilters = {
   key?: string;
   tags?: TagsFilter;
+  withValue?: boolean;
   limit?: number;
   offset?: number;
   orderBy?: DatasourceObjectOrderBy;
