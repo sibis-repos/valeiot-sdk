@@ -115,9 +115,12 @@ export class Router {
    */
   public on<T>(event: string, handler: EventHandler<T>): void {
     event = this.getFullPath(event);
+    this.registerHandler(event, handler)
+  }
 
+  private registerHandler<T>(event: string, handler: EventHandler<T>): void {
     if (this.parentRouter) {
-      this.parentRouter.on(event, handler);
+      this.parentRouter.registerHandler(event, handler);
       return;
     }
 
@@ -168,7 +171,6 @@ export class Router {
     if (this.parentRouter) {
       return this.parentRouter.handle(event);
     }
-
     const handler = this.handlers[event.event];
     if (!handler) {
       return "HANDLER_NOT_FOUND"

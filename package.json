@@ -17,7 +17,8 @@
     "build": "npm run build:esm && npm run build:cjs",
     "build:esm": "tsc --project tsconfig.esm.json",
     "build:cjs": "tsc --project tsconfig.cjs.json",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "tsx src/test.ts"
   },
   "keywords": [
     "valeiot",
@@ -35,7 +36,8 @@
   "homepage": "https://github.com/sibis-repos/valeiot-sdk#readme",
   "devDependencies": {
     "ts-node": "^10.9.2",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "tsx": "^4.20.4"
   },
   "files": [
     "dist"
