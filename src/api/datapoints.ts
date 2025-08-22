@@ -2,6 +2,7 @@ import { RequestOptions } from '../models/common.js';
 import {
   Datapoint,
   DatapointForm,
+  DatapointsCreateParams,
   DatapointsDeleteFilters,
   DatapointsListFilters,
 } from '../models/datapoints.js';
@@ -86,12 +87,13 @@ export class Datapoints {
    * response: null
    */
   public async create(
-    options: { body: DatapointForm[]; datasourceId: number } & RequestOptions
+    options: { body: DatapointForm[]; datasourceId: number, params?: DatapointsCreateParams } & RequestOptions
   ): Promise<null> {
     return this.api.fetch({
       method: 'POST',
       path: `datasources/${options.datasourceId}/datapoints`,
       body: options.body,
+      params: options.params,
       modifier: options.modifier,
     });
   }

@@ -23,6 +23,10 @@ export type DatapointsListFilters = {
   limit?: number;
 };
 
+export type DatapointsCreateParams = {
+  skipPayloadParser?: boolean
+}
+
 export type DatapointsDeleteFilters = {
   variable: string;
   startTime: Date;
