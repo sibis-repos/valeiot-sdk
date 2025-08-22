@@ -1,4 +1,5 @@
 import { ScriptEvent } from '../models/common.js';
+import { error } from './utils.js';
 
 type EventHandler<T = any> = (ctx: EventContext<T>, event: ScriptEvent<T>) => Promise<any>;
 
@@ -173,7 +174,7 @@ export class Router {
     }
     const handler = this.handlers[event.event];
     if (!handler) {
-      return "HANDLER_NOT_FOUND"
+      return error("HANDLER_NOT_FOUND")
     }
 
     const paths = this.getPossiblePaths(event.event);
@@ -198,9 +199,9 @@ export class Router {
     try {
       await ctx.next();
       return await resultPromise;
-    } catch (error) {
-      console.error('Error in event handler:', error);
-      return "INTERNAL_ERROR";
+    } catch (err) {
+      console.error('Error in event handler:', err);
+      return error("INTERNAL_ERROR");
     }
   }
 
