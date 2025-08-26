@@ -17,7 +17,7 @@ export class TagsFilter {
     this.value.push(...tags)
   }
 
-  private get(): RawTag[] {
+  public get(): RawTag[] {
     return this.value;
   }
 
