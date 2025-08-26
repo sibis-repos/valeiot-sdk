@@ -8,13 +8,17 @@ export type Tag = {
 
 export class TagsFilter {
   private value: RawTag[];
-  
+
   constructor(value: RawTag[]) {
     this.value = value;
   }
 
   public add(...tags: RawTag[]): void {
     this.value.push(...tags)
+  }
+
+  private get(): RawTag[] {
+    return this.value;
   }
 
   public remove(...tags: RawTag[]): void {
