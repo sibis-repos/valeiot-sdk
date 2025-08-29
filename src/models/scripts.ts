@@ -14,6 +14,7 @@ export type Script = {
   executionMode: ScriptExecutionMode;
   cloudConfig: ScriptCloudConfig;
   webhookConfig?: ScriptWebhookConfig;
+  codeSize: number;
   createdAt: Date;
   updatedAt: Date;
 };
@@ -35,6 +36,7 @@ export type ScriptDetails = {
   executionMode: ScriptExecutionMode;
   cloudConfig: ScriptCloudConfig;
   webhookConfig?: ScriptWebhookConfig;
+  codeSize: number;
   createdAt: Date;
   updatedAt: Date;
   lastTrigger?: Date;
