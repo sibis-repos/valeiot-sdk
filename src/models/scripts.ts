@@ -63,6 +63,7 @@ export type ScriptInvokeForm = {
 
 export type ScriptInvokeResponse = {
   result: any;
+  failed: boolean;
   logs: string;
 };
 
