@@ -34,13 +34,12 @@ export class UserInboxNotifications {
    */
   public async getList(
     options: {
-      userId: number;
       params?: InboxNotificationsListFilters;
     } & RequestOptions
   ): Promise<List<InboxNotification>> {
     return this.api.fetch({
       method: 'GET',
-      path: `notifications/inbox/users/${options.userId}`,
+      path: `notifications/inbox`,
       params: options.params,
       modifier: options.modifier,
     });
@@ -52,7 +51,7 @@ export class UserInboxNotifications {
    * @default
    * response: null
    */
-  public async create(
+  public async read(
     options: { params: InboxNotificationReadFilters } & RequestOptions
   ): Promise<null> {
     return this.api.fetch({
@@ -71,13 +70,12 @@ export class UserInboxNotifications {
    */
   public async delete(
     options: {
-      userId: number;
       params: InboxNotificationDeleteFilters;
     } & RequestOptions
   ): Promise<null> {
     return this.api.fetch({
       method: 'DELETE',
-      path: `notifications/inbox/users/${options.userId}`,
+      path: `notifications/inbox`,
       params: options.params,
       modifier: options.modifier,
     });
