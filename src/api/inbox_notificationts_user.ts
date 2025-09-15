@@ -33,9 +33,9 @@ export class UserInboxNotifications {
    * ]
    */
   public async getList(
-    options: {
+    options: ({
       params?: InboxNotificationsListFilters;
-    } & RequestOptions
+    } & RequestOptions) = {}
   ): Promise<List<InboxNotification>> {
     return this.api.fetch({
       method: 'GET',
