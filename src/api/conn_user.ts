@@ -3,6 +3,7 @@ import { TokenID } from '../models/tokens.js';
 import { User } from '../models/users.js';
 import { API, APIOptions } from './api.js';
 import { Datasources } from './datasources.js';
+import { UserInboxNotifications } from './inbox_notificationts_user.js';
 import { Scripts } from './scripts.js';
 import { Users } from './users.js';
 
@@ -20,6 +21,7 @@ export class UserConn {
   public datasources: Datasources;
   public users: Users;
   public scripts: Scripts;
+  public notifications: UserInboxNotifications;
 
   constructor(options: UserConnOptions) {
     this.options = options;
@@ -44,6 +46,7 @@ export class UserConn {
     this.datasources = new Datasources(this.api);
     this.users = new Users(this.api);
     this.scripts = new Scripts(this.api);
+    this.notifications = new UserInboxNotifications(this.api);
   }
 
   public setSession(session: string) {

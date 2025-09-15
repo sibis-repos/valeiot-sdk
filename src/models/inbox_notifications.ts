@@ -21,3 +21,10 @@ export type InboxNotificationDeleteFilters = {
   startCreatedAt: Date;
   stopCreatedAt?: Date;
 };
+
+
+
+export type InboxNotificationReadFilters = {
+  startCreatedAt: Date;
+  stopCreatedAt?: Date;
+};
