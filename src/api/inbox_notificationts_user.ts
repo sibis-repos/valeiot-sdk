@@ -56,7 +56,7 @@ export class UserInboxNotifications {
   ): Promise<null> {
     return this.api.fetch({
       method: 'POST',
-      path: 'notifications/inbox',
+      path: 'notifications/inbox/read',
       params: options.params,
       modifier: options.modifier,
     });

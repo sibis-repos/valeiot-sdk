@@ -3,7 +3,7 @@ import { TokenID } from '../models/tokens.js';
 import { User } from '../models/users.js';
 import { API, APIOptions } from './api.js';
 import { Datasources } from './datasources.js';
-import { UserInboxNotifications } from './inbox_notificationts_user.js';
+import { UserNotifications } from './notifications_user.js';
 import { Scripts } from './scripts.js';
 import { Users } from './users.js';
 
@@ -21,7 +21,7 @@ export class UserConn {
   public datasources: Datasources;
   public users: Users;
   public scripts: Scripts;
-  public notifications: UserInboxNotifications;
+  public notifications: UserNotifications;
 
   constructor(options: UserConnOptions) {
     this.options = options;
@@ -46,13 +46,25 @@ export class UserConn {
     this.datasources = new Datasources(this.api);
     this.users = new Users(this.api);
     this.scripts = new Scripts(this.api);
-    this.notifications = new UserInboxNotifications(this.api);
+    this.notifications = new UserNotifications(this.api);
   }
 
   public setSession(session: string) {
     this.options.session = session;
   }
 
+
+  /**
+   * Make login into an user account.
+   * If succeeded, user session is automatically
+   * setted in connection.
+   * @param options Request options.
+   * @default
+   * Response: {
+   *  token: "us1:398127493bfdsbfsda",
+   *  id: 1
+   * }
+   */
   public async login(options: { workspaceId: number, email: string, password: string }): Promise<TokenID> {
     const res = await this.api.fetch<TokenID>({
       method: 'POST',
@@ -65,6 +77,18 @@ export class UserConn {
     return res;
   }
 
+  /**
+   * Retrieves information of the current user.
+   * @default
+   * Response: {
+   *  id: 1;
+   *  roleId: 1;
+   *  createdAt: Date;
+   *  updatedAt: Date;
+   *  name: "Michael";
+   *  email: "user@company.com";
+   * }
+   */
   public async me(): Promise<User> {
     return await this.api.fetch({
       method: 'GET',
