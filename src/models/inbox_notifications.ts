@@ -5,7 +5,7 @@ export type InboxNotification = {
 };
 
 export type UsersInboxNotificationForm = {
-  usersIds: number[];
+  userIds: number[];
   content: Record<any, any>;
 };
 
