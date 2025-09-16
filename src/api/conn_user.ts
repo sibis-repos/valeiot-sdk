@@ -1,8 +1,8 @@
 import { RequestModifier, RequestPosProcessor } from '../models/common.js';
 import { TokenID } from '../models/tokens.js';
-import { User } from '../models/users.js';
 import { API, APIOptions } from './api.js';
 import { Datasources } from './datasources.js';
+import { UserMe } from './me.js';
 import { UserNotifications } from './notifications_user.js';
 import { Scripts } from './scripts.js';
 import { Users } from './users.js';
@@ -22,6 +22,7 @@ export class UserConn {
   public users: Users;
   public scripts: Scripts;
   public notifications: UserNotifications;
+  public me: UserMe;
 
   constructor(options: UserConnOptions) {
     this.options = options;
@@ -47,6 +48,7 @@ export class UserConn {
     this.users = new Users(this.api);
     this.scripts = new Scripts(this.api);
     this.notifications = new UserNotifications(this.api);
+    this.me = new UserMe(this.api);
   }
 
   public setSession(session: string) {
@@ -75,24 +77,5 @@ export class UserConn {
     this.setSession(res.token)
 
     return res;
-  }
-
-  /**
-   * Retrieves information of the current user.
-   * @default
-   * Response: {
-   *  id: 1;
-   *  roleId: 1;
-   *  createdAt: Date;
-   *  updatedAt: Date;
-   *  name: "Michael";
-   *  email: "user@company.com";
-   * }
-   */
-  public async me(): Promise<User> {
-    return await this.api.fetch({
-      method: 'GET',
-      path: ''
-    })
   }
 }

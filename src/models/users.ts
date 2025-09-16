@@ -21,6 +21,15 @@ export type User = {
   email: string;
 };
 
+export type UserSelfUpdateForm = {
+  name: string;
+}
+
+export type UserSelfUpdatePasswordForm = {
+  oldPassword: string;
+  newPassword: string;
+};
+
 export type UserDetails = {
   id: number;
   role: RoleReduced;
