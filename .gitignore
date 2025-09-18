@@ -4,3 +4,4 @@ bundle
 dist
 node_modules
 .*
+portal.js

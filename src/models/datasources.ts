@@ -62,6 +62,7 @@ export type DatasourcesDetailsListFilters = {
   objectsKeys?: string[];
   withDatapoints?: boolean;
   datapointsVariables?: string[];
+  targetBucket?: number;
   limit?: number;
   offset?: number;
   orderBy?: DatasourceOrderBy;

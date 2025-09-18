@@ -69,6 +69,7 @@ export class Datapoints {
       datasourceId: number;
       params: {
         variables: string[];
+        targetBucket?: number;
       };
     } & RequestOptions
   ): Promise<Datapoint[]> {

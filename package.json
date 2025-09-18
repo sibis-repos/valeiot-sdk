@@ -18,7 +18,8 @@
     "build:esm": "tsc --project tsconfig.esm.json",
     "build:cjs": "tsc --project tsconfig.cjs.json",
     "typecheck": "tsc --noEmit",
-    "test": "tsx .test/index.ts"
+    "test": "tsx .test/index.ts",
+    "portal": "tsx .test/portal.ts"
   },
   "keywords": [
     "valeiot",

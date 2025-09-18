@@ -1,5 +1,22 @@
-export type DatapointAggrFunction = "max" | "min" | "avg";
-export type DatapointFiltersOperator = ">" | ">=" | "<=" | "<" | "=" | "!=";
+export type DatapointAggrFunction =
+  | 'max'
+  | 'min'
+  | 'avg'
+  | 'sum'
+  | 'count'
+  | 'median'
+  | 'stddev'
+  | 'variance'
+  | 'first'
+  | 'last'
+  | 'delta'
+  | 'rate'
+  | 'increase'
+  | 'p90'
+  | 'p95'
+  | 'p99';
+
+export type DatapointFilterOperator = 'eq' | 'ne' | 'gt' | 'gte' | 'lt' | 'lte';
 
 export type Datapoint = {
   time: Date;
@@ -15,6 +32,8 @@ export type DatapointForm = {
 
 export type DatapointsListFilters = {
   variable?: string;
+  light?: boolean;
+  targetBucket?: number;
   startTime?: Date;
   stopTime?: Date;
   filters?: DatapointsFilters;
@@ -24,23 +43,30 @@ export type DatapointsListFilters = {
 };
 
 export type DatapointsCreateParams = {
-  skipPayloadParser?: boolean
-}
+  skipPayloadParser?: boolean;
+  targetBucket?: number;
+};
 
 export type DatapointsDeleteFilters = {
   variable: string;
   startTime: Date;
   stopTime: Date;
   limit: number;
+  targetBucket?: number;
+};
+
+export type DatapointFilter = {
+  operator: DatapointFilterOperator;
+  value: number;
 };
 
 export class DatapointsFilters {
-  private filters: [DatapointFiltersOperator, any][];
-  constructor(filters: [DatapointFiltersOperator, any][]) {
+  private filters: DatapointFilter[];
+  constructor(filters: DatapointFilter[]) {
     this.filters = filters;
   }
 
   public toString(): string {
-    return this.filters.map((f) => f[0] + f[1].toString()).toString();
+    return this.filters.map((f) => `${f.operator}:${f.value}`).toString();
   }
 }
