@@ -55,7 +55,7 @@ export class EventContext<T = any> {
    * @param error The error message.
    * @param value The value to set in response.
    */
-  public abort(value: Record<any, any> = {}, error: string = ""): void {
+  public abort(error: string = "", value: Record<any, any> = {}): void {
     this.abort()
     this.sendRaw({
       ...value,
@@ -67,7 +67,7 @@ export class EventContext<T = any> {
    * Set the response data for the event.
    * @param value The value to set.
    */
-  public send(value: Record<any, any> = {}, message: string = ""): void {
+  public send(message: string = "", value: Record<any, any> = {}): void {
     this.sendRaw({
       ...value,
       message
