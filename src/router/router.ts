@@ -1,7 +1,7 @@
 import { ScriptEvent } from '../models/common.js';
 import { error } from './utils.js';
 
-type EventHandler<T = any> = (ctx: EventContext<T>, event: ScriptEvent<T>) => Promise<any>;
+export type EventHandler<T = any> = (ctx: EventContext<T>, event: ScriptEvent<T>) => Promise<any>;
 
 export class EventContext<T = any> {
   public keys: Record<string, any> = {};
