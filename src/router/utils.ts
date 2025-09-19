@@ -6,10 +6,10 @@
  * @param data - Optional extra fields to include in the response.
  * @returns An object containing the message and any provided data.
  */
-export function withMessage(message: string, data?: Record<any, any>) {
+export function withMessage(message: string, data: Record<any, any>) {
     return {
         message,
-        ...(data ?? {}) // Spread additional fields if provided
+        ...data // Spread additional fields if provided
     }
 }
 
@@ -21,10 +21,10 @@ export function withMessage(message: string, data?: Record<any, any>) {
  * @param data - Optional extra fields to include in the response.
  * @returns An object containing the error and any provided data.
  */
-export function withError(error: string, data?: Record<any, any>) {
+export function withError(error: string, data: Record<any, any>) {
     return {
         error,
-        ...(data ?? {}) // Spread additional fields if provided
+        ...data  // Spread additional fields if provided
     }
 }
 

@@ -43,33 +43,42 @@ export class EventContext<T = any> {
 
     const result = await handler(this, this.event);
     if (result !== undefined) {
-      this.setData(result);
+      this.send(result);
     }
 
     await this.next();
   }
 
   /**
-   * Aborts the event pipeline immediately.
+   * Aborts the event pipeline and sets a result value
+   * with an error prop.
+   * @param error The error message.
+   * @param value The value to set in response.
    */
-  public abort(): void {
-    this.aborted = true;
+  public abort(value: Record<any, any> = {}, error: string = ""): void {
+    this.abort()
+    this.sendRaw({
+      ...value,
+      error
+    })
   }
 
   /**
-   * Aborts the event pipeline and sets a result value.
-   * @param value The value to set as the final result.
-   */
-  public abortWith(value: any): void {
-    this.abort();
-    this.setData(value);
-  }
-
-  /**
-   * Sets the final result data for this context.
+   * Set the response data for the event.
    * @param value The value to set.
    */
-  public setData(value: any): void {
+  public send(value: Record<any, any> = {}, message: string = ""): void {
+    this.sendRaw({
+      ...value,
+      message
+    })
+  }
+
+   /**
+   * Set the response data for the event.
+   * @param value The value to set.
+   */
+  public sendRaw(value: any): void {
     this.data = value;
   }
 
