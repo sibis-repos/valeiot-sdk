@@ -2,11 +2,13 @@ export * from './api/api.js';
 export * from './api/conn_workspace.js';
 export * from './api/conn_user.js';
 export * from './router/router.js';
+export * from './router/utils.js'
 
 export * from './tools/case-parser.js';
 
 export * from './models/datapoints.js';
 export * from './models/tags.js';
+
 
 export type * from './models/actions.js';
 export type * from './models/buckets.js';
