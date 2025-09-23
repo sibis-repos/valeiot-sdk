@@ -1,5 +1,5 @@
 import { List } from '../models/list.js';
-import { Portal, PortalForm, PortalsListFilters } from '../models/portals.js';
+import { Portal, PortalDetails, PortalForm, PortalsListFilters } from '../models/portals.js';
 import { ID, RequestOptions } from '../models/common.js';
 import { API } from './api.js';
 
@@ -18,6 +18,7 @@ export class Portals {
    *  id: 1,
    *  appName: "my-app"
    *  name: "My application",
+   *  themeId: 1,
    *  description: "",
    *  version: "1.0.0",
    *  content: {...}
@@ -34,6 +35,30 @@ export class Portals {
   }
 
   /**
+   * Retrieves a portal.
+   * @param options Request options.
+   * @default
+   * portal: {
+   *  id: 1,
+   *  appName: "my-app"
+   *  name: "My application",
+   *  themeId: 1,
+   *  description: "",
+   *  version: "1.0.0",
+   *  content: {...}
+   *  createdAt: Date,
+   *  updatedAt: Date,
+   * }
+   */
+  public async getDetails(options: { portalId: number } & RequestOptions): Promise<PortalDetails> {
+    return this.api.fetch({
+      method: 'GET',
+      path: `portals/${options.portalId}/details`,
+      modifier: options.modifier,
+    });
+  }
+
+  /**
    * Retrieves a list of portals.
    * @param options Request options.
    * @default
@@ -42,6 +67,7 @@ export class Portals {
    *   id: 1,
    *   appName: "my-app"
    *   name: "My application",
+   *   themeId: 1,
    *   description: "",
    *   version: "1.0.0",
    *   content: {...}
@@ -58,6 +84,37 @@ export class Portals {
     return this.api.fetch({
       method: 'GET',
       path: 'portals',
+      params: options.params,
+      modifier: options.modifier,
+    });
+  }
+
+  /**
+   * Retrieves a list of portals.
+   * @param options Request options.
+   * @default
+   * portals: [
+   *  {
+   *   id: 1,
+   *   appName: "my-app"
+   *   name: "My application",
+   *   theme: {...},
+   *   description: "",
+   *   version: "1.0.0",
+   *   content: {...}
+   *   createdAt: Date,
+   *   updatedAt: Date,
+   *  }
+   * ]
+   */
+  public async getDetailsList(
+    options: {
+      params?: PortalsListFilters;
+    } & RequestOptions = {}
+  ): Promise<List<PortalDetails>> {
+    return this.api.fetch({
+      method: 'GET',
+      path: 'portals/details',
       params: options.params,
       modifier: options.modifier,
     });

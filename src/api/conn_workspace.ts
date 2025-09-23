@@ -13,6 +13,7 @@ import { PublicPayloadParsers } from './public_payload_parsers.js';
 import { Quotas } from './quotas.js';
 import { Roles } from './roles.js';
 import { Scripts } from './scripts.js';
+import { Themes } from './themes.js';
 import { Users } from './users.js';
 
 export type WorkspaceConnOptions = {
@@ -41,6 +42,7 @@ export class WorkspaceConn {
   public notifications: Notifications;
   public drive: Drive;
   public roles: Roles;
+  public themes: Themes;
 
   constructor(options: WorkspaceConnOptions = {}) {
     this.options = options;
@@ -97,6 +99,7 @@ export class WorkspaceConn {
     this.notifications = new Notifications(this.api);
     this.drive = new Drive(this.api);
     this.roles = new Roles(this.api);
+    this.themes = new Themes(this.api);
   }
 
   public setSession(session: string) {
