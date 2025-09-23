@@ -63,6 +63,23 @@ export class UserInboxNotifications {
   }
 
   /**
+   * Marks a notification as unread.
+   * @param options Request options.
+   * @default
+   * response: null
+   */
+  public async unread(
+    options: { params: InboxNotificationReadFilters } & RequestOptions
+  ): Promise<null> {
+    return this.api.fetch({
+      method: 'POST',
+      path: 'notifications/inbox/unread',
+      params: options.params,
+      modifier: options.modifier,
+    });
+  }
+
+  /**
    * Deletes inbox notifications.
    * @param options Request options.
    * @default
