@@ -43,7 +43,7 @@ export class EventContext<T = any> {
 
     const result = await handler(this, this.event);
     if (result !== undefined) {
-      this.send(result);
+      this.sendRaw(result);
     }
 
     await this.next();
