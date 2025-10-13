@@ -29,3 +29,5 @@ export type * from './models/scripts.js';
 export type * from './models/tags.js';
 export type * from './models/tokens.js';
 export type * from './models/users.js';
+export type * from './models/themes.js';
+
