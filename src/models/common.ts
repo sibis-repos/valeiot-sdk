@@ -44,6 +44,7 @@ export type APIRawResponse<T> = {
 
 export type APIResponse<T = null> = APIRawResponse<T> & {
   httpStatusCode: number;
+  fetchResponse: Response;
   ok: boolean;
 };
 

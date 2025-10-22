@@ -83,9 +83,11 @@ export class API {
       request = options.modifier ? options.modifier(request) : request;
 
       let res: APIResponse<T>;
+      let fetchResponse: Response
       try {
         res = await fetch(url, request).then(async (response) => {
           let json = {};
+          
           try {
             json = await response.json();
           } catch (e) { }
@@ -93,12 +95,14 @@ export class API {
           return {
             ...json,
             ok: response.ok,
+            fetchResponse: response,
             httpStatusCode: response.status,
           } as APIResponse<T>;
         });
       } catch (e) {
         res = {
           code: `SDK_INTERNAL_ERROR (${e})`,
+          fetchResponse: null as any,
           httpStatusCode: 500,
           ok: false,
           data: null as T,
