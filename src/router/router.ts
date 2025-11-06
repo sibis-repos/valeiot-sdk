@@ -1,13 +1,20 @@
 import { ScriptEvent } from '../models/common.js';
+import { EventHandlerResult, EventResult } from './response.js';
 import { error } from './utils.js';
 
-export type EventHandler<T = any> = (ctx: EventContext<T>, event: ScriptEvent<T>) => Promise<any>;
+export type EventHandler<T = any, K = any> = (
+  ctx: EventContext<T>,
+  event: ScriptEvent<T>
+) => Promise<K & EventResult>;
+
+
 
 export class EventContext<T = any> {
   public keys: Record<string, any> = {};
+  public readonly result: EventHandlerResult;
+
   private handlers: EventHandler<T>[];
   private nextHandler: number = 0;
-  private data: any;
   private aborted: boolean = false;
   private event: ScriptEvent<T>;
   private resolver: (value: any) => void;
@@ -22,6 +29,17 @@ export class EventContext<T = any> {
     this.event = event;
     this.handlers = handlers;
     this.resolver = resolver;
+    this.result = new EventHandlerResult();
+  }
+
+  /**
+   * abort aborts the event cancelling future handling 
+   * and provinding the result. Is also sets the result 
+   * as failed.
+   */
+  public abort(): void {
+    this.aborted = true;
+    this.result.setFailed();
   }
 
   /**
@@ -30,7 +48,7 @@ export class EventContext<T = any> {
    */
   public async next(): Promise<void> {
     if (this.nextHandler >= this.handlers.length || this.aborted) {
-      this.resolver(this.data);
+      this.resolver(this.result.get());
       return;
     }
 
@@ -43,43 +61,18 @@ export class EventContext<T = any> {
 
     const result = await handler(this, this.event);
     if (result !== undefined) {
-      this.sendRaw(result);
+      this.result.setValue(result)
     }
 
     await this.next();
   }
 
   /**
-   * Aborts the event pipeline and sets a result value
-   * with an error prop.
-   * @param error The error message.
-   * @param value The value to set in response.
+   * message sets the result message in the metadata.
+   * @param message 
    */
-  public abort(error: string = "", value: Record<any, any> = {}): void {
-    this.abort()
-    this.sendRaw({
-      ...value,
-      error
-    })
-  }
+  public message(message: string): void {
 
-  /**
-   * Set the response data for the event.
-   * @param value The value to set.
-   */
-  public send(message: string = "", value: Record<any, any> = {}): void {
-    this.sendRaw({
-      ...value,
-      message
-    })
-  }
-
-   /**
-   * Set the response data for the event.
-   * @param value The value to set.
-   */
-  public sendRaw(value: any): void {
-    this.data = value;
   }
 
   /**
@@ -125,7 +118,7 @@ export class Router {
    */
   public on<T>(event: string, handler: EventHandler<T>): void {
     event = this.getFullPath(event);
-    this.registerHandler(event, handler)
+    this.registerHandler(event, handler);
   }
 
   private registerHandler<T>(event: string, handler: EventHandler<T>): void {
@@ -183,7 +176,7 @@ export class Router {
     }
     const handler = this.handlers[event.event];
     if (!handler) {
-      return error("HANDLER_NOT_FOUND")
+      return error('HANDLER_NOT_FOUND');
     }
 
     const paths = this.getPossiblePaths(event.event);
@@ -198,7 +191,7 @@ export class Router {
 
     handlers.push(handler);
 
-    let resolver: (value: unknown) => void = () => { };
+    let resolver: (value: unknown) => void = () => {};
     const resultPromise = new Promise((r) => {
       resolver = r;
     });
@@ -210,7 +203,7 @@ export class Router {
       return await resultPromise;
     } catch (err) {
       console.error('Error in event handler:', err);
-      return error("INTERNAL_ERROR");
+      return error('INTERNAL_ERROR');
     }
   }
 
