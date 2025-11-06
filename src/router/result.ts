@@ -41,6 +41,21 @@ export class EventHandlerResult {
     // Marks the time when this event handler started processing.
     this.createdAt = new Date();
   }
+ /**
+   * set sets the message, description, and value for the result.
+   * It updates the internal metadata fields and optionally assigns a value object.
+   * @param message - Optional message text to set.
+   * @param description - Optional description text to set.
+   * @param value - Optional value object to assign. If not provided, the current value remains unchanged.
+   */
+  public set(message?: string, description?: string, value?: Record<any, any>): void {
+    this.setMessage(message);
+    this.setDescription(description);
+    
+    if (value !== undefined) {
+      this.value = value;
+    }
+  }
 
   /**
    * setValue sets a value to result.

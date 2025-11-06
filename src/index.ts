@@ -2,6 +2,7 @@ export * from './api/api.js';
 export * from './api/conn_workspace.js';
 export * from './api/conn_user.js';
 export * from './router/router.js';
+export * from './router/result.js';
 
 export * from './tools/case-parser.js';
 
