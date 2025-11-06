@@ -1,13 +1,11 @@
 import { ScriptEvent } from '../models/common.js';
-import { EventHandlerResult, EventResult } from './response.js';
-import { error } from './utils.js';
+import { ResultHandlerNotFound, ResultInternalError } from './pre_defined_results.js';
+import { EventHandlerResult, EventResult } from './result.js';
 
 export type EventHandler<T = any, K = any> = (
   ctx: EventContext<T>,
   event: ScriptEvent<T>
 ) => Promise<K & EventResult>;
-
-
 
 export class EventContext<T = any> {
   public keys: Record<string, any> = {};
@@ -176,7 +174,7 @@ export class Router {
     }
     const handler = this.handlers[event.event];
     if (!handler) {
-      return error('HANDLER_NOT_FOUND');
+      return ResultHandlerNotFound;
     }
 
     const paths = this.getPossiblePaths(event.event);
@@ -203,7 +201,7 @@ export class Router {
       return await resultPromise;
     } catch (err) {
       console.error('Error in event handler:', err);
-      return error('INTERNAL_ERROR');
+      return ResultInternalError;
     }
   }
 
