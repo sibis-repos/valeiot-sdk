@@ -2,7 +2,7 @@ export type EventResult = {
   /**
    * _meta is the event result metadata.
    */
-  _meta: EventResultMetadata;
+  _meta?: EventResultMetadata;
 };
 
 export type EventResultMetadata = {

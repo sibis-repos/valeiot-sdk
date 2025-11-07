@@ -1,3 +1,4 @@
+import { EventResult } from '../router/result.js';
 import { OrderByFn } from './common.js';
 import { UserContext } from './users.js';
 
@@ -62,7 +63,7 @@ export type ScriptInvokeForm = {
 };
 
 export type ScriptInvokeResponse = {
-  result: any;
+  result: EventResult;
   failed: boolean;
   logs: string;
 };
