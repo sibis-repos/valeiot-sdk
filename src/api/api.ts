@@ -83,14 +83,14 @@ export class API {
       request = options.modifier ? options.modifier(request) : request;
 
       let res: APIResponse<T>;
-      let fetchResponse: Response
+      let fetchResponse: Response;
       try {
         res = await fetch(url, request).then(async (response) => {
           let json = {};
-          
+
           try {
             json = await response.json();
-          } catch (e) { }
+          } catch (e) {}
 
           return {
             ...json,
