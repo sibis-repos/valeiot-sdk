@@ -5,6 +5,7 @@ import { Buckets } from './buckets.js';
 import { Dashboards } from './dashboards.js';
 import { Datasources } from './datasources.js';
 import { Drive } from './drive.js';
+import { Mqtt } from './mqtt.js';
 import { Networks } from './networks.js';
 import { Notifications } from './notifications.js';
 import { PayloadParsers } from './payload_parsers.js';
@@ -35,6 +36,7 @@ export class WorkspaceConn {
   public scripts: Scripts;
   public quotas: Quotas;
   public networks: Networks;
+  public mqtt: Mqtt;
   public payloadParsers: PayloadParsers;
   public publicPayloadParsers: PublicPayloadParsers;
   public portals: Portals;
@@ -92,6 +94,7 @@ export class WorkspaceConn {
     this.scripts = new Scripts(this.api);
     this.quotas = new Quotas(this.api);
     this.networks = new Networks(this.api);
+    this.mqtt = new Mqtt(this.api);
     this.payloadParsers = new PayloadParsers(this.api);
     this.publicPayloadParsers = new PublicPayloadParsers(this.api);
     this.portals = new Portals(this.api);
