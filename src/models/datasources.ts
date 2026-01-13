@@ -52,6 +52,7 @@ export type DatasourceForm = {
 export type DatasourcesDetailsListFilters = {
   name?: string;
   type?: DatasourceType;
+  dnid?: string;
   alerted?: boolean;
   alertName?: string;
   alertCategory?: string;
@@ -72,6 +73,7 @@ export type DatasourcesDetailsListFilters = {
 export type DatasourcesListFilters = {
   name?: string;
   type?: DatasourceType;
+  dnid?: string;
   tags?: TagsFilter;
   limit?: number;
   offset?: number;
