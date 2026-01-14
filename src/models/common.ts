@@ -25,6 +25,11 @@ export type ScriptEvent<T = any> = {
   content: T;
 };
 
+export type ScriptAttachment = {
+  filename: string;
+  size: number;
+};
+
 export type RequestOptions = {
   modifier?: RequestModifier;
 };
@@ -34,7 +39,7 @@ export type FetchOptions = RequestOptions & {
   method: string;
   body?: any;
   params?: any;
-  ignorePostProcessor?: boolean
+  ignorePostProcessor?: boolean;
 };
 
 export type APIRawResponse<T> = {

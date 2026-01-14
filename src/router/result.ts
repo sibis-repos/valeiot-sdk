@@ -39,7 +39,7 @@ export type EventResultMetadata = {
  */
 export type FileUploadURLParams = PresignedHTTPRequest & {
   fileID: number;
-  folderID: number;
+  folderID: number | null;
   filename: string;
 };
 
