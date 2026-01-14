@@ -16,6 +16,7 @@ export type * from './models/dashboards.js';
 export type * from './models/datapoints.js';
 export type * from './models/datasources.js';
 export type * from './models/drive_folder.js';
+export type * from './models/drive_file.js';
 export type * from './models/inbox_notifications.js';
 export type * from './models/list.js';
 export type * from './models/networks.js';

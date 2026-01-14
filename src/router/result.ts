@@ -1,3 +1,5 @@
+import { PresignedHTTPRequest } from '../models/drive_file';
+
 export type EventResult = {
   /**
    * _meta is the event result metadata.
@@ -24,6 +26,21 @@ export type EventResultMetadata = {
    * that the script took to handle the event.
    */
   duration?: number;
+  /**
+   * fileUploads is an array of file upload parameters.
+   */
+  fileUploads?: FileUploadURLParams[];
+};
+
+/**
+ * FileUploadURLParams is a helper type to manage
+ * the parameters for generating a presigned URL
+ * for file uploads to S3.
+ */
+export type FileUploadURLParams = PresignedHTTPRequest & {
+  fileID: number;
+  folderID: number;
+  filename: string;
 };
 
 /**
@@ -41,7 +58,7 @@ export class EventHandlerResult {
     // Marks the time when this event handler started processing.
     this.createdAt = new Date();
   }
- /**
+  /**
    * set sets the message, description, and value for the result.
    * It updates the internal metadata fields and optionally assigns a value object.
    * @param message - Optional message text to set.
@@ -51,7 +68,7 @@ export class EventHandlerResult {
   public set(message?: string, description?: string, value?: Record<any, any>): void {
     this.setMessage(message);
     this.setDescription(description);
-    
+
     if (value !== undefined) {
       this.value = value;
     }
@@ -79,6 +96,14 @@ export class EventHandlerResult {
    */
   public setDescription(description?: string): void {
     this.meta.description = description;
+  }
+
+  /**
+   * setUploadFileURL sets the upload file URL parameters.
+   * @param params FileUploadURLParams object.
+   */
+  public setUploadFileURL(params: FileUploadURLParams): void {
+    this.meta.fileUploads = [...(this.meta.fileUploads || []), params];
   }
 
   /**
