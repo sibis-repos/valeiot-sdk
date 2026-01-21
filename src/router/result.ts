@@ -38,8 +38,8 @@ export type EventResultMetadata = {
  * for file uploads to S3.
  */
 export type FileUploadURLParams = PresignedHTTPRequest & {
-  fileID: number;
-  folderID: number | null;
+  fileId: number;
+  folderId: number | null;
   filename: string;
 };
 

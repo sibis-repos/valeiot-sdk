@@ -13,4 +13,6 @@ export type MQTTPublish = {
   payload: string;
   /** QoS is the quality-of-service (0, 1, or 2). */
   qos: 0 | 1 | 2;
+  /** Retain is whether the message should be retained. */
+  retain: boolean;
 };
