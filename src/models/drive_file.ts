@@ -22,6 +22,7 @@ export type DriveFile = {
 
 export type DriveFileForm = {
   folderId?: number | null;
+  public?: boolean;
   name: string;
   description: string;
   size: number;
