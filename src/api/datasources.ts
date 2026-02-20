@@ -4,8 +4,8 @@ import {
   DatasourceForm,
   DatasourcesDetailsListFilters,
   DatasourcesListFilters,
+  ListWithTagKeys,
 } from '../models/datasources.js';
-import { List } from '../models/list.js';
 import { Network } from '../models/networks.js';
 import { ID, RequestOptions } from '../models/common.js';
 import { API } from './api.js';
@@ -131,7 +131,7 @@ export class Datasources {
     options: {
       params?: DatasourcesListFilters;
     } & RequestOptions = {}
-  ): Promise<List<Datasource>> {
+  ): Promise<ListWithTagKeys<Datasource>> {
     return this.api.fetch({
       method: 'GET',
       path: 'datasources',
@@ -168,7 +168,7 @@ export class Datasources {
     options: {
       params?: DatasourcesDetailsListFilters;
     } & RequestOptions = {}
-  ): Promise<List<DatasourceDetails>> {
+  ): Promise<ListWithTagKeys<DatasourceDetails>> {
     return this.api.fetch({
       method: 'GET',
       path: 'datasources/details',

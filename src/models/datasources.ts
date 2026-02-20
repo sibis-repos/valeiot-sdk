@@ -5,6 +5,11 @@ import { NetworkReduced } from './networks.js';
 import { DatasourceObject } from './objects.js';
 import { PayloadParserReduced } from './payload_parsers.js';
 import { Tag, TagsFilter } from './tags.js';
+import { List } from './list.js';
+
+export type ListWithTagKeys<T> = List<T> & {
+  tagKeys?: string[];
+};
 
 export type DatasourceType = 'entity' | 'device';
 export type DatasourceOrderBy = 'name' | 'created_at' | 'updated_at';
@@ -62,6 +67,7 @@ export type DatasourcesDetailsListFilters = {
   withObjects?: boolean;
   objectsKeys?: string[];
   withDatapoints?: boolean;
+  withTagKeys?: boolean;
   datapointsVariables?: string[];
   targetBucket?: number;
   limit?: number;
@@ -79,4 +85,5 @@ export type DatasourcesListFilters = {
   offset?: number;
   orderBy?: DatasourceOrderBy;
   orderByFn?: OrderByFn;
+  withTagKeys?: boolean;
 };
