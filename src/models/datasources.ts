@@ -12,7 +12,15 @@ export type ListWithTagKeys<T> = List<T> & {
 };
 
 export type DatasourceType = 'entity' | 'device';
-export type DatasourceOrderBy = 'name' | 'created_at' | 'updated_at';
+export type DatasourceFilterMode = 'like' | 'equal';
+export type DatasourceOrderBy =
+  | 'name'
+  | 'dnid'
+  | 'created_at'
+  | 'updated_at'
+  | 'last_input'
+  | 'network_name'
+  | 'payload_parser_name';
 
 export type Datasource = {
   id: number;
@@ -23,6 +31,7 @@ export type Datasource = {
   payloadParserId?: number | null;
   createdAt: Date;
   updatedAt: Date;
+  lastInput?: Date;
   name: string;
   blocked: boolean;
 };
@@ -78,12 +87,13 @@ export type DatasourcesDetailsListFilters = {
 
 export type DatasourcesListFilters = {
   name?: string;
-  type?: DatasourceType;
+  nameFilterMode?: DatasourceFilterMode;
   dnid?: string;
+  dnidFilterMode?: DatasourceFilterMode;
+  type?: DatasourceType;
   tags?: TagsFilter;
   limit?: number;
   offset?: number;
   orderBy?: DatasourceOrderBy;
   orderByFn?: OrderByFn;
-  withTagKeys?: boolean;
 };

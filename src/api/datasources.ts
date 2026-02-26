@@ -43,6 +43,7 @@ export class Datasources {
    *  payloadParserId: null,
    *  createdAt: Date,
    *  updatedAt: Date,
+   *  lastInput: Date,
    *  name: "My device",
    *  blocked: false
    * }
@@ -122,6 +123,7 @@ export class Datasources {
    *    payloadParserId: null,
    *    createdAt: Date,
    *    updatedAt: Date,
+   *    lastInput: Date,
    *    name: "My device",
    *    blocked: false
    *  }
