@@ -65,20 +65,22 @@ export type DatasourceForm = {
 
 export type DatasourcesDetailsListFilters = {
   name?: string;
-  type?: DatasourceType;
+  nameFilterMode?: DatasourceFilterMode;
   dnid?: string;
-  alerted?: boolean;
-  alertName?: string;
-  alertCategory?: string;
-  startAlertedAt?: Date;
-  stopAlertedAt?: Date;
+  dnidFilterMode?: DatasourceFilterMode;
+  type?: DatasourceType;
+  networkId?: number;
+  networkName?: string;
+  networkNameFilterMode?: DatasourceFilterMode;
+  payloadParserId?: number;
+  payloadParserName?: string;
+  payloadParserNameFilterMode?: DatasourceFilterMode;
   tags?: TagsFilter;
   withObjects?: boolean;
-  objectsKeys?: string[];
+  objectsKeys?: string;
   withDatapoints?: boolean;
+  datapointsVariables?: string;
   withTagKeys?: boolean;
-  datapointsVariables?: string[];
-  targetBucket?: number;
   limit?: number;
   offset?: number;
   orderBy?: DatasourceOrderBy;
