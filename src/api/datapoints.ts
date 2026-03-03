@@ -118,4 +118,28 @@ export class Datapoints {
       modifier: options.modifier,
     });
   }
+
+  /**
+   * Deletes a specific datapoint by variable and time.
+   * Route: DELETE /workspace/datasources/:id/datapoints/:variable?time=<time-iso>
+   * @param options Request options.
+   * @default
+   * response: null
+   */
+  public async deleteOne(
+    options: {
+      datasourceId: number;
+      variable: string;
+      time: Date | string;
+    } & RequestOptions
+  ): Promise<null> {
+    const time =
+      options.time instanceof Date ? options.time.toISOString() : options.time;
+    return this.api.fetch({
+      method: 'DELETE',
+      path: `datasources/${options.datasourceId}/datapoints/${encodeURIComponent(options.variable)}`,
+      params: { time },
+      modifier: options.modifier,
+    });
+  }
 }
