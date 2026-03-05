@@ -16,8 +16,8 @@ export type DriveFile = {
   name: string;
   description: string;
   size: number;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type DriveFileForm = {

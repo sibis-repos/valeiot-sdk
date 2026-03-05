@@ -16,8 +16,8 @@ export type Script = {
   cloudConfig: ScriptCloudConfig;
   webhookConfig?: ScriptWebhookConfig;
   codeSize: number;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type ScriptForm = {
@@ -38,9 +38,9 @@ export type ScriptDetails = {
   cloudConfig: ScriptCloudConfig;
   webhookConfig?: ScriptWebhookConfig;
   codeSize: number;
-  createdAt: Date;
-  updatedAt: Date;
-  lastTrigger?: Date;
+  createdAt: string;
+  updatedAt: string;
+  lastTrigger?: string;
 };
 
 export type ScriptCloudConfig = {
@@ -94,4 +94,34 @@ export type ScriptLayer = {
 
 export type ScriptCode = {
   code: string;
+};
+
+/** Reduced script log (list item): id and time only. */
+export type ScriptLog = {
+  id: number;
+  time: string;
+};
+
+/** Filters for listing script logs (start-time, stop-time, limit, offset). */
+export type ScriptLogsListFilters = {
+  startTime?: string;
+  stopTime?: string;
+  limit?: number;
+  offset?: number;
+};
+
+/** Full script log with payload and result (GET by id). */
+export type ScriptLogDetails = {
+  id: number;
+  time: string;
+  payload: {
+    event: string;
+    metadata: Record<string, any>;
+    content: any;
+  };
+  result: {
+    failed: boolean;
+    result: any;
+    logs: string;
+  };
 };

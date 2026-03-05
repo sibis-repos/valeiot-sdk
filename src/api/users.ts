@@ -1,6 +1,6 @@
 import { List } from '../models/list.js';
 import { TokenID } from '../models/tokens.js';
-import { User, UserDetails, UserForm, UsersListFilters } from '../models/users.js';
+import { User, UserDetails, UserForm, UserUpdatePasswordForm, UsersListFilters } from '../models/users.js';
 import { ID, RequestOptions } from '../models/common.js';
 import { API } from './api.js';
 import { UserTags } from './users_tags.js';
@@ -180,6 +180,22 @@ export class Users {
     return this.api.fetch({
       method: 'DELETE',
       path: `users/${options.userId}`,
+      modifier: options.modifier,
+    });
+  }
+
+  /**
+   * Updates a user's password (workspace admin). Route: PUT /workspace/users/:userId/password.
+   * @param options Request options with userId and body { password }.
+   * @default response: null
+   */
+  public async updatePassword(
+    options: { userId: number; body: UserUpdatePasswordForm } & RequestOptions
+  ): Promise<null> {
+    return this.api.fetch({
+      method: 'PUT',
+      path: `users/${options.userId}/password`,
+      body: options.body,
       modifier: options.modifier,
     });
   }

@@ -8,6 +8,9 @@ import {
   ScriptInvokeForm,
   ScriptInvokeResponse,
   ScriptLayer,
+  ScriptLog,
+  ScriptLogDetails,
+  ScriptLogsListFilters,
   ScriptsListFilters,
 } from '../models/scripts.js';
 import { API } from './api.js';
@@ -238,6 +241,39 @@ export class Scripts {
       method: 'POST',
       path: `scripts/${options.scriptId}/invoke`,
       body: options.body,
+      modifier: options.modifier,
+    });
+  }
+
+  /**
+   * Lists script logs (reduced: id and time). Route: GET /workspace/scripts/:scriptId/logs.
+   * Logs are retained 7 days. Use returned item ids with getLog to fetch full details.
+   * @param options Request options with scriptId and optional startTime, stopTime, limit (1–50), offset.
+   */
+  public async getLogsList(
+    options: {
+      scriptId: number;
+      params?: ScriptLogsListFilters;
+    } & RequestOptions
+  ): Promise<List<ScriptLog>> {
+    return this.api.fetch({
+      method: 'GET',
+      path: `scripts/${options.scriptId}/logs`,
+      params: options.params,
+      modifier: options.modifier,
+    });
+  }
+
+  /**
+   * Gets a single script log by id (full: time, payload, result). Route: GET /workspace/scripts/:scriptId/logs/:logId.
+   * @param options Request options with scriptId and logId.
+   */
+  public async getLog(
+    options: { scriptId: number; logId: number } & RequestOptions
+  ): Promise<ScriptLogDetails> {
+    return this.api.fetch({
+      method: 'GET',
+      path: `scripts/${options.scriptId}/logs/${options.logId}`,
       modifier: options.modifier,
     });
   }

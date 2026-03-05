@@ -29,9 +29,9 @@ export type Action = {
   lock: boolean;
   lockConfig?: ActionLockConfig;
   locked: boolean;
-  lockedUntil?: Date;
-  createdAt: Date;
-  updatedAt: Date;
+  lockedUntil?: string;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type ActionDetails = {
@@ -46,10 +46,10 @@ export type ActionDetails = {
   lock: boolean;
   lockConfig?: ActionLockConfig;
   locked: boolean;
-  lockedUntil?: Date;
-  createdAt: Date;
-  updatedAt: Date;
-  lastTrigger?: Date;
+  lockedUntil?: string;
+  createdAt: string;
+  updatedAt: string;
+  lastTrigger?: string;
 };
 
 export type ActionForm = {

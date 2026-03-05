@@ -5,8 +5,8 @@ export type NetworkOrderBy = 'name' | 'description' | 'type' | 'created_at' | 'u
 
 export type Network = {
   id: number;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   name: string;
   type: string;
   description: string;
@@ -28,11 +28,11 @@ export type NetworkToken = {
   id: number;
   workspaceId?: number | null;
   networkId: number;
-  createdAt: Date;
+  createdAt: string;
   name: string;
   token: string;
   permission: TokenPermission;
-  expiresAt?: Date | null;
+  expiresAt?: string | null;
 };
 
 export type DNID = {

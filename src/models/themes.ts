@@ -4,8 +4,8 @@ export type ThemeOrderBy = 'name' | 'description' | 'version' | 'created_at' | '
 
 export type Theme = {
   id: number;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   name: string;
   description: string;
   version: string;

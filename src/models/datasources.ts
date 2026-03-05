@@ -29,9 +29,9 @@ export type Datasource = {
   type: DatasourceType;
   dnid: string;
   payloadParserId?: number | null;
-  createdAt: Date;
-  updatedAt: Date;
-  lastInput?: Date;
+  createdAt: string;
+  updatedAt: string;
+  lastInput?: string;
   name: string;
   blocked: boolean;
 };
@@ -42,7 +42,7 @@ export type DatasourceDetails = {
   dnid: string;
   createdAt: string;
   updatedAt: string;
-  lastInput?: Date;
+  lastInput?: string;
   name: string;
   blocked: boolean;
   bucket: BucketReduced;

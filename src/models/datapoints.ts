@@ -19,7 +19,7 @@ export type DatapointAggrFunction =
 export type DatapointFilterOperator = 'eq' | 'ne' | 'gt' | 'gte' | 'lt' | 'lte';
 
 export type Datapoint = {
-  time: Date;
+  time: string;
   variable: string;
   value: any;
 };

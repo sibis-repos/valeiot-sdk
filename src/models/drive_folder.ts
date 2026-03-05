@@ -8,8 +8,8 @@ export type DriveFolder = {
   parentId: number | null;
   name: string;
   description: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type DriveFolderForm = {

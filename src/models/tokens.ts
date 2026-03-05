@@ -6,14 +6,14 @@ export type Token = {
   name: string;
   token: string;
   permission: TokenPermission;
-  createdAt: Date;
-  expiresAt: Date | null;
+  createdAt: string;
+  expiresAt: string | null;
 };
 
 export type TokenForm = {
   name: string;
   permission: TokenPermission;
-  expiresAt: Date | null;
+  expiresAt: string | null;
 };
 
 export type TokenID = {

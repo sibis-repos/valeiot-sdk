@@ -5,8 +5,8 @@ export type PortalOrderBy = 'name' | 'description' | 'version' | 'created_at' | 
 
 export type Portal = {
   id: number;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   appName: string;
   name: string;
   themeId?: number;
@@ -17,8 +17,8 @@ export type Portal = {
 
 export type PortalDetails = {
   id: number;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   appName: string;
   name: string;
   theme?: ThemeReduced;

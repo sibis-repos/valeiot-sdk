@@ -5,8 +5,8 @@ export type DashboardOrderBy = 'name' | 'description' | 'version' | 'created_at'
 
 export type Dashboard = {
   id: number;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   name: string;
   description: string;
   version: string;

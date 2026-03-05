@@ -15,8 +15,8 @@ export type UserForm = {
 export type User = {
   id: number;
   roleId: number;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   name: string;
   email: string;
 };
@@ -30,13 +30,18 @@ export type UserSelfUpdatePasswordForm = {
   newPassword: string;
 };
 
+/** Body for workspace admin to set a user's password (PUT /workspace/users/:id/password). */
+export type UserUpdatePasswordForm = {
+  password: string;
+};
+
 export type UserDetails = {
   id: number;
   role: RoleReduced;
-  lastActivity?: Date;
+  lastActivity?: string;
   tags: Tag[];
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   name: string;
   email: string;
 };

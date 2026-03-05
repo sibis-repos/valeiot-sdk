@@ -6,8 +6,8 @@ export type DatasourceObjectOrderBy = 'name' | 'created_at' | 'updated_at';
 export type DatasourceObject = {
   id: number;
   key: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   value: Record<string, any>;
 };
 

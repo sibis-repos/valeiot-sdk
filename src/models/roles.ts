@@ -9,8 +9,8 @@ export type Role = {
   name: string;
   description: string;
   permissions: RolePermissions;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type RoleForm = {

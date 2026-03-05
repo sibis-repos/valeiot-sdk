@@ -1,7 +1,7 @@
 export type InboxNotification = {
   content: Record<any, any>;
   isRead: boolean;
-  createdAt: Date;
+  createdAt: string;
 };
 
 export type UsersInboxNotificationForm = {
@@ -21,8 +21,6 @@ export type InboxNotificationDeleteFilters = {
   startCreatedAt: Date;
   stopCreatedAt?: Date;
 };
-
-
 
 export type InboxNotificationReadFilters = {
   startCreatedAt: Date;

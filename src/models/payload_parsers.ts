@@ -12,8 +12,8 @@ export type PayloadParser = {
   name: string;
   description: string;
   code: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type PayloadParserForm = {
