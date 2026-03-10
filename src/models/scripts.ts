@@ -7,6 +7,7 @@ export type ScriptRuntime = 'nodejs20.x';
 export type ScriptExecutionMode = 'cloud' | 'webhook';
 export type ScriptWebhookMethod = 'GET' | 'POST' | 'DELETE' | 'PATCH' | 'PUT';
 
+/** `updatedBy` format: `wt-<id>` (workspace token) or `ws-<owner>` (workspace session owner id). */
 export type Script = {
   id: number;
   name: string;
@@ -18,6 +19,7 @@ export type Script = {
   codeSize: number;
   createdAt: string;
   updatedAt: string;
+  updatedBy?: string;
 };
 
 export type ScriptForm = {
@@ -29,6 +31,7 @@ export type ScriptForm = {
   webhookConfig?: ScriptWebhookConfig;
 };
 
+/** `updatedBy` format: `wt-<id>` (workspace token) or `ws-<owner>` (workspace session owner id). */
 export type ScriptDetails = {
   id: number;
   name: string;
@@ -41,6 +44,7 @@ export type ScriptDetails = {
   createdAt: string;
   updatedAt: string;
   lastTrigger?: string;
+  updatedBy?: string;
 };
 
 export type ScriptCloudConfig = {
