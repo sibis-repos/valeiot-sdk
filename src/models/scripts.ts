@@ -3,7 +3,7 @@ import { OrderByFn } from './common.js';
 import { UserContext } from './users.js';
 
 export type ScriptOrderBy = 'name' | 'description' | 'runtime' | 'created_at' | 'updated_at';
-export type ScriptRuntime = 'nodejs20.x';
+export type ScriptRuntime = 'nodejs20.x' | 'nodejs24.x';
 export type ScriptExecutionMode = 'cloud' | 'webhook';
 export type ScriptWebhookMethod = 'GET' | 'POST' | 'DELETE' | 'PATCH' | 'PUT';
 
