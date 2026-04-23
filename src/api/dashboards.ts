@@ -4,11 +4,19 @@ import { ID, RequestOptions } from '../models/common.js';
 import { API } from './api.js';
 import { DashboardTags } from './dashboards_tags.js';
 
+/**
+ * Workspace API wrapper for Valeiot dashboards.
+ */
 export class Dashboards {
   private api: API;
 
   public tags: DashboardTags;
 
+  /**
+   * Creates a dashboards client and wires the nested tags resource.
+   *
+   * @param api Shared API transport.
+   */
   constructor(api: API) {
     this.api = api;
     this.tags = new DashboardTags(this.api);

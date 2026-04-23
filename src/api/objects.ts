@@ -8,10 +8,18 @@ import { ID, RequestOptions } from '../models/common.js';
 import { API } from './api.js';
 import { DatasourceObjectTags } from './objects_tags.js';
 
+/**
+ * API wrapper for datasource objects and object values.
+ */
 export class Objects {
   private api: API;
   public tags: DatasourceObjectTags;
 
+  /**
+   * Creates an objects client and wires the nested object tags resource.
+   *
+   * @param api Shared API transport.
+   */
   constructor(api: API) {
     this.api = api;
     this.tags = new DatasourceObjectTags(this.api);

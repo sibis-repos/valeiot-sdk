@@ -3,8 +3,14 @@ import { RoleReduced } from './roles.js';
 import { Tag, TagsFilter } from './tags.js';
 import { Permissions } from './tokens.js';
 
+/**
+ * Sort fields accepted by user listing endpoints.
+ */
 export type UserOrderBy = 'name' | 'email' | 'role_id' | 'created_at' | 'updated_at';
 
+/**
+ * Payload used to create or update a workspace user.
+ */
 export type UserForm = {
   roleId: number;
   name: string;
@@ -12,6 +18,9 @@ export type UserForm = {
   password: string;
 };
 
+/**
+ * Base user resource.
+ */
 export type User = {
   id: number;
   roleId: number;
@@ -21,10 +30,16 @@ export type User = {
   email: string;
 };
 
+/**
+ * Payload used when a logged-in user updates their own profile.
+ */
 export type UserSelfUpdateForm = {
   name: string;
 }
 
+/**
+ * Payload used when a logged-in user changes their own password.
+ */
 export type UserSelfUpdatePasswordForm = {
   oldPassword: string;
   newPassword: string;
@@ -35,6 +50,9 @@ export type UserUpdatePasswordForm = {
   password: string;
 };
 
+/**
+ * Expanded user view including resolved role and tags.
+ */
 export type UserDetails = {
   id: number;
   role: RoleReduced;
@@ -46,6 +64,9 @@ export type UserDetails = {
   email: string;
 };
 
+/**
+ * User metadata embedded in script events and auth-related payloads.
+ */
 export type UserContext = {
   id: number;
   permission: Permissions;
@@ -54,6 +75,9 @@ export type UserContext = {
   tags: RawTag[];
 };
 
+/**
+ * Filters used when listing users.
+ */
 export type UsersListFilters = {
   name?: string;
   email?: string;

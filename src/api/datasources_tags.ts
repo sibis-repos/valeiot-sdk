@@ -3,9 +3,17 @@ import { Tag } from '../models/tags.js';
 import { ID, RawTag, RequestOptions, TagForm } from '../models/common.js';
 import { API } from './api.js';
 
+/**
+ * API wrapper for datasource tag operations.
+ */
 export class DatasourceTags {
   private api: API;
 
+  /**
+   * Creates a datasource tags client.
+   *
+   * @param api Shared API transport.
+   */
   constructor(api: API) {
     this.api = api;
   }

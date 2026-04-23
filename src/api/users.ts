@@ -5,11 +5,19 @@ import { ID, RequestOptions } from '../models/common.js';
 import { API } from './api.js';
 import { UserTags } from './users_tags.js';
 
+/**
+ * Workspace or user API wrapper for Valeiot users.
+ */
 export class Users {
   private api: API;
 
   public tags: UserTags;
 
+  /**
+   * Creates a users client and wires the nested tags resource.
+   *
+   * @param api Shared API transport.
+   */
   constructor(api: API) {
     this.api = api;
     this.tags = new UserTags(api);

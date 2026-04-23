@@ -15,9 +15,17 @@ import {
 } from '../models/scripts.js';
 import { API } from './api.js';
 
+/**
+ * Workspace or user API wrapper for Valeiot scripts.
+ */
 export class Scripts {
   private api: API;
 
+  /**
+   * Creates a scripts client.
+   *
+   * @param api Shared API transport.
+   */
   constructor(api: API) {
     this.api = api;
   }

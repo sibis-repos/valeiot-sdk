@@ -3,13 +3,25 @@ import { List } from '../models/list.js';
 import { ID, RequestOptions } from '../models/common.js';
 import { API } from './api.js';
 
+/**
+ * Workspace API wrapper for Valeiot actions.
+ */
 export class Actions {
   private api: API;
 
+  /**
+   * Creates an actions client.
+   *
+   * @param api Shared API transport.
+   */
   constructor(api: API) {
     this.api = api;
   }
 
+  /**
+   * Retrieves a single action by id.
+   * @param options Request options.
+   */
   public async get(options: { actionId: number } & RequestOptions): Promise<Action> {
     return this.api.fetch({
       method: 'GET',
@@ -18,6 +30,10 @@ export class Actions {
     });
   }
 
+  /**
+   * Retrieves a list of actions.
+   * @param options Request options.
+   */
   public async getList(
     options: { params?: ActionsListFilters } & RequestOptions = {}
   ): Promise<List<Action>> {
@@ -29,6 +45,10 @@ export class Actions {
     });
   }
 
+  /**
+   * Retrieves an expanded list of actions including operational fields.
+   * @param options Request options.
+   */
   public async getDetailsList(
     options: { params?: ActionsListFilters } & RequestOptions = {}
   ): Promise<List<ActionDetails>> {
@@ -40,6 +60,10 @@ export class Actions {
     });
   }
 
+  /**
+   * Creates a new action.
+   * @param options Request options.
+   */
   public async create(options: { body: ActionForm } & RequestOptions): Promise<ID> {
     return this.api.fetch({
       method: 'POST',
@@ -49,6 +73,10 @@ export class Actions {
     });
   }
 
+  /**
+   * Updates an existing action.
+   * @param options Request options.
+   */
   public async update(
     options: { actionId: number; body: ActionForm } & RequestOptions
   ): Promise<null> {
@@ -60,6 +88,10 @@ export class Actions {
     });
   }
 
+  /**
+   * Deletes an action.
+   * @param options Request options.
+   */
   public async delete(options: { actionId: number } & RequestOptions): Promise<null> {
     return this.api.fetch({
       method: 'DELETE',

@@ -2,9 +2,21 @@ import { EventResult } from '../router/result.js';
 import { OrderByFn } from './common.js';
 import { UserContext } from './users.js';
 
+/**
+ * Sort fields accepted by script listing endpoints.
+ */
 export type ScriptOrderBy = 'name' | 'description' | 'runtime' | 'created_at' | 'updated_at';
+/**
+ * Supported cloud runtimes for Valeiot scripts.
+ */
 export type ScriptRuntime = 'nodejs20.x' | 'nodejs24.x';
+/**
+ * Script execution modes supported by the platform.
+ */
 export type ScriptExecutionMode = 'cloud' | 'webhook';
+/**
+ * HTTP methods accepted by webhook-mode scripts.
+ */
 export type ScriptWebhookMethod = 'GET' | 'POST' | 'DELETE' | 'PATCH' | 'PUT';
 
 /** `updatedBy` format: `wt-<id>` (workspace token) or `ws-<owner>` (workspace session owner id). */
@@ -22,6 +34,9 @@ export type Script = {
   updatedBy?: string;
 };
 
+/**
+ * Payload used to create or update a script.
+ */
 export type ScriptForm = {
   name: string;
   description: string;
@@ -47,6 +62,9 @@ export type ScriptDetails = {
   updatedBy?: string;
 };
 
+/**
+ * Cloud execution configuration for a script.
+ */
 export type ScriptCloudConfig = {
   runtime: ScriptRuntime;
   timeout: number; //seconds
@@ -54,6 +72,9 @@ export type ScriptCloudConfig = {
   envVariables: Record<string, string>;
 };
 
+/**
+ * Webhook execution configuration for a script.
+ */
 export type ScriptWebhookConfig = {
   url: string;
   method: ScriptWebhookMethod;
@@ -61,17 +82,26 @@ export type ScriptWebhookConfig = {
   timeout: number; // number
 };
 
+/**
+ * Payload used to invoke a script manually.
+ */
 export type ScriptInvokeForm = {
   event: string;
   content: any;
 };
 
+/**
+ * Response returned after a script invocation.
+ */
 export type ScriptInvokeResponse = {
   result: EventResult;
   failed: boolean;
   logs: string;
 };
 
+/**
+ * Metadata associated with a script event execution.
+ */
 export type ScriptEventMeta = {
   user?: UserContext;
   workspaceId: number;
@@ -79,6 +109,9 @@ export type ScriptEventMeta = {
   time: string; // date in iso format
 };
 
+/**
+ * Filters used when listing scripts.
+ */
 export type ScriptsListFilters = {
   name?: string;
   description?: string;
@@ -91,11 +124,17 @@ export type ScriptsListFilters = {
   orderByFn?: OrderByFn;
 };
 
+/**
+ * Runtime layer option available for a given script runtime.
+ */
 export type ScriptLayer = {
   version: number;
   description: string;
 };
 
+/**
+ * Source code payload for a script.
+ */
 export type ScriptCode = {
   code: string;
 };

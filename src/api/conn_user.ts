@@ -7,6 +7,9 @@ import { UserNotifications } from './notifications_user.js';
 import { Scripts } from './scripts.js';
 import { Users } from './users.js';
 
+/**
+ * Options used to initialize a user-scoped Valeiot connection.
+ */
 export type UserConnOptions = {
   session: string;
   baseUrl: string;
@@ -14,6 +17,9 @@ export type UserConnOptions = {
   postProcessor?: RequestPosProcessor;
 };
 
+/**
+ * User-scoped API client for endpoints that depend on a user session.
+ */
 export class UserConn {
   private api: API;
   private options: UserConnOptions;
@@ -24,6 +30,11 @@ export class UserConn {
   public notifications: UserNotifications;
   public me: UserMe;
 
+  /**
+   * Creates a user connection bound to the `/user` API namespace.
+   *
+   * @param options User connection options.
+   */
   constructor(options: UserConnOptions) {
     this.options = options;
 
@@ -51,6 +62,11 @@ export class UserConn {
     this.me = new UserMe(this.api);
   }
 
+  /**
+   * Replaces the current user session id used for authentication.
+   *
+   * @param session Session identifier.
+   */
   public setSession(session: string) {
     this.options.session = session;
   }

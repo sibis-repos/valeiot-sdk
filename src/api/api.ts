@@ -6,6 +6,9 @@ import {
   RequestPosProcessor,
 } from '../models/common.js';
 
+/**
+ * Configuration used by the low-level API transport.
+ */
 export type APIOptions = {
   /**
    * baseUrl is the requests base url. Must not end with '/'.
@@ -27,6 +30,11 @@ export type APIOptions = {
 export class API {
   private options: APIOptions;
 
+  /**
+   * Creates a reusable API transport instance.
+   *
+   * @param options Transport configuration.
+   */
   constructor(options: APIOptions) {
     this.options = options;
   }

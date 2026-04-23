@@ -3,9 +3,17 @@ import { Tag } from '../models/tags.js';
 import { ID, RawTag, RequestOptions, TagForm } from '../models/common.js';
 import { API } from './api.js';
 
+/**
+ * API wrapper for dashboard tag operations.
+ */
 export class DashboardTags {
   private api: API;
 
+  /**
+   * Creates a dashboard tags client.
+   *
+   * @param api Shared API transport.
+   */
   constructor(api: API) {
     this.api = api;
   }

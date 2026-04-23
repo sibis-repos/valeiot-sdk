@@ -3,9 +3,17 @@ import { List } from '../models/list.js';
 import { ID, RequestOptions } from '../models/common.js';
 import { API } from './api.js';
 
+/**
+ * Workspace API wrapper for Valeiot themes.
+ */
 export class Themes {
   private api: API;
 
+  /**
+   * Creates a themes client.
+   *
+   * @param api Shared API transport.
+   */
   constructor(api: API) {
     this.api = api;
   }

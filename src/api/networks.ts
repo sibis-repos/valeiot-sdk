@@ -4,11 +4,19 @@ import { ID, RequestOptions } from '../models/common.js';
 import { API } from './api.js';
 import { NetworksTokens } from './networks_tokens.js';
 
+/**
+ * Workspace API wrapper for Valeiot networks.
+ */
 export class Networks {
   private api: API;
 
   public tokens: NetworksTokens;
 
+  /**
+   * Creates a networks client and wires the nested tokens resource.
+   *
+   * @param api Shared API transport.
+   */
   constructor(api: API) {
     this.api = api;
     this.tokens = new NetworksTokens(this.api);

@@ -3,9 +3,17 @@ import { Role, RoleForm, RolesListFilters } from '../models/roles.js';
 import { ID, RequestOptions } from '../models/common.js';
 import { API } from './api.js';
 
+/**
+ * Workspace API wrapper for Valeiot roles.
+ */
 export class Roles {
   private api: API;
 
+  /**
+   * Creates a roles client.
+   *
+   * @param api Shared API transport.
+   */
   constructor(api: API) {
     this.api = api;
   }

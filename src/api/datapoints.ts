@@ -9,9 +9,17 @@ import {
 import { List } from '../models/list.js';
 import { API } from './api.js';
 
+/**
+ * API wrapper for datasource datapoints.
+ */
 export class Datapoints {
   private api: API;
 
+  /**
+   * Creates a datapoints client.
+   *
+   * @param api Shared API transport.
+   */
   constructor(api: API) {
     this.api = api;
   }

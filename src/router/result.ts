@@ -1,5 +1,12 @@
 import { PresignedHTTPRequest } from '../models/drive_file';
 
+/**
+ * Base result shape returned by router handlers.
+ *
+ * Handler-specific payload fields are merged with this structure at runtime,
+ * while `_meta` stores execution metadata such as message, failure state,
+ * duration, and file upload instructions.
+ */
 export type EventResult = {
   /**
    * _meta is the event result metadata.
@@ -7,6 +14,9 @@ export type EventResult = {
   _meta?: EventResultMetadata;
 };
 
+/**
+ * Metadata attached to a router execution result.
+ */
 export type EventResultMetadata = {
   /**
    * message is the result message.
@@ -54,6 +64,9 @@ export class EventHandlerResult {
   private meta: EventResultMetadata = {};
   private createdAt: Date;
 
+  /**
+   * Creates an empty result accumulator and starts duration tracking.
+   */
   constructor() {
     // Marks the time when this event handler started processing.
     this.createdAt = new Date();

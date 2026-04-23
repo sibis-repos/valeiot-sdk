@@ -1,8 +1,14 @@
 import { OrderByFn } from './common.js';
 import { ThemeReduced } from './themes.js';
 
+/**
+ * Sort fields accepted by portal listing endpoints.
+ */
 export type PortalOrderBy = 'name' | 'description' | 'version' | 'created_at' | 'updated_at';
 
+/**
+ * Portal resource representing a publishable end-user application.
+ */
 export type Portal = {
   id: number;
   createdAt: string;
@@ -15,6 +21,9 @@ export type Portal = {
   content: any;
 };
 
+/**
+ * Expanded portal view including the resolved theme reference.
+ */
 export type PortalDetails = {
   id: number;
   createdAt: string;
@@ -27,6 +36,9 @@ export type PortalDetails = {
   content: any;
 };
 
+/**
+ * Payload used to create or update a portal.
+ */
 export type PortalForm = {
   appName: string;
   themeId?: number;
@@ -36,6 +48,9 @@ export type PortalForm = {
   content: any;
 };
 
+/**
+ * Filters used when listing portals.
+ */
 export type PortalsListFilters = {
   appName?: string;
   name?: string;

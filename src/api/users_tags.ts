@@ -3,9 +3,17 @@ import { Tag } from '../models/tags.js';
 import { ID, RawTag, RequestOptions, TagForm } from '../models/common.js';
 import { API } from './api.js';
 
+/**
+ * API wrapper for user tag operations.
+ */
 export class UserTags {
   private api: API;
 
+  /**
+   * Creates a user tags client.
+   *
+   * @param api Shared API transport.
+   */
   constructor(api: API) {
     this.api = api;
   }

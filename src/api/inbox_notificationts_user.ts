@@ -8,9 +8,17 @@ import {
 import { List } from '../models/list.js';
 import { API } from './api.js';
 
+/**
+ * User-scoped API wrapper for inbox notification operations.
+ */
 export class UserInboxNotifications {
   private api: API;
 
+  /**
+   * Creates a user inbox notifications client.
+   *
+   * @param api Shared API transport.
+   */
   constructor(api: API) {
     this.api = api;
   }

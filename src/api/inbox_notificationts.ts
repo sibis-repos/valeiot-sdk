@@ -8,9 +8,17 @@ import {
 import { List } from '../models/list.js';
 import { API } from './api.js';
 
+/**
+ * Workspace API wrapper for inbox notification management.
+ */
 export class InboxNotifications {
   private api: API;
 
+  /**
+   * Creates an inbox notifications client.
+   *
+   * @param api Shared API transport.
+   */
   constructor(api: API) {
     this.api = api;
   }

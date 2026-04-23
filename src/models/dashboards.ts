@@ -1,8 +1,14 @@
 import { OrderByFn } from './common.js';
 import { TagsFilter } from './tags.js';
 
+/**
+ * Sort fields accepted by dashboard listing endpoints.
+ */
 export type DashboardOrderBy = 'name' | 'description' | 'version' | 'created_at' | 'updated_at';
 
+/**
+ * Dashboard resource used for data visualization inside Valeiot.
+ */
 export type Dashboard = {
   id: number;
   createdAt: string;
@@ -13,6 +19,9 @@ export type Dashboard = {
   content: any;
 };
 
+/**
+ * Payload used to create or update a dashboard.
+ */
 export type DashboardForm = {
   name: string;
   description: string;
@@ -20,6 +29,9 @@ export type DashboardForm = {
   content: any;
 };
 
+/**
+ * Filters used when listing dashboards.
+ */
 export type DashboardsListFilters = {
   name?: string;
   description?: string;

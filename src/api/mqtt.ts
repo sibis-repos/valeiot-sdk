@@ -2,9 +2,17 @@ import { RequestOptions } from '../models/common.js';
 import { MQTTPublish } from '../models/mqtt.js';
 import { API } from './api.js';
 
+/**
+ * Workspace API wrapper for MQTT publishing operations.
+ */
 export class Mqtt {
   private api: API;
 
+  /**
+   * Creates an MQTT client.
+   *
+   * @param api Shared API transport.
+   */
   constructor(api: API) {
     this.api = api;
   }

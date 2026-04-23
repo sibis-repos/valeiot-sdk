@@ -17,6 +17,9 @@ import { Scripts } from './scripts.js';
 import { Themes } from './themes.js';
 import { Users } from './users.js';
 
+/**
+ * Options used to initialize a workspace-scoped Valeiot connection.
+ */
 export type WorkspaceConnOptions = {
   session?: string;
   token?: string;
@@ -25,6 +28,9 @@ export type WorkspaceConnOptions = {
   postProcessor?: RequestPosProcessor;
 };
 
+/**
+ * Workspace-scoped API client exposing the main Valeiot management resources.
+ */
 export class WorkspaceConn {
   private api: API;
   private options: WorkspaceConnOptions;
@@ -46,6 +52,11 @@ export class WorkspaceConn {
   public roles: Roles;
   public themes: Themes;
 
+  /**
+   * Creates a workspace connection using explicit options or environment defaults.
+   *
+   * @param options Workspace connection options.
+   */
   constructor(options: WorkspaceConnOptions = {}) {
     this.options = options;
 
@@ -105,10 +116,20 @@ export class WorkspaceConn {
     this.themes = new Themes(this.api);
   }
 
+  /**
+   * Replaces the current workspace session id used for authentication.
+   *
+   * @param session Session identifier.
+   */
   public setSession(session: string) {
     this.options.session = session;
   }
 
+  /**
+   * Replaces the current workspace bearer token used for authentication.
+   *
+   * @param token Workspace token.
+   */
   public setToken(token: string) {
     this.options.token = token;
   }

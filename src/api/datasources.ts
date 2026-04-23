@@ -14,6 +14,9 @@ import { DatasourceTags } from './datasources_tags.js';
 import { DatasourcesTokens } from './datasources_tokens.js';
 import { Objects } from './objects.js';
 
+/**
+ * Workspace or user API wrapper for Valeiot datasources, which represent both devices and entities.
+ */
 export class Datasources {
   private api: API;
 
@@ -22,6 +25,11 @@ export class Datasources {
   public tags: DatasourceTags;
   public tokens: DatasourcesTokens;
 
+  /**
+   * Creates a datasources client and wires nested datapoints, objects, tags, and tokens resources.
+   *
+   * @param api Shared API transport.
+   */
   constructor(api: API) {
     this.api = api;
     this.tags = new DatasourceTags(this.api);

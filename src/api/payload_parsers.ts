@@ -7,9 +7,17 @@ import {
 import { ID, RequestOptions } from '../models/common.js';
 import { API } from './api.js';
 
+/**
+ * Workspace API wrapper for private payload parsers.
+ */
 export class PayloadParsers {
   private api: API;
 
+  /**
+   * Creates a payload parsers client.
+   *
+   * @param api Shared API transport.
+   */
   constructor(api: API) {
     this.api = api;
   }

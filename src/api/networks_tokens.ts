@@ -3,9 +3,17 @@ import { List } from '../models/list.js';
 import { Token, TokenForm, TokenID } from '../models/tokens.js';
 import { API } from './api.js';
 
+/**
+ * API wrapper for network token operations.
+ */
 export class NetworksTokens {
   private api: API;
 
+  /**
+   * Creates a network tokens client.
+   *
+   * @param api Shared API transport.
+   */
   constructor(api: API) {
     this.api = api;
   }

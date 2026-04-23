@@ -1,9 +1,17 @@
 import { User, UserDetails, UserSelfUpdateForm, UserSelfUpdatePasswordForm } from '../models/users.js';
 import { API } from './api.js';
 
+/**
+ * User-scoped API wrapper for operations on the currently authenticated user.
+ */
 export class UserMe {
     private api: API;
 
+    /**
+     * Creates a self-user client.
+     *
+     * @param api Shared API transport.
+     */
     constructor(api: API) {
         this.api = api;
     }
@@ -51,6 +59,10 @@ export class UserMe {
         })
     }
 
+    /**
+      * Updates the profile of the current user.
+      * @param options Request options.
+    */
     public async update(options: { body: UserSelfUpdateForm }): Promise<null> {
         return await this.api.fetch({
             method: "PUT",
@@ -59,6 +71,10 @@ export class UserMe {
         })
     }
 
+    /**
+      * Updates the password of the current user.
+      * @param options Request options.
+    */
     public async updatePassword(options: { body: UserSelfUpdatePasswordForm }): Promise<null> {
         return await this.api.fetch({
             method: "PUT",
@@ -67,6 +83,9 @@ export class UserMe {
         })
     }
 
+    /**
+      * Deletes the current user account.
+    */
     public async delete(): Promise<null> {
         return this.api.fetch({
             method: "DELETE",

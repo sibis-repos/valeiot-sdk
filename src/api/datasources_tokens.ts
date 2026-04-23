@@ -3,9 +3,17 @@ import { List } from '../models/list.js';
 import { Token, TokenForm, TokenID } from '../models/tokens.js';
 import { API } from './api.js';
 
+/**
+ * API wrapper for datasource token operations.
+ */
 export class DatasourcesTokens {
   private api: API;
 
+  /**
+   * Creates a datasource tokens client.
+   *
+   * @param api Shared API transport.
+   */
   constructor(api: API) {
     this.api = api;
   }

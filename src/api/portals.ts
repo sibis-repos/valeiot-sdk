@@ -3,9 +3,17 @@ import { Portal, PortalDetails, PortalForm, PortalsListFilters } from '../models
 import { ID, RequestOptions } from '../models/common.js';
 import { API } from './api.js';
 
+/**
+ * Workspace API wrapper for Valeiot portals.
+ */
 export class Portals {
   private api: API;
 
+  /**
+   * Creates a portals client.
+   *
+   * @param api Shared API transport.
+   */
   constructor(api: API) {
     this.api = api;
   }

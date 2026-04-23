@@ -7,12 +7,26 @@ import { PayloadParserReduced } from './payload_parsers.js';
 import { Tag, TagsFilter } from './tags.js';
 import { List } from './list.js';
 
+/**
+ * Generic list response enriched with the available tag keys for the result set.
+ *
+ * @typeParam T Item type contained in the list.
+ */
 export type ListWithTagKeys<T> = List<T> & {
   tagKeys?: string[];
 };
 
+/**
+ * Datasource kinds supported by Valeiot.
+ */
 export type DatasourceType = 'entity' | 'device';
+/**
+ * String matching modes supported by datasource filters.
+ */
 export type DatasourceFilterMode = 'like' | 'equal';
+/**
+ * Sort fields accepted by datasource listing endpoints.
+ */
 export type DatasourceOrderBy =
   | 'name'
   | 'dnid'
@@ -22,6 +36,9 @@ export type DatasourceOrderBy =
   | 'network_name'
   | 'payload_parser_name';
 
+/**
+ * Base datasource representation shared by devices and entities.
+ */
 export type Datasource = {
   id: number;
   bucketId: number;
@@ -36,6 +53,9 @@ export type Datasource = {
   blocked: boolean;
 };
 
+/**
+ * Expanded datasource view including related resources, tags, objects, and datapoints.
+ */
 export type DatasourceDetails = {
   id: number;
   type: DatasourceType;
@@ -53,6 +73,9 @@ export type DatasourceDetails = {
   datapoints: Datapoint[];
 };
 
+/**
+ * Payload used to create or update a datasource.
+ */
 export type DatasourceForm = {
   bucketId: number;
   networkId: number;
@@ -63,6 +86,9 @@ export type DatasourceForm = {
   blocked: boolean;
 };
 
+/**
+ * Filters used when listing datasource details with optional related data expansion.
+ */
 export type DatasourcesDetailsListFilters = {
   name?: string;
   nameFilterMode?: DatasourceFilterMode;
@@ -87,6 +113,9 @@ export type DatasourcesDetailsListFilters = {
   orderByFn?: OrderByFn;
 };
 
+/**
+ * Filters used when listing base datasource records.
+ */
 export type DatasourcesListFilters = {
   name?: string;
   nameFilterMode?: DatasourceFilterMode;

@@ -2,9 +2,17 @@ import { RequestOptions } from '../models/common.js';
 import { WorkspaceQuotas, WorkspaceQuotasConsumption } from '../models/quotas.js';
 import { API } from './api.js';
 
+/**
+ * Workspace API wrapper for quota and consumption information.
+ */
 export class Quotas {
   private api: API;
 
+  /**
+   * Creates a quotas client.
+   *
+   * @param api Shared API transport.
+   */
   constructor(api: API) {
     this.api = api;
   }

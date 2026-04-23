@@ -3,9 +3,17 @@ import { RequestOptions } from '../models/common.js';
 import { List } from '../models/list.js';
 import { API } from './api.js';
 
+/**
+ * Workspace API wrapper for Valeiot buckets.
+ */
 export class Buckets {
   private api: API;
 
+  /**
+   * Creates a buckets client.
+   *
+   * @param api Shared API transport.
+   */
   constructor(api: API) {
     this.api = api;
   }

@@ -3,9 +3,17 @@ import { List } from '../models/list.js';
 import { PayloadParser, PayloadParsersListFilters } from '../models/payload_parsers.js';
 import { API } from './api.js';
 
+/**
+ * API wrapper for public payload parsers available to the current scope.
+ */
 export class PublicPayloadParsers {
   private api: API;
 
+  /**
+   * Creates a public payload parsers client.
+   *
+   * @param api Shared API transport.
+   */
   constructor(api: API) {
     this.api = api;
   }

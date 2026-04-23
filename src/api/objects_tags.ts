@@ -3,13 +3,25 @@ import { Tag } from '../models/tags.js';
 import { ID, RawTag, RequestOptions, TagForm } from '../models/common.js';
 import { API } from './api.js';
 
+/**
+ * API wrapper for datasource object tag operations.
+ */
 export class DatasourceObjectTags {
   private api: API;
 
+  /**
+   * Creates a datasource object tags client.
+   *
+   * @param api Shared API transport.
+   */
   constructor(api: API) {
     this.api = api;
   }
 
+  /**
+   * Retrieves a list of tags for a datasource object.
+   * @param options Request options.
+   */
   public async getList(
     options: {
       datasourceId: number;
@@ -23,6 +35,10 @@ export class DatasourceObjectTags {
     });
   }
 
+  /**
+   * Retrieves a single tag from a datasource object.
+   * @param options Request options.
+   */
   public async get(
     options: {
       datasourceId: number;
@@ -37,6 +53,10 @@ export class DatasourceObjectTags {
     });
   }
 
+  /**
+   * Creates a new tag for a datasource object.
+   * @param options Request options.
+   */
   public async create(
     options: {
       datasourceId: number;
@@ -52,6 +72,10 @@ export class DatasourceObjectTags {
     });
   }
 
+  /**
+   * Updates an existing tag for a datasource object.
+   * @param options Request options.
+   */
   public async update(
     options: {
       datasourceId: number;
@@ -68,6 +92,10 @@ export class DatasourceObjectTags {
     });
   }
 
+  /**
+   * Deletes a tag from a datasource object.
+   * @param options Request options.
+   */
   public async delete(
     options: {
       datasourceId: number;
@@ -82,6 +110,10 @@ export class DatasourceObjectTags {
     });
   }
 
+  /**
+   * Replaces the full tag set of a datasource object.
+   * @param options Request options.
+   */
   public async set(
     options: {
       datasourceId: number;
@@ -97,6 +129,10 @@ export class DatasourceObjectTags {
     });
   }
 
+  /**
+   * Creates or replaces tags for a datasource object.
+   * @param options Request options.
+   */
   public async createOrReplace(
     options: {
       datasourceId: number;

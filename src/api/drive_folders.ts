@@ -4,11 +4,19 @@ import { ID, RequestOptions } from '../models/common.js';
 import { API } from './api.js';
 import { DriveFoldersTags } from './drive_folders_tags.js';
 
+/**
+ * Workspace API wrapper for Valeiot drive folders.
+ */
 export class DriveFolders {
   private api: API;
 
   public tags: DriveFoldersTags;
 
+  /**
+   * Creates a drive folders client and wires the folder tags resource.
+   *
+   * @param api Shared API transport.
+   */
   constructor(api: API) {
     this.api = api;
     this.tags = new DriveFoldersTags(this.api);

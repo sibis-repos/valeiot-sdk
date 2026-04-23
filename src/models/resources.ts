@@ -1,3 +1,6 @@
+/**
+ * Resource names currently supported by role permission rules.
+ */
 export type Resource =
   | 'dashboard'
   | 'datasource'

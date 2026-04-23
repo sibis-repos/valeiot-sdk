@@ -2,11 +2,23 @@ import { ScriptEvent } from '../models/common.js';
 import { ResultHandlerNotFound, ResultInternalError } from './pre_defined_results.js';
 import { EventHandlerResult, EventResult } from './result.js';
 
+/**
+ * Middleware or final handler executed by the router for a given event.
+ *
+ * @typeParam T Event content type.
+ * @typeParam K Additional payload returned by the handler.
+ */
 export type EventHandler<T = any, K = any> = (
   ctx: EventContext<T>,
   event: ScriptEvent<T>
 ) => Promise<K & EventResult>;
 
+/**
+ * Execution context shared across all middlewares and the final handler
+ * while processing a single event.
+ *
+ * @typeParam T Event content type.
+ */
 export class EventContext<T = any> {
   public keys: Record<string, any> = {};
   public readonly result: EventHandlerResult;
@@ -31,9 +43,8 @@ export class EventContext<T = any> {
   }
 
   /**
-   * abort aborts the event cancelling future handling 
-   * and provinding the result. Is also sets the result 
-   * as failed.
+   * Aborts the current execution chain, preventing remaining handlers from running.
+   * The current result is marked as failed before the final response is resolved.
    */
   public abort(): void {
     this.aborted = true;
@@ -66,8 +77,9 @@ export class EventContext<T = any> {
   }
 
   /**
-   * message sets the result message in the metadata.
-   * @param message 
+   * Sets the human-readable message in the result metadata.
+   *
+   * @param message Message to expose in the final `_meta` payload.
    */
   public message(message: string): void {
 
@@ -92,6 +104,15 @@ export class EventContext<T = any> {
   }
 }
 
+/**
+ * Lightweight event router for script execution flows.
+ *
+ * A router can:
+ * - register handlers for exact event names
+ * - register middlewares that run before handlers
+ * - create hierarchical groups with scoped middlewares
+ * - resolve a standardized fallback result when no handler is found or when execution fails
+ */
 export class Router {
   private parentRouter: Router | null;
   private handlers: Record<string, EventHandler<any>> = {};
@@ -119,6 +140,13 @@ export class Router {
     this.registerHandler(event, handler);
   }
 
+  /**
+   * Registers a normalized event handler at the root router level.
+   * Child groups delegate registration to their parent router.
+   *
+   * @param event Normalized event path.
+   * @param handler Handler function associated with the event.
+   */
   private registerHandler<T>(event: string, handler: EventHandler<T>): void {
     if (this.parentRouter) {
       this.parentRouter.registerHandler(event, handler);
