@@ -141,7 +141,6 @@ jobs:
     needs:
       - prepare
       - build
-    if: needs.prepare.outputs.publish_github_packages == 'true'
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
