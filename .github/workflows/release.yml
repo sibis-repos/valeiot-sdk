@@ -21,9 +21,13 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  publish:
+  prepare:
     runs-on: ubuntu-latest
-
+    outputs:
+      tag_name: ${{ steps.metadata.outputs.tag_name }}
+      package_name: ${{ steps.metadata.outputs.package_name }}
+      package_version: ${{ steps.metadata.outputs.package_version }}
+      publish_github_packages: ${{ steps.metadata.outputs.publish_github_packages }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -31,7 +35,43 @@ jobs:
           fetch-depth: 0
           ref: ${{ inputs.tag || github.ref }}
 
-      - name: Setup Node.js for npm publish
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Resolve release metadata
+        id: metadata
+        env:
+          TAG_NAME: ${{ inputs.tag || github.ref_name }}
+          REPOSITORY_OWNER: ${{ github.repository_owner }}
+        run: bash ./scripts/release-resolve-metadata.sh
+
+      - name: Upload release scripts and sources
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-workspace
+          path: |
+            package.json
+            package-lock.json
+            .npmrc
+            tsconfig.json
+            tsconfig.esm.json
+            tsconfig.cjs.json
+            src
+            scripts
+          if-no-files-found: error
+
+  build:
+    runs-on: ubuntu-latest
+    needs: prepare
+    steps:
+      - name: Download release workspace
+        uses: actions/download-artifact@v4
+        with:
+          name: release-workspace
+
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -43,24 +83,58 @@ jobs:
       - name: Build package
         run: npm run build
 
-      - name: Resolve release metadata
-        id: metadata
-        env:
-          TAG_NAME: ${{ inputs.tag || github.ref_name }}
-          REPOSITORY_OWNER: ${{ github.repository_owner }}
-        run: ./scripts/release-resolve-metadata.sh
-
       - name: Create package tarball
         id: pack
-        run: ./scripts/release-pack.sh
+        run: bash ./scripts/release-pack.sh
+
+      - name: Upload package artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: package-tarball
+          path: |
+            *.tgz
+            dist
+            package.json
+            package-lock.json
+            .npmrc
+            scripts
+          if-no-files-found: error
+
+  publish_npm:
+    runs-on: ubuntu-latest
+    needs:
+      - prepare
+      - build
+    steps:
+      - name: Download package artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: package-tarball
+
+      - name: Setup Node.js for npm publish
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
 
       - name: Publish package to npm
         env:
           NPM_SIBIS_TOKEN: ${{ secrets.NPM_SIBIS_TOKEN }}
-        run: npm publish --provenance
+        run: bash ./scripts/release-publish-npm.sh
+
+  publish_github_packages:
+    runs-on: ubuntu-latest
+    needs:
+      - prepare
+      - build
+    if: needs.prepare.outputs.publish_github_packages == 'true'
+    steps:
+      - name: Download package artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: package-tarball
 
       - name: Setup Node.js for GitHub Packages
-        if: steps.metadata.outputs.publish_github_packages == 'true'
         uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -68,31 +142,48 @@ jobs:
           scope: '@${{ github.repository_owner }}'
 
       - name: Publish package to GitHub Packages
-        if: steps.metadata.outputs.publish_github_packages == 'true'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm publish --registry https://npm.pkg.github.com
 
+  release:
+    runs-on: ubuntu-latest
+    needs:
+      - prepare
+      - build
+      - publish_npm
+      - publish_github_packages
+    if: always() && needs.publish_npm.result == 'success' && (needs.prepare.outputs.publish_github_packages != 'true' || needs.publish_github_packages.result == 'success')
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ needs.prepare.outputs.tag_name }}
+
+      - name: Download package artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: package-tarball
+
       - name: Explain GitHub Packages skip
-        if: steps.metadata.outputs.publish_github_packages != 'true'
+        if: needs.prepare.outputs.publish_github_packages != 'true'
         env:
-          PACKAGE_NAME: ${{ steps.metadata.outputs.package_name }}
+          PACKAGE_NAME: ${{ needs.prepare.outputs.package_name }}
           REPOSITORY_OWNER: ${{ github.repository_owner }}
-        run: ./scripts/release-explain-github-packages-skip.sh
+        run: bash ./scripts/release-explain-github-packages-skip.sh
 
       - name: Generate release notes
-        id: notes
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
-          TAG_NAME: ${{ steps.metadata.outputs.tag_name }}
-          PACKAGE_NAME: ${{ steps.metadata.outputs.package_name }}
-        run: ./scripts/release-generate-notes.sh
+          TAG_NAME: ${{ needs.prepare.outputs.tag_name }}
+          PACKAGE_NAME: ${{ needs.prepare.outputs.package_name }}
+        run: bash ./scripts/release-generate-notes.sh
 
       - name: Create or update GitHub Release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TAG_NAME: ${{ steps.metadata.outputs.tag_name }}
-          PACKAGE_VERSION: ${{ steps.metadata.outputs.package_version }}
-          TARBALL_NAME: ${{ steps.pack.outputs.tarball_name }}
-        run: ./scripts/release-upsert-github-release.sh
+          TAG_NAME: ${{ needs.prepare.outputs.tag_name }}
+          PACKAGE_VERSION: ${{ needs.prepare.outputs.package_version }}
+        run: bash ./scripts/release-upsert-github-release.sh
