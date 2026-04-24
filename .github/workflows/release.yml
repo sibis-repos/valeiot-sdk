@@ -70,6 +70,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: release-workspace
+          path: .
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -110,6 +111,13 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: package-tarball
+          path: .
+
+      - name: Inspect downloaded package artifact
+        run: |
+          pwd
+          ls -la
+          ls -la scripts
 
       - name: Setup Node.js for npm publish
         uses: actions/setup-node@v4
@@ -133,6 +141,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: package-tarball
+          path: .
 
       - name: Setup Node.js for GitHub Packages
         uses: actions/setup-node@v4
@@ -165,6 +174,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: package-tarball
+          path: .
 
       - name: Explain GitHub Packages skip
         if: needs.prepare.outputs.publish_github_packages != 'true'
