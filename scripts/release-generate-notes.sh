@@ -7,6 +7,9 @@ tag_name="${TAG_NAME:?TAG_NAME is required}"
 package_name="${PACKAGE_NAME:?PACKAGE_NAME is required}"
 github_sha="${GITHUB_SHA:?GITHUB_SHA is required}"
 
+package_version="$(node -p "JSON.parse(require('fs').readFileSync('package.json', 'utf8')).version")"
+package_description="$(node -p "JSON.parse(require('fs').readFileSync('package.json', 'utf8')).description || ''")"
+
 gh api \
   --method POST \
   -H "Accept: application/vnd.github+json" \
@@ -16,7 +19,21 @@ gh api \
   --jq '.body' > generated-notes.md
 
 cat <<EOF > release-notes.md
-npm: https://www.npmjs.com/package/${package_name}
+## ${package_name} ${package_version}
+
+${package_description}
+
+### Install
+
+\`\`\`bash
+npm install ${package_name}@${package_version}
+\`\`\`
+
+### Package
+
+- npm: https://www.npmjs.com/package/${package_name}/v/${package_version}
+
+### Changes
 
 $(cat generated-notes.md)
 EOF
