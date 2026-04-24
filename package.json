@@ -1,6 +1,6 @@
 {
   "name": "@sibis/valeiot-sdk",
-  "version": "0.24.0",
+  "version": "0.25.0",
   "description": "Valeiot software development kit.",
   "type": "module",
   "main": "./dist/cjs/index.js",
@@ -35,6 +35,9 @@
     "url": "https://github.com/sibis-repos/valeiot-sdk/issues"
   },
   "homepage": "https://github.com/sibis-repos/valeiot-sdk#readme",
+  "publishConfig": {
+    "access": "public"
+  },
   "devDependencies": {
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3",

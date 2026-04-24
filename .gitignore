@@ -4,4 +4,6 @@ bundle
 dist
 node_modules
 .*
+!.github/
+!.github/**
 portal.js

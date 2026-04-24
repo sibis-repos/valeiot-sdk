@@ -1,0 +1,98 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing git tag to release, for example v0.24.0
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  packages: write
+  id-token: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ inputs.tag || github.ref }}
+
+      - name: Setup Node.js for npm publish
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build package
+        run: npm run build
+
+      - name: Resolve release metadata
+        id: metadata
+        env:
+          TAG_NAME: ${{ inputs.tag || github.ref_name }}
+          REPOSITORY_OWNER: ${{ github.repository_owner }}
+        run: ./scripts/release-resolve-metadata.sh
+
+      - name: Create package tarball
+        id: pack
+        run: ./scripts/release-pack.sh
+
+      - name: Publish package to npm
+        env:
+          NPM_SIBIS_TOKEN: ${{ secrets.NPM_SIBIS_TOKEN }}
+        run: npm publish --provenance
+
+      - name: Setup Node.js for GitHub Packages
+        if: steps.metadata.outputs.publish_github_packages == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://npm.pkg.github.com
+          scope: '@${{ github.repository_owner }}'
+
+      - name: Publish package to GitHub Packages
+        if: steps.metadata.outputs.publish_github_packages == 'true'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm publish --registry https://npm.pkg.github.com
+
+      - name: Explain GitHub Packages skip
+        if: steps.metadata.outputs.publish_github_packages != 'true'
+        env:
+          PACKAGE_NAME: ${{ steps.metadata.outputs.package_name }}
+          REPOSITORY_OWNER: ${{ github.repository_owner }}
+        run: ./scripts/release-explain-github-packages-skip.sh
+
+      - name: Generate release notes
+        id: notes
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          TAG_NAME: ${{ steps.metadata.outputs.tag_name }}
+          PACKAGE_NAME: ${{ steps.metadata.outputs.package_name }}
+        run: ./scripts/release-generate-notes.sh
+
+      - name: Create or update GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG_NAME: ${{ steps.metadata.outputs.tag_name }}
+          PACKAGE_VERSION: ${{ steps.metadata.outputs.package_version }}
+          TARBALL_NAME: ${{ steps.pack.outputs.tarball_name }}
+        run: ./scripts/release-upsert-github-release.sh

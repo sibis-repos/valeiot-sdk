@@ -130,6 +130,27 @@ npm run typecheck
 npm run test
 ```
 
+## Releases
+
+Releases are automated through GitHub Actions.
+
+Expected flow:
+
+1. update `package.json` with the target version
+2. commit the change
+3. create and push a git tag that matches the package version, such as `0.25.0` or `v0.25.0`
+4. let the release workflow build the package, publish it to npm, and create or update the corresponding GitHub Release
+
+Required repository secrets:
+
+- `NPM_SIBIS_TOKEN`: npm token with permission to publish `@sibis/valeiot-sdk`
+
+Notes:
+
+- the workflow publishes to npm with public access
+- the workflow can also publish to GitHub Packages only when the package scope matches the GitHub repository owner namespace
+- with the current package name `@sibis/valeiot-sdk`, GitHub Packages publication is skipped unless the repository owner namespace also uses `@sibis`
+
 Notes:
 
 - the package publishes both ESM and CommonJS builds
