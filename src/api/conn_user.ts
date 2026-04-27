@@ -6,6 +6,7 @@ import { UserMe } from './me.js';
 import { UserNotifications } from './notifications_user.js';
 import { Scripts } from './scripts.js';
 import { Users } from './users.js';
+import { UserDrive } from './user_drive.js';
 
 /**
  * Options used to initialize a user-scoped Valeiot connection.
@@ -29,6 +30,7 @@ export class UserConn {
   public scripts: Scripts;
   public notifications: UserNotifications;
   public me: UserMe;
+  public drive: UserDrive;
 
   /**
    * Creates a user connection bound to the `/user` API namespace.
@@ -60,6 +62,7 @@ export class UserConn {
     this.scripts = new Scripts(this.api);
     this.notifications = new UserNotifications(this.api);
     this.me = new UserMe(this.api);
+    this.drive = new UserDrive(this.api);
   }
 
   /**
